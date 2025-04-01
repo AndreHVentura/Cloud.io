@@ -2,7 +2,9 @@
 
 ![Banner do Projeto](https://link-para-imagem.com/banner.png)
 
-> DESCRIÇÃO Construir uma aplicação web que permite aos usuários fazerem o monitoramento de estações meteorológicas e receberem alertas sobre condições adversas do clima na região de Lago de furnas.
+<h1>DESCRIÇÃO:</h1>    
+Cloud.io é um software meteorológico com o objetivo de manter as pessoas informadas sobre condições climáticas extremas.
+</div>
 
 # 🗂️SPRINTS
 | Sprint | Data de Início | Data de Entrega | Status |
@@ -10,10 +12,6 @@
 |  1  | :calendar:  ➡ (24/03/2025) | 📆 ➡ (14/04/2025) |  em andamento |            
 |  2  | :calendar:  ➡ (16/04/2025) | 📆 ➡ (12/05/2025) |  em andamento |
 |  3  | :calendar:  ➡ (14/05/2025) | 📆 ➡ (09/06/2025)|  em andamento |
-
-## 📝 Sobre o Projeto
-
-Descreva detalhadamente o que o projeto faz e qual problema ele resolve.
 
 
 # 📑PRODUCT BACKLOG

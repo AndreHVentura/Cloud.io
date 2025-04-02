@@ -76,5 +76,5 @@ Cloud.io é um software meteorológico com o objetivo de manter as pessoas infor
 | Dev     |   Eduardo Henrique  |     <a target="_blank" href="https://github.com/EduardoBrito2"><img src="https://skillicons.dev/icons?i=github"></a>|  
 | Dev     |   Valcir  |     <a target="_blank" href="https://github.com/valcir-jr"><img  src="https://skillicons.dev/icons?i=github"></a>|   
 | Dev     |   Andre Michel   |     <a target="_blank" href="https://github.com/andremc331"><img  src="https://skillicons.dev/icons?i=github"></a>|  
-| Dev     |   Rodrigo   |     <a target="_blank" href="https://github.com/Danilo-Fatec"><img  src="https://skillicons.dev/icons?i=github"></a>|  
+| Dev     |   Rodrigo   |     <a target="_blank" href="https://github.com/rodrigoaslima"><img  src="https://skillicons.dev/icons?i=github"></a>|  
 

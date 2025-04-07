@@ -10,15 +10,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: Arial, sans-serif;
   }
-
-  html, body {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #500e71;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 `;
 
 // Componentes reutilizáveis

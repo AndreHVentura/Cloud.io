@@ -1,4 +1,3 @@
-// src/styles/GlobalStyles.ts
 import { createGlobalStyle } from "styled-components";
 import styled from "styled-components";
 
@@ -9,6 +8,15 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #500e71;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

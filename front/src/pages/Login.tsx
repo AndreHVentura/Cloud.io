@@ -1,28 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputField, InputLabel, LoginButton, LoginContainer, LoginForm, Logo, SignupLink } from "../styles/pages/login";
+import api from "../services/api"
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  // const [email, setEmail] = useState<string>('');
-  // const [senha, setSenha] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [senha, setSenha] = useState<string>('');
   
 
-  // const handleLogin = async () => {
-  //   try {
-  //     // Chama a API de login
-  //     // const response = await api.post('/login', { mail: email, password: senha });
+  const handleLogin = async () => {
+    try {
+      // Chama a API de login
+      const response = await api.post('/login', { mail: email, password: senha });
       
-  //     // Salva o token no localStorage
-  //     localStorage.setItem('token', response.data.token);
+      // Salva o token no localStorage
+      localStorage.setItem('token', response.data.token);
 
-  //     // Redireciona para a página home
-  //     navigate('/home');
-  //   } catch (error) {
-  //     console.error('Erro ao fazer login:', error);
-  //     alert('Erro ao efetuar o login. Tente novamente.');
-  //   }
-  // };
+      // Redireciona para a página home
+      navigate('/home');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      alert('Erro ao efetuar o login. Tente novamente.');
+    }
+  };
   return (
     <LoginContainer>
       {/* <img src=""/> */}

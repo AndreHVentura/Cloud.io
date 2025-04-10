@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputField, InputLabel, LoginButton, LoginContainer, LoginForm, Logo, SignupLink } from "../styles/pages/login";
-import api from "../services/api"
+import api from "../services/api";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
-  
 
-  const handleLogin = async () => {
+  // Função para realizar login
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault(); // Previne o envio padrão do formulário
+
+    if (!email || !senha) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
     try {
       // Chama a API de login
       const response = await api.post('/login', { mail: email, password: senha });
-      
+
       // Salva o token no localStorage
       localStorage.setItem('token', response.data.token);
 
@@ -24,35 +31,34 @@ const Login: React.FC = () => {
       alert('Erro ao efetuar o login. Tente novamente.');
     }
   };
+
   return (
     <LoginContainer>
-      {/* <img src=""/> */}
       <Logo>cloud.<span>io</span></Logo>
-      
-      
-      <LoginForm>
-        <InputLabel>Insira seu E-mail:</InputLabel>
-        <InputField 
-          type="email" 
-          className="email-input" 
-          // value={email}
-          // onChange={(e) => setEmail(e.target.value)}  
-          />
-        
-        <InputLabel>Insira sua senha:</InputLabel>
-        <InputField 
-          type="password" 
-          className="password-input" 
-          // value={senha}
-          // onChange={(e) => setSenha(e.target.value)}  
-          />
-        
-        <LoginButton onClick={()=>navigate("")}>Entrar &gt;</LoginButton>
-        
-        <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
-        
-        
+
+      <LoginForm onSubmit={handleLogin}>
+        <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
+        <InputField
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)} // Atualiza o estado do email
+          required
+        />
+
+        <InputLabel htmlFor="senha">Insira sua senha:</InputLabel>
+        <InputField
+          type="password"
+          id="senha"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)} // Atualiza o estado da senha
+          required
+        />
+
+        <LoginButton type="submit">Entrar &gt;</LoginButton>
       </LoginForm>
+
+      <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
     </LoginContainer>
   );
 };

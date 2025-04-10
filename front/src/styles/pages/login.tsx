@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+const MainContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(55, 82, 218);
+`;
+
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -108,6 +117,7 @@ const SignupLink = styled.a`
 `;
 
 export { 
+  MainContainer,
   LoginContainer, 
   Logo, 
   LoginForm, 

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { InputField, InputLabel, LoginButton, LoginContainer, LoginForm, Logo, SignupLink } from "../styles/pages/login";
+import { InputField, InputLabel, LoginButton,
+         LoginContainer, LoginForm, Logo,
+         SignupLink, MainContainer } from "../styles/pages/login";
 import api from "../services/api";
 
 const Login: React.FC = () => {
@@ -33,6 +35,7 @@ const Login: React.FC = () => {
   };
 
   return (
+    <MainContainer>
     <LoginContainer>
       <Logo>cloud.<span>io</span></Logo>
 
@@ -60,6 +63,7 @@ const Login: React.FC = () => {
 
       <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
     </LoginContainer>
+    </MainContainer>
   );
 };
 

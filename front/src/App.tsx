@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout><Login /></MainLayout>} />
         <Route path="/cadastro" element={<MainLayout><Cadastro /></MainLayout>} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
       </Routes>
     </BrowserRouter>
   );

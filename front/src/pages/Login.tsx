@@ -58,7 +58,7 @@ const Login: React.FC = () => {
           required
         />
 
-        <LoginButton type="submit">ENTRAR &gt;</LoginButton>
+        <LoginButton type="submit">ENTRAR</LoginButton>
       </LoginForm>
 
       <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>

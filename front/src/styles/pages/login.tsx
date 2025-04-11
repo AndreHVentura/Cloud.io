@@ -158,6 +158,7 @@ const SignupLink = styled.a`
   color: #0066cc;
   text-decoration: none;
   font-weight: bold;
+  font-size: 12px;
   text-align: center;
   cursor: pointer;
 

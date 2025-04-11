@@ -7,7 +7,7 @@ const MainContainer = styled.div`
   width: 100vw;
   align-items: center;
   justify-content: center;
-  background-color: rgb(55, 82, 218);
+  background-color: rgb(7, 78, 120);
   padding: 10px;
   box-sizing: border-box;
 
@@ -25,7 +25,7 @@ const LoginContainer = styled.div`
   width: 100%;
   max-width: 500px;  /* Limita a largura em telas grandes */
   height: auto;
-  background-color: #f4f6f9;
+  background-color: #0c1f2e;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   border-radius: 10px;
@@ -50,7 +50,7 @@ const LoginContainer = styled.div`
 // Logo com cor dinâmica e tamanho ajustável
 const Logo = styled.h1`
   font-size: 3rem;
-  color: #333;
+  color: white;
   font-weight: bold;
   margin-bottom: 2rem;
   

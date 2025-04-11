@@ -37,7 +37,7 @@ const Login: React.FC = () => {
   return (
     <MainContainer>
     <LoginContainer>
-      <Logo>cloud.<span>io</span></Logo>
+      <Logo>Cloud.<span>io</span></Logo>
 
       <LoginForm onSubmit={handleLogin}>
         <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
           required
         />
 
-        <LoginButton type="submit">Entrar &gt;</LoginButton>
+        <LoginButton type="submit">ENTRAR &gt;</LoginButton>
       </LoginForm>
 
       <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+// Contêiner principal (garante que o layout ocupe toda a tela e se ajuste ao tamanho)
 const MainContainer = styled.div`
   display: flex;
   height: 100vh;
@@ -7,20 +8,46 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgb(55, 82, 218);
+  padding: 10px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 20px; // Mais espaço em dispositivos móveis
+  }
 `;
 
+// Container do login (vai centralizar o conteúdo e adaptar conforme a tela)
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;  /* Para ocupar toda a altura da tela */
+  width: 100%;
+  max-width: 500px;  /* Limita a largura em telas grandes */
+  height: auto;
   background-color: #f4f6f9;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   border-radius: 10px;
+  box-sizing: border-box;
+  margin: 0 auto;  // Garantir que fique centralizado mesmo em telas grandes
+
+  @media (max-width: 1024px) and (min-width: 768px) {
+    max-width: 700px;  // Mais largura para tablets
+    padding: 30px 20px; // Mais espaçamento para tablets
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px 15px; // Ajuste de padding para telas pequenas
+  }
+
+  @media (max-width: 480px) {
+    max-width: 100%; // Faz com que o container ocupe 100% da tela
+  }
 `;
 
+// Logo com cor dinâmica e tamanho ajustável
 const Logo = styled.h1`
   font-size: 3rem;
   color: #333;
@@ -32,32 +59,49 @@ const Logo = styled.h1`
   }
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2.5rem; // Reduzindo o tamanho da logo em telas pequenas
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem; // Font menor ainda para telas muito pequenas
   }
 `;
 
+// Estilo do formulário de login
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-width: 400px;  /* Limita a largura para evitar que o formulário fique muito largo */
+  width: 100%;
+  max-width: 400px;  /* Limita a largura do formulário */
   padding: 2rem;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) and (min-width: 768px) {
+    max-width: 650px;  // Formulário mais largo para tablets
+    padding: 2.5rem;
+  }
 
   @media (max-width: 768px) {
-    max-width: 90%;
+    max-width: 100%;  // O formulário pode usar 100% da largura disponível em telas pequenas
+  }
+
+  @media (max-width: 480px) {
+    padding: 1.5rem; // Ajuste de padding para dispositivos móveis
   }
 `;
 
+// Estilo do rótulo do input
 const InputLabel = styled.label`
   margin-bottom: 0.5rem;
   font-size: 1rem;
   color: #555;
 `;
 
+// Estilo do campo de input (com bordas arredondadas e foco)
 const InputField = styled.input`
   padding: 1rem;
   margin-bottom: 1.5rem;
@@ -76,8 +120,13 @@ const InputField = styled.input`
   &::placeholder {
     color: #888;
   }
+
+  @media (max-width: 480px) {
+    padding: 0.9rem;  // Ajustando o padding em telas muito pequenas
+  }
 `;
 
+// Estilo do botão de login (com transição suave)
 const LoginButton = styled.button`
   padding: 1rem;
   background-color: #0066cc;
@@ -97,8 +146,13 @@ const LoginButton = styled.button`
     background-color: #004080;
     transform: translateY(0);
   }
+
+  @media (max-width: 768px) {
+    padding: 0.8rem;  // Ajustando o padding para telas menores
+  }
 `;
 
+// Estilo do link para cadastro (com ajuste de fonte e estilo)
 const SignupLink = styled.a`
   margin-top: 1.5rem;
   color: #0066cc;
@@ -112,7 +166,11 @@ const SignupLink = styled.a`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.9rem;
+    font-size: 0.9rem;  // Menor tamanho de fonte em telas pequenas
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;  // Ajuste para telas muito pequenas
   }
 `;
 

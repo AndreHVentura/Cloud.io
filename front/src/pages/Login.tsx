@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputField, InputLabel, LoginButton,
          LoginContainer, LoginForm, Logo,
-         SignupLink, MainContainer } from "../styles/pages/login";
+         SignupLink, MainContainer } from "../styles/login";
 import api from "../services/api";
 
 const Login: React.FC = () => {

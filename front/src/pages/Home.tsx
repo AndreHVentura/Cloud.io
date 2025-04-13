@@ -6,18 +6,14 @@ import MainContent from "../components/Maincontent";
 export default function Home() {
   const [isActive, setIsActive] = useState<string>("close");
   const toggle = () => {
-    if(isActive === "close") {
-      setIsActive("open")
-    } else {
-      setIsActive("close")
-    }
-  }
+    setIsActive(prev => prev === "close" ? "open" : "close");
+  };
 
   return (
     <>
-      <NavBar state={isActive}/>
-      <Topbar helper={toggle}/>
+      <NavBar state={isActive} />
+      <Topbar helper={toggle} />
       <MainContent />
     </>
   );
-};
+}

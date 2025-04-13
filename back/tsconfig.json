@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "ES6",
+      "module": "commonjs",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "typeRoots": ["./node_modules/@types", "./src/types"] // Adicione o caminho para a pasta de tipos
+    },
+    "include": ["src/**/*.ts", "express.d.ts"], // Certifique-se de que o arquivo está incluído
+    "exclude": ["node_modules"]
+  }

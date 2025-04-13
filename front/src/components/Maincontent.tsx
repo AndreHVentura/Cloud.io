@@ -1,22 +1,25 @@
 import styled from "styled-components";
+import WeatherDashboard from "./WeatherDashboard";
 
 export default function MainContent() {
     return(
       <Main>
-        <MainDiv>Os gráficos ficarão aqui</MainDiv>
+        <MainDiv>
+          <WeatherDashboard />
+        </MainDiv>
       </Main>
     );
   };
   
 const Main = styled.main`
-  height: calc(100vh - 3rem);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 2rem;
+  background-color: #f8f9fa;
 `;
   
 const MainDiv = styled.div`
-  background-color: skyblue;
-  height: 90%;
-  width: 95%; 
+   max-width: 1200px;
+   width: 100%; 
 `;

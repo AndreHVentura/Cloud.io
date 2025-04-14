@@ -9,7 +9,8 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: flex-start; // Alinha o conteúdo ao topo
   background-color: rgb(7, 78, 120);
-  padding: 10px;
+  padding: 0px;
+  margin: 0px;
   box-sizing: border-box;
   overflow-y: auto; // Permite rolagem vertical
 

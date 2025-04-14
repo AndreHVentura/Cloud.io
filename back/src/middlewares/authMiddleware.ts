@@ -10,7 +10,7 @@ class AuthMiddleware {
   // Middleware para verificar o token JWT
   static verifyToken() {
     return expressjwt({
-      secret: JWT_SECRET,
+      secret: process.env.JWT_SECRET || "fallback_secret",
       algorithms: ['HS256'], // Algoritmo de criptografia
     });
   }

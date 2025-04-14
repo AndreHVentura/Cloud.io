@@ -12,14 +12,15 @@ import {
   Button,
   SignupLink
 } from "../styles/cadastro"; // ajuste o caminho conforme necessário
+import api from "../services/api";
 
 const Cadastro: React.FC = () => {
   const [formData, setFormData] = useState({
-    nome: "",
+    name: "",
     email: "",
-    senha: "",
+    password: "",
     dataNascimento: "",
-    categoria: "",
+    role: "",
     baseOperacao: "",
   });
   
@@ -30,11 +31,13 @@ const Cadastro: React.FC = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  console.log(formData);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Ativa a tela de carregamento ao iniciar o cadastro
     try {
-      const response = await axios.post("http://localhost:3011/register", formData);
+      const response = await api.post('api/users/register', formData);
       if (response.status === 201) {
         alert("Cadastro concluído com sucesso!");
         setLoading(false); // Desativa a tela de carregamento após o cadastro
@@ -55,19 +58,19 @@ const Cadastro: React.FC = () => {
         <Logo>Cloud.<span>io</span></Logo>
         <Form onSubmit={handleSubmit}>
           <InputLabel htmlFor="nome">Nome</InputLabel>
-          <InputField name="nome" placeholder="Digite seu nome" onChange={handleChange} required />
+          <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
 
           <InputLabel htmlFor="email">Email</InputLabel>
           <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
 
           <InputLabel htmlFor="senha">Senha</InputLabel>
-          <InputField name="senha" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
+          <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
 
           <InputLabel htmlFor="dataNascimento">Data de Nascimento</InputLabel>
           <InputField name="dataNascimento" type="date" onChange={handleChange} required />
 
           <InputLabel htmlFor="categoria">Categoria</InputLabel>
-          <InputField name="categoria" placeholder="Ex: Nutricionista, Cliente" onChange={handleChange} required />
+          <InputField name="role" placeholder="Ex: Nutricionista, Cliente" onChange={handleChange} required />
 
           <InputLabel htmlFor="baseOperacao">Base de Operação</InputLabel>
           <InputField name="baseOperacao" placeholder="Ex: Unidade SP" onChange={handleChange} required />

@@ -17,8 +17,8 @@ const LoadingScreen: React.FC = () => {
 
   return (
     <LoadingContainer>
-        {/*logo*/}
-      <LoadingMessage>Experimente nossa nova plataforma de orçamentos</LoadingMessage>
+      
+      <LoadingMessage>Experimente nossa nova plataforma</LoadingMessage>
       <Spinner />
     </LoadingContainer>
   );

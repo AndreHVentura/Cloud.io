@@ -3,16 +3,18 @@ import styled from "styled-components";
 // Contêiner principal (garante que o layout ocupe toda a tela e se ajuste ao tamanho)
 const MainContainer = styled.div`
   display: flex;
-  height: 100vh;
+  flex-direction: column; // Permite que o logo fique em cima e o conteúdo vá para baixo
+  min-height: 100vh; // Permite crescer além da altura da tela
   width: 100vw;
   align-items: center;
-  justify-content: center;
-  background-color: rgb(55, 82, 218);
+  justify-content: flex-start; // Alinha o conteúdo ao topo
+  background-color: rgb(7, 78, 120);
   padding: 10px;
   box-sizing: border-box;
+  overflow-y: auto; // Permite rolagem vertical
 
   @media (max-width: 768px) {
-    padding: 20px; // Mais espaço em dispositivos móveis
+    padding: 20px;
   }
 `;
 
@@ -25,12 +27,13 @@ const Container = styled.div`
   width: 100%;
   max-width: 500px;  /* Limita a largura em telas grandes */
   height: auto;
-  background-color: #f4f6f9;
+  background-color: #0c1f2e;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   border-radius: 10px;
   box-sizing: border-box;
-  margin: 0 auto;  // Garantir que fique centralizado mesmo em telas grandes
+  margin-top: 2rem; // dá espaço para o Logo e afasta o formulário do topo
+  margin-bottom: 2rem;;
 
   @media (max-width: 1024px) and (min-width: 768px) {
     max-width: 700px;  // Mais largura para tablets
@@ -50,7 +53,7 @@ const Container = styled.div`
 // Logo com cor dinâmica e tamanho ajustável
 const Logo = styled.h1`
   font-size: 3rem;
-  color: #333;
+  color: white;
   font-weight: bold;
   margin-bottom: 2rem;
   

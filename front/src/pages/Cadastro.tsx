@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../components/LoadingScreen"; // Importe o componente LoadingScreen
 import {
   MainContainer,
   Container,
@@ -21,7 +22,8 @@ const Cadastro: React.FC = () => {
     categoria: "",
     baseOperacao: "",
   });
-
+  
+  const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,22 +32,27 @@ const Cadastro: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // Ativa a tela de carregamento ao iniciar o cadastro
     try {
       const response = await axios.post("http://localhost:3011/register", formData);
       if (response.status === 201) {
         alert("Cadastro concluído com sucesso!");
+        setLoading(false); // Desativa a tela de carregamento após o cadastro
         navigate("/home");
       }
     } catch (error) {
       console.error("Erro ao cadastrar:", error);
       alert("Erro ao cadastrar usuário!");
+      setLoading(false); // Desativa a tela de carregamento se houver erro
     }
   };
 
-  return (
+  return loading ? (
+    <LoadingScreen /> // Exibe a LoadingScreen enquanto o estado `loading` for true
+  ) : (
     <MainContainer>
       <Container>
-        <Logo><span>Bom</span> Sabor</Logo>
+        <Logo>Cloud.<span>io</span></Logo>
         <Form onSubmit={handleSubmit}>
           <InputLabel htmlFor="nome">Nome</InputLabel>
           <InputField name="nome" placeholder="Digite seu nome" onChange={handleChange} required />
@@ -68,7 +75,7 @@ const Cadastro: React.FC = () => {
           <Button type="submit">Cadastrar</Button>
         </Form>
 
-        <SignupLink href="/login">Já possui conta? Faça login</SignupLink>
+        <SignupLink href="/">Já possui conta? Faça login</SignupLink>
       </Container>
     </MainContainer>
   );

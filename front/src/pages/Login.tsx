@@ -4,40 +4,42 @@ import { InputField, InputLabel, LoginButton,
          LoginContainer, LoginForm, Logo,
          SignupLink, MainContainer } from "../styles/login";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { login } = useAuth(); // Usando o contexto
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
 
   // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault(); // Previne o envio padrão do formulário
-
+    e.preventDefault();
+  
     if (!email || !senha) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
-
+  
     try {
-      // Chama a API de login
-      const response = await api.post('/login', { mail: email, password: senha });
-
-      // Salva o token no localStorage
+      const response = await api.post('/api/users/login', { 
+        email: email,
+        password: senha 
+      });
+      console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-
-      // Redireciona para a página home
+      login(response.data.token); // Usando a função do contexto
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      alert('Erro ao efetuar o login. Tente novamente.');
+      alert('Credenciais inválidas ou erro no servidor.');
     }
   };
 
   return (
     <MainContainer>
     <LoginContainer>
-      <Logo>cloud.<span>io</span></Logo>
+      <Logo>Cloud.<span>io</span></Logo>
 
       <LoginForm onSubmit={handleLogin}>
         <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
@@ -58,7 +60,7 @@ const Login: React.FC = () => {
           required
         />
 
-        <LoginButton type="submit">Entrar &gt;</LoginButton>
+        <LoginButton type="submit">ENTRAR</LoginButton>
       </LoginForm>
 
       <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>

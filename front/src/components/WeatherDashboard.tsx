@@ -1,9 +1,8 @@
-import React from 'react';
 import styled from 'styled-components';
-import WindPeakChart from './WindpeakChart';
-import WindSpeedChart from './WindspeedChart';
-import WindDirChart from './WindDirChart';
-import WaveHeightChart from './WaveheightChart';
+import WindPeakChart from './graficos/WindpeakChart';
+import WindSpeedChart from './graficos/WindspeedChart';
+import WindDirChart from './graficos/WindDirChart';
+import WaveHeightChart from './graficos/WaveheightChart';
 
 const WeatherDashboard = () => {
   return (
@@ -45,7 +44,6 @@ const Wrapper = styled.div`
 
 const ChartRow = styled.div`
   display: flex;
-  flex-wrap: nowrap;
   gap: 2rem;
   justify-content: center;
   width: 100%;

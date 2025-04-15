@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { TopbarProps } from "../types/types";
 import { Link } from "react-router-dom";
 
-export default function Topbar({ helper }: TopbarProps) {
+export default function TopBar({ helper }: TopbarProps) {
     return(
       <Upperdiv>
         <Link to="/">
@@ -27,6 +27,8 @@ const Upperdiv = styled.div`
   justify-content: flex-start;
   color: white;
   padding: 0 1rem;
+  position: relative;
+  z-index: 3;
 
   & svg {
     height: 1.5rem;

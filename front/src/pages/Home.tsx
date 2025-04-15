@@ -1,7 +1,7 @@
 import { useState } from "react";
 import NavBar from "../components/Navbar";
-import Topbar from "../components/Topbar";
-import MainContent from "../components/Maincontent";
+import TopBar from "../components/Topbar";
+import HomeContent from "../components/HomeContent";
 
 export default function Home() {
   const [isActive, setIsActive] = useState<string>("close");
@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <>
       <NavBar state={isActive} />
-      <Topbar helper={toggle} />
-      <MainContent />
+      <TopBar helper={toggle} />
+      <HomeContent />
     </>
   );
 }

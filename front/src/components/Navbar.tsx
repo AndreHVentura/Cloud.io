@@ -38,11 +38,12 @@ export default function NavBar({ state }: NavbarProps) {
 }
 
 const Nav = styled.nav`
-  margin-top: 3rem;
+  padding-top: 3rem;
   height: 100vh;
   position: fixed;
   background-color: rgb(53,74,97); 
   transition: width 200ms ease;
+  z-index: 2;
   
   &.open {
     width: 15rem;

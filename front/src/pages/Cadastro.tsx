@@ -70,7 +70,7 @@ const Cadastro: React.FC = () => {
           <InputField name="dataNascimento" type="date" onChange={handleChange} required />
 
           <InputLabel htmlFor="categoria">Categoria</InputLabel>
-          <InputField name="role" placeholder="Ex: Nutricionista, Cliente" onChange={handleChange} required />
+          <InputField name="role" placeholder="Ex: Colaborador, Administração" onChange={handleChange} required />
 
           <InputLabel htmlFor="baseOperacao">Base de Operação</InputLabel>
           <InputField name="baseOperacao" placeholder="Ex: Unidade SP" onChange={handleChange} required />

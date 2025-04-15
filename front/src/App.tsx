@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
 import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
+import Historico from "./pages/Historico";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<MainLayout><Login /></MainLayout>} />
           <Route path="/cadastro" element={<MainLayout><Cadastro /></MainLayout>} />
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/history" element={<MainLayout><Historico /></MainLayout>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

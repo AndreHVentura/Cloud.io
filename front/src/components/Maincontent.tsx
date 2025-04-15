@@ -3,9 +3,9 @@ import WeatherDashboard from "./WeatherDashboard";
 import TempWidget from "./TempWidget";
 import HumWidget from "./HumWidget";
 import PressWidget from "./PressWidget";
+import SolarRadiationWidget from "./SolarRadiationWidget";
 import TempCabineWidget from "./TempCabineWidget";
 import ChargeWidget from "./ChargeWidget";
-import SolarRadiationWidget from "./SolarRadiationWidget";
 
 export default function MainContent() {
     return(

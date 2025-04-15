@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
 // 🖼️ Imagem local como fundo
-import imagem1 from "../logo/ice.jpg";
+import imagem1 from "../logo/snow-florest.jpg";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

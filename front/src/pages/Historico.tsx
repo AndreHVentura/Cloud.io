@@ -4,16 +4,15 @@ import Topbar from "../components/Topbar";
 import styled from "styled-components";
 import { ButtonGroup, Container, StyledTable } from "../styles/historico";
 
-export default function Historico(){
-  const [isActive, setIsActive] = useState<string>("close");
-    const toggle = () => {
-      setIsActive(prev => prev === "close" ? "open" : "close");
-    };
+export default function Historico() {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const toggleNav = () => setIsNavOpen(!isNavOpen);
     
     return(
         <>
-        <NavBar state={isActive} />
-        <Topbar helper={toggle} isNavOpen={isActive === "open"} />
+         <NavBar isOpen={isNavOpen} />
+         <Topbar helper={toggleNav} isNavOpen={isNavOpen} />
+
         {/* <>Graficos com registros meterologicos do dia ,com filtro para registros passados</> */}
         <br></br>
         <Container>

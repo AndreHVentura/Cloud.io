@@ -4,16 +4,14 @@ import TopBar from "../components/Topbar";
 import AlertsContent from "../components/AlertsContent";
 
 export default function Alerta() {
-  const [isActive, setIsActive] = useState<string>("close");
-  const toggle = () => {
-    setIsActive(prev => prev === "close" ? "open" : "close");
-  };
+    const [isNavOpen, setIsNavOpen] = useState(false);
+    const toggleNav = () => setIsNavOpen(!isNavOpen);
 
-  return (
-    <>
-      <NavBar state={isActive} />
-      <TopBar helper={toggle} isNavOpen={isActive === "open"} />
-      <AlertsContent />
-    </>
-  );  
-};
+    return (
+        <>
+            <NavBar isOpen={isNavOpen} />
+            <TopBar helper={toggleNav} isNavOpen={isNavOpen} />
+            <AlertsContent />
+        </>
+    );
+}

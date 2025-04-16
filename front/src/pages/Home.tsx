@@ -4,16 +4,14 @@ import TopBar from "../components/Topbar";
 import HomeContent from "../components/HomeContent";
 
 export default function Home() {
-  const [isActive, setIsActive] = useState<string>("close");
-  const toggle = () => {
-    setIsActive(prev => prev === "close" ? "open" : "close");
-  };
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   return (
-    <>
-      <NavBar state={isActive} />
-      <TopBar helper={toggle} isNavOpen={isActive === "open"} />
-      <HomeContent />
-    </>
+      <>
+          <NavBar isOpen={isNavOpen} />
+          <TopBar helper={toggleNav} isNavOpen={isNavOpen} />
+          <HomeContent />
+      </>
   );
 }

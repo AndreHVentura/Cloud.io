@@ -1,122 +1,167 @@
-import styled from "styled-components";
-import { NavbarProps } from "../types/types";
-import { NavLink } from "react-router-dom";
-import { IonIcon } from "./Icons";
-import { Icons } from "./Icons";
+import { motion, AnimatePresence } from "framer-motion"
+import { NavLink } from "react-router-dom"
+import { IonIcon } from "./Icons"
+import { Icons } from "./Icons"
+import styled from "styled-components"
 
-export default function NavBar({ state }: NavbarProps) {
-    return (
-      <Nav className={state}>
-        <Ul>
-        <li>
-            <NavLink to="/home">
-              <IonIcon icon={Icons.home} />
-              <span>Início</span>
-            </NavLink>  
-          </li>
-          <li>
-            <NavLink to="/alerts">
-              <IonIcon icon={Icons.warning} />
-              <span>Alertas</span>
-            </NavLink>    
-          </li>
-          <li>
-            <NavLink to="/history">
-              <IonIcon icon={Icons.time} />
-              <span>Histórico</span>
-            </NavLink>  
-          </li>
-          <li>
-            <NavLink to="/settings">
-              <IonIcon icon={Icons.settingsSharp} />
-              <span>Configurações</span>
-            </NavLink>  
-          </li>
-          
-          {/* Novos itens na parte inferior */}
-          <BottomLinks>
-            <li>
-              <NavLink to="/about">
-                <IonIcon icon={Icons.informationCircle} />
-                <span>Sobre</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/logout">
-                <IonIcon icon={Icons.logOut} />
-                <span>Sair</span>
-              </NavLink>
-            </li>
-          </BottomLinks>
-        </Ul>
-      </Nav>
-    );
-}
-
-const Nav = styled.nav`
-  padding-top: 3rem;
-  height: 100vh;
-  position: fixed;
-  background-color: rgb(26, 26, 26); 
-  transition: width 200ms ease;
-  z-index: 2;
-  
-  &.open {
-    width: 15rem;
-  }
-  &.close {
-    width: 0;
-    pointer-events: none;
-
-    ul {
-      display: none;
+export default function NavBar({ isOpen }: { isOpen: boolean }) {
+  const sidebar = {
+    open: {
+      clipPath: `circle(150% at 40px 40px)`,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+        restDelta: 2
+      }
+    },
+    closed: {
+      clipPath: "circle(0px at 40px 40px)",
+      transition: {
+        delay: 0.2,
+        type: "spring",
+        stiffness: 400,
+        damping: 40
+      }
     }
   }
-`;
 
-const Ul = styled.ul`
-  list-style: none;
-  padding: 3%;
-  margin: 0;
+  const item = {
+    open: {
+      opacity: 1,
+      x: 0,
+      transition: { type: "spring", stiffness: 300, damping: 24 }
+    },
+    closed: { 
+      opacity: 0,
+      x: -50,
+      transition: { duration: 0.2 } 
+    }
+  }
+
+  return (
+    <>
+      <AnimatePresence>
+        {isOpen && (
+          <Background
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
+
+      <NavContainer
+        initial={false}
+        animate={isOpen ? "open" : "closed"}
+      >
+        <motion.div 
+          className="sidebar"
+          variants={sidebar}
+        />
+        
+        <AnimatePresence>
+          {isOpen && (
+            <NavContent>
+              <motion.div variants={item}>
+                <NavLink to="/alerts">
+                  <IonIcon icon={Icons.warning} />
+                  <span>Alertas</span>
+                </NavLink>
+              </motion.div>
+
+              <motion.div variants={item}>
+                <NavLink to="/history">
+                  <IonIcon icon={Icons.time} />
+                  <span>Histórico</span>
+                </NavLink>
+              </motion.div>
+
+              <motion.div variants={item}>
+                <NavLink to="/settings">
+                  <IonIcon icon={Icons.settingsSharp} />
+                  <span>Configurações</span>
+                </NavLink>
+              </motion.div>
+
+              <BottomLinks>
+                <motion.div variants={item}>
+                  <NavLink to="/about">
+                    <IonIcon icon={Icons.informationCircle} />
+                    <span>Sobre</span>
+                  </NavLink>
+                </motion.div>
+                
+                <motion.div variants={item}>
+                  <NavLink to="/logout">
+                    <IonIcon icon={Icons.logOut} />
+                    <span>Sair</span>
+                  </NavLink>
+                </motion.div>
+              </BottomLinks>
+            </NavContent>
+          )}
+        </AnimatePresence>
+      </NavContainer>
+    </>
+  )
+}
+
+const Background = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+`
+
+const NavContainer = styled(motion.nav)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 250px;
+  z-index: 2;
+
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgb(26, 26, 26);
+  }
+`
+
+const NavContent = styled.div`
+  position: relative;
+  padding: 3rem 1rem 1rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100%;
 
-  & li {
-    width: 100%;
-  }
-  & a {
+  a {
     display: flex;
     align-items: center;
-    height: 3rem;
+    padding: 0.75rem 1rem;
+    color: white;
     text-decoration: none;
-    color: white;
-    filter: grayscale(50%) opacity(0.7);
-    transition: 400ms
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    svg {
+      margin-right: 1rem;
+      font-size: 1.5rem;
+    }
   }
-  & a:hover {
-    filter: grayscale(0%) opacity(1);
-    background-color: rgb(33, 54, 77);
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    color: white;
-  } 
-  & span {
-    margin-left: 1rem;
-  }
-  & svg {
-    height: 3rem; 
-    width: 3rem;
-    min-width: 3rem;
-    margin: 0 1rem;
-  }
-`;
+`
 
 const BottomLinks = styled.div`
   margin-top: auto;
-  width: 100%;
-  padding-bottom: 3rem;
-`;
+  padding-bottom: 2rem;
+`

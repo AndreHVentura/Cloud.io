@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
-
-// 🖼️ Imagem local como fundo
-import imagem1 from "../logo/snow-florest.jpg";
+import SwiperCarousel from "../components/SwiperCarousel"; // ✅ novo import
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -72,8 +70,8 @@ const Login: React.FC = () => {
           </SignupLink>
         </LoginContainer>
 
-        {/* Painel Direito com imagem de fundo */}
-        <ImagesContainer />
+        {/* Painel Direito com carrossel de imagens */}
+        <SwiperCarousel />
       </Container>
     </MainContainer>
   );
@@ -105,14 +103,13 @@ const LoginContainer = styled.div`
   align-items: center;
 `;
 
-
 const Logo = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: #ffffff; /* Cor padrão */
-  
+  color: #ffffff;
+
   span {
-    color: #096cd6; /* Cor de "io" */
+    color: #096cd6;
   }
 `;
 
@@ -141,7 +138,7 @@ const InputField = styled.input`
 
 const LoginButton = styled.button`
   padding: 10px;
-  width:250px;
+  width: 250px;
   align-self: center;
   background-color: #4caf50;
   color: white;
@@ -162,14 +159,4 @@ const SignupLink = styled.p`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-// 🔥 Estilo do container com imagem de fundo
-const ImagesContainer = styled.div`
-  flex: 1;
-  background-image: url(${imagem1});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100%;
 `;

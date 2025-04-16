@@ -22,8 +22,14 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^7.0.2",
     "react-scripts": "^5.0.1",
+    "react-slick": "^0.30.3",
     "recharts": "^2.15.1",
+<<<<<<< HEAD
     "styled-components": "^6.1.17",
+=======
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.13",
+>>>>>>> a1f8dc2814a754b661ddee41d2fe6e700302f5fe
     "xlsx": "^0.18.5"
   },
   "scripts": {
@@ -56,6 +62,7 @@
     "@types/papaparse": "^5.3.15",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "@types/react-slick": "^0.23.13",
     "@types/xlsx": "^0.0.36",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",

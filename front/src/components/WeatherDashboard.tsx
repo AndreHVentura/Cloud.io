@@ -36,7 +36,7 @@ export default WeatherDashboard;
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -44,7 +44,7 @@ const Wrapper = styled.div`
 
 const ChartRow = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   justify-content: center;
   width: 100%;
   max-width: 1400px;
@@ -57,7 +57,7 @@ const ChartRow = styled.div`
 
 const ChartCard = styled.div`
   background-color: white;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   flex: 1 1 48%;

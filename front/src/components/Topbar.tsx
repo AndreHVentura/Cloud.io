@@ -1,25 +1,27 @@
 import styled from "styled-components";
 import { TopbarProps } from "../types/types";
-import { Link } from "react-router-dom";
+import { IonIcon } from "./Icons";
+import { Icons } from "./Icons";
 
-export default function TopBar({ helper }: TopbarProps) {
-    return(
-      <Upperdiv>
-        <Link to="/settings">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/></svg>
-        </Link>  
-        <P>Usuário</P>
-        <ToggleDiv>
-          <Button onClick={helper}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="white" d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></svg>
-          </Button>  
-        </ToggleDiv>
-      </Upperdiv>
-    );
-  }
+export default function TopBar({ helper, isNavOpen }: TopbarProps & { isNavOpen: boolean }) {
+  return(
+    <Upperdiv>
+      <NotificationIcon>
+        <IonIcon icon={Icons.notificationsCircleSharp} />
+      </NotificationIcon>
+      <IonIcon icon={Icons.personCircleSharp} />
+      <P>Usuário</P>
+      <ToggleDiv>
+        <Button onClick={helper}>
+          <IonIcon icon={isNavOpen ? Icons.close : Icons.menu} />
+        </Button>  
+      </ToggleDiv>
+    </Upperdiv>
+  );
+}
   
 const Upperdiv = styled.div`
-  background-color: rgb(25,38,53); 
+  background-color: rgb(26, 26, 26); 
   height: 3rem;
   display: flex;
   flex-direction: row-reverse;
@@ -31,8 +33,8 @@ const Upperdiv = styled.div`
   z-index: 3;
 
   & svg {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 3rem;
+    width: 3rem;
     min-width: 3rem;
   }
 `;
@@ -43,12 +45,23 @@ const P = styled.p`
 
 const Button = styled.button`
   background-color: rgb(25,38,53);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 3em ;
+  height: 3em ;
   border: none;
   cursor: pointer; 
   padding: 0.3rem 0;
+  color: white;
 
   &:hover {
-    background-color: rgb(45,58,73)
+    background-color: rgb(45,58,73);
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 `;
 
@@ -56,4 +69,8 @@ const ToggleDiv = styled.div`
   margin-right: auto;
   border-right: solid white;
   padding-right: 1rem;
+`;
+
+const NotificationIcon = styled.div`
+  margin-left: 1rem;
 `;

@@ -3,5 +3,6 @@ export interface NavbarProps {
 };
 
 export interface TopbarProps {
-    helper: () => void
-}
+    helper: () => void;
+    isNavOpen: boolean;
+  }

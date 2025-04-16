@@ -4,12 +4,15 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@ionic/react": "^8.5.4",
     "apexcharts": "^4.5.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.8",
     "cra-template-typescript": "1.2.0",
     "express": "^4.21.2",
+    "ionicons": "^7.4.0",
     "lodash": "^4.17.21",
+    "motion": "^12.7.3",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.7.0",
@@ -20,7 +23,7 @@
     "react-router-dom": "^7.0.2",
     "react-scripts": "^5.0.1",
     "recharts": "^2.15.1",
-    "styled-components": "^6.1.13",
+    "styled-components": "^6.1.17",
     "xlsx": "^0.18.5"
   },
   "scripts": {

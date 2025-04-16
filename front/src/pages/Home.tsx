@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <NavBar state={isActive} />
-      <TopBar helper={toggle} />
+      <TopBar helper={toggle} isNavOpen={isActive === "open"} />
       <HomeContent />
     </>
   );

@@ -41,7 +41,9 @@ const Login: React.FC = () => {
       <Container>
         {/* Painel Esquerdo - Login */}
         <LoginContainer>
-          <Logo>Cloud.<span>io</span></Logo>
+          <Logo>
+            Cloud.<span>io</span>
+          </Logo>
 
           <LoginForm onSubmit={handleLogin}>
             <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
@@ -85,7 +87,6 @@ const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 20px;
 `;
 
 const Container = styled.div`
@@ -96,7 +97,7 @@ const Container = styled.div`
 
 const LoginContainer = styled.div`
   flex: 1;
-  background-color: #f0f0f0;
+  background-color: #082942;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -104,11 +105,14 @@ const LoginContainer = styled.div`
   align-items: center;
 `;
 
+
 const Logo = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 20px;
+  color: #ffffff; /* Cor padrão */
+  
   span {
-    color: #4caf50;
+    color: #096cd6; /* Cor de "io" */
   }
 `;
 
@@ -120,6 +124,7 @@ const LoginForm = styled.form`
 `;
 
 const InputLabel = styled.label`
+  color: white;
   margin-bottom: 8px;
   font-size: 1rem;
   font-weight: bold;
@@ -136,6 +141,8 @@ const InputField = styled.input`
 
 const LoginButton = styled.button`
   padding: 10px;
+  width:250px;
+  align-self: center;
   background-color: #4caf50;
   color: white;
   font-size: 1rem;

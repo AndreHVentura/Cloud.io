@@ -3,30 +3,33 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
-import SwiperCarousel from "../components/SwiperCarousel"; // ✅ novo import
+
+// Importe a imagem diretamente
+import LoginImage from "../logo/snow-florest.jpg"; // Substitua pelo caminho da sua imagem
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login } = useAuth(); // Usando o contexto
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
 
+  // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!email || !senha) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
-
+  
     try {
-      const response = await api.post('/api/users/login', {
+      const response = await api.post('/api/users/login', { 
         email: email,
-        password: senha
+        password: senha 
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      login(response.data.token);
+      login(response.data.token); // Usando a função do contexto
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -36,12 +39,11 @@ const Login: React.FC = () => {
 
   return (
     <MainContainer>
+      {/* Divisão da Tela */}
       <Container>
-        {/* Painel Esquerdo - Login */}
+        {/* Painel Esquerdo - Formulário de Login */}
         <LoginContainer>
-          <Logo>
-            Cloud.<span>io</span>
-          </Logo>
+          <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
             <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
@@ -49,7 +51,7 @@ const Login: React.FC = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)} // Atualiza o estado do email
               required
             />
 
@@ -58,20 +60,20 @@ const Login: React.FC = () => {
               type="password"
               id="senha"
               value={senha}
-              onChange={(e) => setSenha(e.target.value)}
+              onChange={(e) => setSenha(e.target.value)} // Atualiza o estado da senha
               required
             />
 
             <LoginButton type="submit">ENTRAR</LoginButton>
           </LoginForm>
 
-          <SignupLink onClick={() => navigate("/cadastro")}>
-            CADASTRE-SE AQUI!
-          </SignupLink>
+          <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
         </LoginContainer>
 
-        {/* Painel Direito com carrossel de imagens */}
-        <SwiperCarousel />
+        {/* Painel Direito - Apenas imagem */}
+        <ImageContainer>
+          <img src={LoginImage} alt="Imagem de login" />
+        </ImageContainer>
       </Container>
     </MainContainer>
   );
@@ -79,9 +81,11 @@ const Login: React.FC = () => {
 
 export default Login;
 
+// Styled Components
+
 const MainContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,13 +93,13 @@ const MainContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 `;
 
 const LoginContainer = styled.div`
   flex: 1;
-  background-color: #082942;
+  background-color: #0e2843;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -104,12 +108,10 @@ const LoginContainer = styled.div`
 `;
 
 const Logo = styled.h1`
+  color: white;
   font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #ffffff;
-
   span {
-    color: #096cd6;
+    color: #0066cc;
   }
 `;
 
@@ -137,9 +139,9 @@ const InputField = styled.input`
 `;
 
 const LoginButton = styled.button`
+align-self: center;
   padding: 10px;
-  width: 250px;
-  align-self: center;
+  width: 55%;
   background-color: #4caf50;
   color: white;
   font-size: 1rem;
@@ -160,3 +162,17 @@ const SignupLink = styled.p`
     text-decoration: underline;
   }
 `;
+
+const ImageContainer = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  img {
+    width: 100%;        
+    height: 100%;       
+    object-fit: cover;  
+  }
+`;
+

@@ -43,6 +43,7 @@ const Wrapper = styled.div`
 `;
 
 const ChartRow = styled.div`
+  color: white;
   display: flex;
   gap: 1rem;
   justify-content: center;

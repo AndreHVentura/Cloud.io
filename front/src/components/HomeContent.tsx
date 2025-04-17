@@ -30,7 +30,7 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   padding: 2rem;
-  background-color: #f8f9fa;
+  background-color: #13487c;
 `;
   
 const MainDiv = styled.div`

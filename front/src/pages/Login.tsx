@@ -4,8 +4,9 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
-// Importe a imagem diretamente
-import LoginImage from "../logo/snow-florest.jpg"; // Substitua pelo caminho da sua imagem
+// Importe a imagem do logo alternativo
+import LogoAlternativo from "../logo/icone-nuvem.png"; // Novo logo alternativo
+import LoginImage from "../logo/snow-florest.jpg"; // Imagem de fundo
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ const Login: React.FC = () => {
       <Container>
         {/* Painel Esquerdo - Formulário de Login */}
         <LoginContainer>
+          {/* Logo Alternativo acima do título */}
+          <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
@@ -70,7 +73,7 @@ const Login: React.FC = () => {
           <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
         </LoginContainer>
 
-        {/* Painel Direito - Apenas imagem */}
+        {/* Painel Direito - Apenas imagem de fundo */}
         <ImageContainer>
           <img src={LoginImage} alt="Imagem de login" />
         </ImageContainer>
@@ -108,11 +111,18 @@ const LoginContainer = styled.div`
 `;
 
 const Logo = styled.h1`
+  margin-top: 10px;
   color: white;
   font-size: 2.5rem;
   span {
     color: #0066cc;
   }
+`;
+
+const LogoImage = styled.img`
+  width: 120px; 
+  margin-bottom: 5px; 
+  object-fit: contain;
 `;
 
 const LoginForm = styled.form`
@@ -139,7 +149,7 @@ const InputField = styled.input`
 `;
 
 const LoginButton = styled.button`
-align-self: center;
+  align-self: center;
   padding: 10px;
   width: 55%;
   background-color: #4caf50;
@@ -170,9 +180,8 @@ const ImageContainer = styled.div`
   align-items: center;
   background-color: #f0f0f0;
   img {
-    width: 100%;        
-    height: 100%;       
-    object-fit: cover;  
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
-

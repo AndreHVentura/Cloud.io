@@ -10,14 +10,13 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
       clipPath: `circle(150% at 40px 40px)`,
       transition: {
         type: "spring",
-        stiffness: 20,
-        restDelta: 2
+        mass: 10,
+        damping: 20
       }
     },
     closed: {
       clipPath: "circle(0px at 40px 40px)",
       transition: {
-        delay: 0.2,
         type: "spring",
         stiffness: 400,
         damping: 40
@@ -64,21 +63,21 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
             <NavContent>
               <motion.div variants={item}>
                 <NavLink to="/alerts">
-                  <IonIcon icon={Icons.warning} />
+                  <IonStyledIcon icon={Icons.warning} />
                   <span>Alertas</span>
                 </NavLink>
               </motion.div>
 
               <motion.div variants={item}>
                 <NavLink to="/history">
-                  <IonIcon icon={Icons.time} />
+                  <IonStyledIcon icon={Icons.time} />
                   <span>Histórico</span>
                 </NavLink>
               </motion.div>
 
               <motion.div variants={item}>
                 <NavLink to="/settings">
-                  <IonIcon icon={Icons.settingsSharp} />
+                  <IonStyledIcon icon={Icons.settingsSharp} />
                   <span>Configurações</span>
                 </NavLink>
               </motion.div>
@@ -86,14 +85,14 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
               <BottomLinks>
                 <motion.div variants={item}>
                   <NavLink to="/about">
-                    <IonIcon icon={Icons.informationCircle} />
+                    <IonStyledIcon icon={Icons.informationCircle} />
                     <span>Sobre</span>
                   </NavLink>
                 </motion.div>
                 
                 <motion.div variants={item}>
                   <NavLink to="/logout">
-                    <IonIcon icon={Icons.logOut} />
+                    <IonStyledIcon icon={Icons.logOut} />
                     <span>Sair</span>
                   </NavLink>
                 </motion.div>
@@ -130,7 +129,7 @@ const NavContainer = styled(motion.nav)`
     left: 0;
     bottom: 0;
     width: 100%;
-    background: rgb(26, 26, 26);
+    background: #191919;
   }
 `
 
@@ -153,15 +152,16 @@ const NavContent = styled.div`
     &:hover {
       background: rgba(255, 255, 255, 0.1);
     }
-
-    svg {
-      margin-right: 1rem;
-      font-size: 1.5rem;
-    }
   }
 `
 
+const IonStyledIcon = styled(IonIcon)`
+  font-size: 1.5em;
+  margin-left: 0em;
+  margin-right: 1rem;
+`;
+
 const BottomLinks = styled.div`
   margin-top: auto;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 `

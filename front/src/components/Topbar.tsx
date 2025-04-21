@@ -18,12 +18,12 @@ export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNa
   return(
       <Upperdiv>
           <NotificationIcon>
-              <IonIcon icon={Icons.notificationsCircleSharp} />
+            <IonStyledIcon icon={Icons.notificationsCircleSharp} />
           </NotificationIcon>
-          <IonIcon icon={Icons.personCircleSharp} />
+          <IonStyledIcon icon={Icons.personCircleSharp} />
           <P>Usuário</P>
           <ToggleDiv>
-              <MenuToggle toggle={helper} isOpen={isNavOpen} />
+            <MenuToggle toggle={helper} isOpen={isNavOpen} />
           </ToggleDiv>
       </Upperdiv>
   );
@@ -31,7 +31,7 @@ export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNa
 
 const MenuToggle = ({ toggle, isOpen }: { toggle: () => void, isOpen: boolean }) => (
   <Button onClick={toggle}>
-      <svg width="23" height="23" viewBox="0 0 23 23">
+      <svg width="2em" height="2em" viewBox="0 0 23 23">
           <Path
               variants={{
                   closed: { d: "M 2 2.5 L 20 2.5" },
@@ -60,7 +60,7 @@ const MenuToggle = ({ toggle, isOpen }: { toggle: () => void, isOpen: boolean })
 );
   
 const Upperdiv = styled.div`
-  background-color: rgb(26, 26, 26); 
+  background-color: #191919; 
   height: 3rem;
   display: flex;
   flex-direction: row-reverse;
@@ -71,11 +71,12 @@ const Upperdiv = styled.div`
   position: relative;
   z-index: 3;
 
-  & svg {
-    height: 3rem;
-    width: 3rem;
-    min-width: 3rem;
-  }
+`;
+
+const IonStyledIcon = styled(IonIcon)`
+  font-size: 2rem;
+  margin-left: 1rem;
+  margin-right: 0.5rem;
 `;
 
 const P = styled.p`
@@ -83,7 +84,7 @@ const P = styled.p`
 `;
 
 const Button = styled.button`
-  background-color: rgb(25,38,53);
+  background-color: #191919;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -96,7 +97,7 @@ const Button = styled.button`
   color: white;
 
   &:hover {
-    background-color: rgb(45,58,73);
+    background-color: #373739;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;

@@ -62,6 +62,13 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
           {isOpen && (
             <NavContent>
               <motion.div variants={item}>
+                <NavLink to="/home">
+                  <IonStyledIcon icon={Icons.home} />
+                  <span>Inicio</span>
+                </NavLink>
+              </motion.div>
+
+              <motion.div variants={item}>
                 <NavLink to="/alerts">
                   <IonStyledIcon icon={Icons.warning} />
                   <span>Alertas</span>

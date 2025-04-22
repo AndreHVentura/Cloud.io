@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen"; // Importe o componente LoadingScreen
@@ -13,42 +14,55 @@ import {
   SignupLink
 } from "../styles/cadastro"; // ajuste o caminho conforme necessário
 import api from "../services/api";
+import { useCreateUser } from "../context/CreateAccountContext";
+
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  dataNascimento: string;
+  role: string;
+  baseOperacao: string;
+}
 
 const Cadastro: React.FC = () => {
-  const [formData, setFormData] = useState({
+  /*const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     dataNascimento: "",
     role: "",
     baseOperacao: "",
-  });
-  
+  });*/
   const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>()
+  
   const navigate = useNavigate();
+  const {createAccountData, createAccountError, createAccountSuccess} = useCreateUser();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  console.log(formData);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true); // Ativa a tela de carregamento ao iniciar o cadastro
-    try {
-      const response = await api.post('api/users/register', formData);
-      if (response.status === 201) {
-        alert("Cadastro concluído com sucesso!");
-        setLoading(false); // Desativa a tela de carregamento após o cadastro
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Erro ao cadastrar:", error);
-      alert("Erro ao cadastrar usuário!");
-      setLoading(false); // Desativa a tela de carregamento se houver erro
+  const onSubmit: SubmitHandler<FormData> = ({ email, password, name, role }) => {
+    createAccountData({ email, password, name, role:'admin' });
+    if (createAccountError) {
+      console.warn('Erro');
+    } else {
+      navigate("/")
     }
   };
+
+  
+
+  /*const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('element: ', e)
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };*/
+
+  //console.log(formData);
 
   return loading ? (
     <LoadingScreen /> // Exibe a LoadingScreen enquanto o estado `loading` for true
@@ -56,24 +70,24 @@ const Cadastro: React.FC = () => {
     <MainContainer>
       <Container>
         <Logo>Cloud.<span>io</span></Logo>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <InputLabel htmlFor="nome">Nome</InputLabel>
-          <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
+          <InputField {...register("name", {required:true})} placeholder="Digite seu nome" />
 
           <InputLabel htmlFor="email">Email</InputLabel>
-          <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
+          <InputField {...register("email", {required: true})} type="email" placeholder="Digite seu email"  required />
 
           <InputLabel htmlFor="senha">Senha</InputLabel>
-          <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
+          <InputField {...register("password", {required: true})} type="password" placeholder="Digite sua senha"  required />
 
           <InputLabel htmlFor="dataNascimento">Data de Nascimento</InputLabel>
-          <InputField name="dataNascimento" type="date" onChange={handleChange} required />
+          <InputField {...register("dataNascimento", {required: true})} type="date"  required />
 
           <InputLabel htmlFor="categoria">Categoria</InputLabel>
-          <InputField name="role" placeholder="Ex: Nutricionista, Cliente" onChange={handleChange} required />
+          <InputField {...register("role", {required: true})} placeholder="Ex: Administrador, Cliente"  required />
 
           <InputLabel htmlFor="baseOperacao">Base de Operação</InputLabel>
-          <InputField name="baseOperacao" placeholder="Ex: Unidade SP" onChange={handleChange} required />
+          <InputField {...register("baseOperacao", {required: true})} placeholder="Ex: Unidade SP" required />
 
           <Button type="submit">Cadastrar</Button>
         </Form>

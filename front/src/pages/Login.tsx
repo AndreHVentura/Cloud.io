@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputField, InputLabel, LoginButton,
          LoginContainer, LoginForm, Logo,
@@ -8,33 +8,24 @@ import { useAuth } from "../context/AuthContext";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Usando o contexto
+  const { errorMessage, userLogin } = useAuth(); // Usando o contexto
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
 
   // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    if (!email || !senha) {
-      alert("Por favor, preencha todos os campos.");
-      return;
-    }
-  
-    try {
-      const response = await api.post('/api/users/login', { 
-        email: email,
-        password: senha 
-      });
-      console.log('Login bem-sucedido:', response.data);
-      localStorage.setItem('token', response.data.token);
-      login(response.data.token); // Usando a função do contexto
-      navigate('/home');
-    } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      alert('Credenciais inválidas ou erro no servidor.');
-    }
+    userLogin({ email, password: senha }); // Chama a função de login do contexto
   };
+  useEffect(() => {
+    if (errorMessage !== '') {
+      alert(`Erro ao fazer login: ${errorMessage}`); // Exibe mensagem de erro
+    } else {
+      // Se não houver erro, redireciona para a página inicial
+      navigate("/home");
+    }
+  }
+  , [errorMessage, navigate]); // Adiciona errorMessage como dependência
 
   return (
     <MainContainer>

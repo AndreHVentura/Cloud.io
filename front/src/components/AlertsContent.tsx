@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import AlertsMap from "./AlertsMap";
 
 export default function AlertsContent() {
   return(
     <AlertsMain>
       <AlertsFilterDiv>Criar um alerta de atividade meteorológica</AlertsFilterDiv>
       <AlertsMessages>Dados da estação dentro do raio de atividade</AlertsMessages>
-      <AlertsMapDiv>Mapa leaflet</AlertsMapDiv>
+      <AlertsMapDiv>
+        <AlertsMap />
+      </AlertsMapDiv>
     </AlertsMain>
   );
 };
@@ -36,7 +39,7 @@ const AlertsMapDiv = styled(AlertsBaseDiv)`
   height: 100%;
 
   @media (max-width: 735px) {
-    width: auto;
+    width: 100%;
   }
 `;
 

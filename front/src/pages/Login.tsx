@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
-// Importe a imagem do logo alternativo
-import LogoAlternativo from "../logo/icone-nuvem.png"; // Novo logo alternativo
-import LoginImage from "../logo/snow-florest.jpg"; // Imagem de fundo
+// Importação das imagens da pasta logo
+import LogoAlternativo from "../logo/icone-nuvem.png";
+import SnowFlorest from "../logo/snow-florest.jpg";
+import OregonLandscape from "../logo/oregon-landscape.jpg";
+import RainField from "../logo/rain-field.jpg";
+
+// Array de imagens para o carrossel
+const images = [SnowFlorest, OregonLandscape, RainField];
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Usando o contexto
+  const { login } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
@@ -30,7 +36,7 @@ const Login: React.FC = () => {
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      login(response.data.token); // Usando a função do contexto
+      login(response.data.token);
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -38,13 +44,19 @@ const Login: React.FC = () => {
     }
   };
 
+  // Efeito para trocar de imagem automaticamente
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Troca de imagem a cada 3 segundos
+
+    return () => clearInterval(interval); // Limpar o intervalo quando o componente for desmontado
+  }, []);
+
   return (
     <MainContainer>
-      {/* Divisão da Tela */}
       <Container>
-        {/* Painel Esquerdo - Formulário de Login */}
         <LoginContainer>
-          {/* Logo Alternativo acima do título */}
           <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
@@ -73,9 +85,8 @@ const Login: React.FC = () => {
           <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
         </LoginContainer>
 
-        {/* Painel Direito - Apenas imagem de fundo */}
         <ImageContainer>
-          <img src={LoginImage} alt="Imagem de login" />
+          <img src={images[currentImageIndex]} alt={`imagem-login-${currentImageIndex}`} />
         </ImageContainer>
       </Container>
     </MainContainer>
@@ -179,6 +190,7 @@ const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
+  
   img {
     width: 100%;
     height: 100%;

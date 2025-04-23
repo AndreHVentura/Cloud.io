@@ -66,14 +66,9 @@ const Cadastro: React.FC = () => {
           <InputLabel htmlFor="senha">Senha</InputLabel>
           <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
 
-          <InputLabel htmlFor="dataNascimento">Data de Nascimento</InputLabel>
-          <InputField name="dataNascimento" type="date" onChange={handleChange} required />
+          <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
+          <InputField name="password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
 
-          <InputLabel htmlFor="categoria">Categoria</InputLabel>
-          <InputField name="role" placeholder="Ex: Colaborador, Administração" onChange={handleChange} required />
-
-          <InputLabel htmlFor="baseOperacao">Base de Operação</InputLabel>
-          <InputField name="baseOperacao" placeholder="Ex: Unidade SP" onChange={handleChange} required />
 
           <Button type="submit">Cadastrar</Button>
         </Form>

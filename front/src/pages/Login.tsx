@@ -4,10 +4,10 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
-import LogoAlternativo from "../logo/icone-nuvem.png"; // Logo Alternativo
-import SnowFlorest from "../logo/snow-florest.jpg"; // Imagem para o carrossel
-import OregonLandscape from "../logo/oregon-landscape.jpg"; // Imagem para o carrossel
-import RainField from "../logo/rain-field.jpg"; // Imagem para o carrossel
+import LogoAlternativo from "../logo/icone-nuvem.png";
+import SnowFlorest from "../logo/snow-florest.jpg";
+import OregonLandscape from "../logo/oregon-landscape.jpg";
+import RainField from "../logo/rain-field.jpg";
 
 const images = [SnowFlorest, OregonLandscape, RainField];
 
@@ -18,7 +18,6 @@ const Login: React.FC = () => {
   const [senha, setSenha] = useState<string>('');
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -42,13 +41,12 @@ const Login: React.FC = () => {
     }
   };
 
-  // Efeito para trocar de imagem automaticamente
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Troca de imagem a cada 3 segundos
+    }, 7000);
 
-    return () => clearInterval(interval); // Limpar o intervalo quando o componente for desmontado
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -64,7 +62,7 @@ const Login: React.FC = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Atualiza o estado do email
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -73,7 +71,7 @@ const Login: React.FC = () => {
               type="password"
               id="senha"
               value={senha}
-              onChange={(e) => setSenha(e.target.value)} // Atualiza o estado da senha
+              onChange={(e) => setSenha(e.target.value)}
               required
             />
 
@@ -84,7 +82,14 @@ const Login: React.FC = () => {
         </LoginContainer>
 
         <ImageContainer>
-          <img src={images[currentImageIndex]} alt={`imagem-login-${currentImageIndex}`} />
+          {images.map((imgSrc, index) => (
+            <CarouselImage
+              key={index}
+              src={imgSrc}
+              alt={`imagem-login-${index}`}
+              isVisible={index === currentImageIndex}
+            />
+          ))}
         </ImageContainer>
       </Container>
     </MainContainer>
@@ -123,15 +128,15 @@ const Logo = styled.h1`
   margin-top: 10px;
   color: white;
   font-size: 2.5rem;
-  font-family: 'Inter Tight', sans-serif;  /* Aplique a fonte Englebert */
+  font-family: 'Inter Tight', sans-serif;
   span {
     color: #0066cc;
   }
 `;
 
 const LogoImage = styled.img`
-  width: 120px; 
-  margin-bottom: 5px; 
+  width: 120px;
+  margin-bottom: 5px;
   object-fit: contain;
 `;
 
@@ -185,14 +190,18 @@ const SignupLink = styled.p`
 
 const ImageContainer = styled.div`
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  position: relative;
+  overflow: hidden;
+`;
+
+const CarouselImage = styled.img<{ isVisible: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
 `;

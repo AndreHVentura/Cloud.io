@@ -4,13 +4,11 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
-// Importação das imagens da pasta logo
-import LogoAlternativo from "../logo/icone-nuvem.png";
-import SnowFlorest from "../logo/snow-florest.jpg";
-import OregonLandscape from "../logo/oregon-landscape.jpg";
-import RainField from "../logo/rain-field.jpg";
+import LogoAlternativo from "../logo/icone-nuvem.png"; // Logo Alternativo
+import SnowFlorest from "../logo/snow-florest.jpg"; // Imagem para o carrossel
+import OregonLandscape from "../logo/oregon-landscape.jpg"; // Imagem para o carrossel
+import RainField from "../logo/rain-field.jpg"; // Imagem para o carrossel
 
-// Array de imagens para o carrossel
 const images = [SnowFlorest, OregonLandscape, RainField];
 
 const Login: React.FC = () => {
@@ -23,16 +21,16 @@ const Login: React.FC = () => {
   // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!email || !senha) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
-  
+
     try {
-      const response = await api.post('/api/users/login', { 
+      const response = await api.post('/api/users/login', {
         email: email,
-        password: senha 
+        password: senha
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
@@ -125,6 +123,7 @@ const Logo = styled.h1`
   margin-top: 10px;
   color: white;
   font-size: 2.5rem;
+  font-family: 'Inter Tight', sans-serif;  /* Aplique a fonte Englebert */
   span {
     color: #0066cc;
   }

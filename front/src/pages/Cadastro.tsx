@@ -20,8 +20,7 @@ const Cadastro: React.FC = () => {
     email: "",
     password: "",
     dataNascimento: "",
-    role: "",
-    baseOperacao: "",
+    c_password: ""
   });
   
   const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
@@ -32,10 +31,20 @@ const Cadastro: React.FC = () => {
   };
 
   console.log(formData);
+  const Verificar = (): boolean => {
+    if (formData.password !== formData.c_password) {
+      window.alert(
+        "As senhas não estão batendo, por favor, verifique se as senhas são correspondentes"
+      );
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Ativa a tela de carregamento ao iniciar o cadastro
+    if (Verificar()){
     try {
       const response = await api.post('api/users/register', formData);
       if (response.status === 201) {
@@ -48,6 +57,7 @@ const Cadastro: React.FC = () => {
       alert("Erro ao cadastrar usuário!");
       setLoading(false); // Desativa a tela de carregamento se houver erro
     }
+  }
   };
 
   return loading ? (
@@ -65,17 +75,11 @@ const Cadastro: React.FC = () => {
 
           <InputLabel htmlFor="senha">Senha</InputLabel>
           <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
-          <InputLabel htmlFor="dataNascimento">Data de Nascimento</InputLabel>
-          <InputField name="dataNascimento" type="date" onChange={handleChange} required />
-
-          <InputLabel htmlFor="categoria">Categoria</InputLabel>
-           <InputField name="role" placeholder="Ex: Colaborador, Administração" onChange={handleChange} required />
- 
-          <InputLabel htmlFor="baseOperacao">Base de Operação</InputLabel>
-          <InputField name="baseOperacao" placeholder="Ex: Unidade SP" onChange={handleChange} required />
+          <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
+          <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
 
 
-          <Button type="submit">Cadastrar</Button>
+          <Button onClick={handleSubmit}>Cadastrar</Button>
         </Form>
 
         <SignupLink href="/">Já possui conta? Faça login</SignupLink>

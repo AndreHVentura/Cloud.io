@@ -32,6 +32,7 @@ const Cadastro: React.FC = () => {
 
   console.log(formData);
   const Verificar = (): boolean => {
+    setLoading(false);
     if (formData.password !== formData.c_password) {
       window.alert(
         "As senhas não estão batendo, por favor, verifique se as senhas são correspondentes"

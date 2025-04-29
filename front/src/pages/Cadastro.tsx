@@ -10,7 +10,8 @@ import {
   InputLabel,
   InputField,
   Button,
-  SignupLink
+  SignupLink,
+  SelectField // Adicionando o SelectField
 } from "../styles/cadastro"; // ajuste o caminho conforme necessário
 import api from "../services/api";
 
@@ -21,7 +22,7 @@ const Cadastro: React.FC = () => {
     password: "",
     dataNascimento: "",
     c_password: "",
-    city:""
+    city: ""
   });
   
   const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
@@ -88,8 +89,9 @@ const Cadastro: React.FC = () => {
           <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
           <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
           <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
+
           <InputLabel htmlFor="city">Cidade:</InputLabel>
-          <select id="city" name="city" onChange={handleChange}>
+          <SelectField name="city" onChange={handleChange} required>
             <option value={""}>Selecione sua cidade</option>
             <option value={"Aguanil"}>Aguanil</option>
             <option value={"Alfenas"}>Alfenas</option>
@@ -125,9 +127,9 @@ const Cadastro: React.FC = () => {
             <option value={"Passos"}>Passos</option>
             <option value={"São_João_Batista_do_Glória"}>São João Batista do Glória</option>
             <option value={"São_José_da_Barra"}>São José da Barra</option>
-          </select>
+          </SelectField>
 
-          <Button onClick={handleSubmit}>Cadastrar</Button>
+          <Button type="submit">Cadastrar</Button>
         </Form>
 
         <SignupLink href="/">Já possui conta? Faça login</SignupLink>

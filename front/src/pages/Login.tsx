@@ -1,36 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 
-// Importe a imagem do logo alternativo
-import LogoAlternativo from "../logo/icone-nuvem.png"; // Novo logo alternativo
-import LoginImage from "../logo/snow-florest.jpg"; // Imagem de fundo
+import LogoAlternativo from "../logo/icone-nuvem.png";
+import SnowFlorest from "../logo/snow-florest.jpg";
+import OregonLandscape from "../logo/oregon-landscape.jpg";
+import RainField from "../logo/rain-field.jpg";
+
+const images = [SnowFlorest, OregonLandscape, RainField];
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // Usando o contexto
+  const { login } = useAuth();
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  // Função para realizar login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     if (!email || !senha) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
-  
+
     try {
-      const response = await api.post('/api/users/login', { 
+      const response = await api.post('/api/users/login', {
         email: email,
-        password: senha 
+        password: senha
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      login(response.data.token); // Usando a função do contexto
+      login(response.data.token);
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -38,13 +41,18 @@ const Login: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <MainContainer>
-      {/* Divisão da Tela */}
       <Container>
-        {/* Painel Esquerdo - Formulário de Login */}
         <LoginContainer>
-          {/* Logo Alternativo acima do título */}
           <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
@@ -54,7 +62,7 @@ const Login: React.FC = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)} // Atualiza o estado do email
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -63,7 +71,7 @@ const Login: React.FC = () => {
               type="password"
               id="senha"
               value={senha}
-              onChange={(e) => setSenha(e.target.value)} // Atualiza o estado da senha
+              onChange={(e) => setSenha(e.target.value)}
               required
             />
 
@@ -73,9 +81,15 @@ const Login: React.FC = () => {
           <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
         </LoginContainer>
 
-        {/* Painel Direito - Apenas imagem de fundo */}
         <ImageContainer>
-          <img src={LoginImage} alt="Imagem de login" />
+          {images.map((imgSrc, index) => (
+            <CarouselImage
+              key={index}
+              src={imgSrc}
+              alt={`imagem-login-${index}`}
+              isVisible={index === currentImageIndex}
+            />
+          ))}
         </ImageContainer>
       </Container>
     </MainContainer>
@@ -114,14 +128,15 @@ const Logo = styled.h1`
   margin-top: 10px;
   color: white;
   font-size: 2.5rem;
+  font-family: 'Inter Tight', sans-serif;
   span {
     color: #0066cc;
   }
 `;
 
 const LogoImage = styled.img`
-  width: 120px; 
-  margin-bottom: 5px; 
+  width: 120px;
+  margin-bottom: 5px;
   object-fit: contain;
 `;
 
@@ -175,13 +190,18 @@ const SignupLink = styled.p`
 
 const ImageContainer = styled.div`
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f0f0f0;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  position: relative;
+  overflow: hidden;
+`;
+
+const CarouselImage = styled.img<{ isVisible: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
 `;

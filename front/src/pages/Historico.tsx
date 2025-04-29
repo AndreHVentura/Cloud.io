@@ -1,6 +1,6 @@
 import { useState } from "react";
-import NavBar from "../components/Navbar";
-import Topbar from "../components/Topbar";
+import NavBar from "../components/perfil/Navbar";
+import Topbar from "../components/perfil/Topbar";
 import styled from "styled-components";
 import { ButtonGroup, Container, StyledTable } from "../styles/historico";
 

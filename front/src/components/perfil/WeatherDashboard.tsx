@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import WindPeakChart from './graficos/WindpeakChart';
-import WindSpeedChart from './graficos/WindspeedChart';
-import WindDirChart from './graficos/WindDirChart';
-import WaveHeightChart from './graficos/WaveheightChart';
+import WindPeakChart from '../graficos/WindpeakChart';
+import WindSpeedChart from '../graficos/WindspeedChart';
+import WindDirChart from '../graficos/WindDirChart';
+import WaveHeightChart from '../graficos/WaveheightChart';
 
 const WeatherDashboard = () => {
   return (

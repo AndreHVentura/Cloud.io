@@ -1,7 +1,7 @@
 import { useState } from "react";
-import NavBar from "../components/Navbar";
-import TopBar from "../components/Topbar";
-import AlertsContent from "../components/AlertsContent";
+import NavBar from "../components/perfil/Navbar";
+import TopBar from "../components/perfil/Topbar";
+import AlertsContent from "../components/perfil/AlertsContent";
 
 export default function Alerta() {
     const [isNavOpen, setIsNavOpen] = useState(false);

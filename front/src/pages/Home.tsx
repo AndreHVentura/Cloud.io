@@ -1,7 +1,7 @@
 import { useState } from "react";
-import NavBar from "../components/Navbar";
-import TopBar from "../components/Topbar";
-import HomeContent from "../components/HomeContent";
+import NavBar from "../components/perfil/Navbar";
+import TopBar from "../components/perfil/Topbar";
+import HomeContent from "../components/perfil/HomeContent";
 
 export default function Home() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -9,9 +9,9 @@ export default function Home() {
 
   return (
       <>
-          <NavBar isOpen={isNavOpen} />
-          <TopBar helper={toggleNav} isNavOpen={isNavOpen} />
-          <HomeContent />
+        <NavBar isOpen={isNavOpen} />
+        <TopBar helper={toggleNav} isNavOpen={isNavOpen} />
+        <HomeContent />
       </>
   );
 }

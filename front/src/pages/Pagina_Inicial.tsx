@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";  // Importando o useNavigate
 
 const Container = styled.div`
   background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
@@ -152,6 +153,13 @@ const FeatureDescription = styled.p`
 `;
 
 const HomePage = () => {
+  const navigate = useNavigate();  // Use o hook useNavigate aqui
+
+  // Função para redirecionar para a página de login
+  const handleSignInClick = () => {
+    navigate("/login");  // Redireciona para a página de login
+  };
+
   return (
     <Container>
       <Navbar>
@@ -175,7 +183,7 @@ const HomePage = () => {
         <HeroText>
           <Title>Where Creativity Meets Innovation</Title>
           <Subtitle>Lorem ipsum dolor sit amet consectetur.</Subtitle>
-          <Button>Iniciar sessão</Button>
+          <Button onClick={handleSignInClick}>Iniciar sessão</Button>  {/* Chama a função handleSignInClick */}
         </HeroText>
 
         <HeroImage />

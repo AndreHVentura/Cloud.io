@@ -44,7 +44,7 @@ const Login: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 7000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -180,6 +180,7 @@ const LoginButton = styled.button`
 
 const SignupLink = styled.p`
   margin-top: 10px;
+  font-weight: bold;
   font-size: 1rem;
   color: #0073e6;
   cursor: pointer;

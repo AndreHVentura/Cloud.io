@@ -88,8 +88,6 @@ const Cadastro: React.FC = () => {
           <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
           <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
           <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
-          {/* <InputLabel htmlFor="city">Qual sua cidade?</InputLabel>
-          <InputField name="city" placeholder="Ex:Aguanil" onChange={handleChange} required /> */}
           <InputLabel htmlFor="city">Cidade:</InputLabel>
           <select id="city" name="city" onChange={handleChange}>
             <option value={""}>Selecione sua cidade</option>

@@ -9,10 +9,10 @@ class UserController {
     }
     // Método para cadastrar um novo usuário
     async register(req: Request, res: Response) {
-        const { name, email, password } = req.body;
+        const { name, email, password, city } = req.body;
 
         try {
-            const result = await this.userService.createUser({name, email, password});
+            const result = await this.userService.createUser({name, email, password,city});
             res.status(201).json(result);
         } catch (error) {
             if (error instanceof Error) {

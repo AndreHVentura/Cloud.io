@@ -29,6 +29,7 @@ class AuthMiddleware {
         _id: user._id,
         name: user.name,
         email: user.email,
+        city: user.city
       };
       next();
     });

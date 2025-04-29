@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 
 class UserService{
     //cria usuario
-    async createUser({name,email,password}: IUser){
+    async createUser({name,email,password,city}: IUser){
         //verificando se o usuario ja existe
         try {
             const existingUser = await User.findOne({email});
@@ -18,7 +18,7 @@ class UserService{
             }
 
             //criando um novo usuario
-            const user = new User({name,email,password});
+            const user = new User({name,email,password,city});
             await user.save();
 
             //agora vai gerar o token JWT para o usuario para autenticacao
@@ -56,7 +56,7 @@ class UserService{
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                // role: user.role
+                city: user.city
             }
             return {user: userResponse, token};
         } catch (error) {

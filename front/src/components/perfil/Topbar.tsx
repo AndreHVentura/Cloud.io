@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { IonIcon } from "./Icons";
+import { IonIcon } from './Icons';
 import { Icons } from "./Icons";
 
 

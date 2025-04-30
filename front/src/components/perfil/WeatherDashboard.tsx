@@ -3,6 +3,7 @@ import WindPeakChart from '../graficos/WindpeakChart';
 import WindSpeedChart from '../graficos/WindspeedChart';
 import WindDirChart from '../graficos/WindDirChart';
 import WaveHeightChart from '../graficos/WaveheightChart';
+import ReservoirLevelChart from '../graficos/ReservoirlevelChart';
 
 const WeatherDashboard = () => {
   return (
@@ -25,6 +26,10 @@ const WeatherDashboard = () => {
         <ChartCard>
           <ChartTitle>Altura das ondas</ChartTitle>
           <WaveHeightChart />
+        </ChartCard>
+        <ChartCard>
+          <ChartTitle>Nivel do reservatório</ChartTitle>
+          <ReservoirLevelChart />
         </ChartCard>
       </ChartRow>
     </Wrapper>
@@ -74,7 +79,7 @@ const ChartCard = styled.div`
   }
 `;
 
-const ChartTitle = styled.h3`
+export const ChartTitle = styled.h3`
   font-size: 1.2rem;
   margin-bottom: 1rem;
   font-weight: 600;

@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
+import Grafics from "./components/perfil/pagesP/grafics";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>}/>
+          <Route path="/grafic" element={<MainLayout><Grafics /></MainLayout>}/>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

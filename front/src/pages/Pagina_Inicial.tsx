@@ -158,7 +158,7 @@ const HomePage = () => {
         <Logo>Logo Cloud.io</Logo>
         <NavGroup>
           <NavLinks>
-            <NavLink href="#">Home</NavLink>
+            <NavLink href="/grafic">Home</NavLink>
             <NavLink href="#">Shop</NavLink>
             <NavLink href="#">About</NavLink>
             <NavLink href="#">Blog</NavLink>

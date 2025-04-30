@@ -6,6 +6,7 @@ import PressWidget from "../widgets/PressWidget";
 import TempCabineWidget from "../widgets/TempCabineWidget";
 import ChargeWidget from "../widgets/ChargeWidget";
 import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
+import ReservoirLevelChart from "../graficos/ReservoirlevelChart";
 
 export default function HomeContent() {
     return(
@@ -20,6 +21,7 @@ export default function HomeContent() {
           <SolarRadiationWidget />
         </WidgetsContainer>
         <WeatherDashboard />
+        {/* <ReservoirLevelChart/> */}
       </MainDiv>
     </Main>
     );

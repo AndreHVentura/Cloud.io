@@ -1,24 +1,24 @@
 import styled from "styled-components";
 import WeatherDashboard from "./WeatherDashboard";
-import TempWidget from "../widgets/TempWidget";
-import HumWidget from "../widgets/HumWidget";
-import PressWidget from "../widgets/PressWidget";
-import TempCabineWidget from "../widgets/TempCabineWidget";
-import ChargeWidget from "../widgets/ChargeWidget";
-import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
+// import TempWidget from "../widgets/TempWidget";
+// import HumWidget from "../widgets/HumWidget";
+// import PressWidget from "../widgets/PressWidget";
+// import TempCabineWidget from "../widgets/TempCabineWidget";
+// import ChargeWidget from "../widgets/ChargeWidget";
+// import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
 
 export default function HomeContent() {
     return(
       <Main>
       <MainDiv>
-        <WidgetsContainer>
+        {/* <WidgetsContainer>
           <TempWidget />
           <HumWidget />
           <PressWidget />
           <TempCabineWidget />
           <ChargeWidget />
           <SolarRadiationWidget />
-        </WidgetsContainer>
+        </WidgetsContainer> */}
         <WeatherDashboard />
       </MainDiv>
     </Main>

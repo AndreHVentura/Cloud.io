@@ -1,9 +1,68 @@
-import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";  // Importando o useNavigate
+import ImgFundo from "../logo/nuvens.jpg"
+import ImgLogo from "../logo/icone-nuvem.png"
+
+const HomePage = () => {
+  return (
+    <Container>
+      <Hero>
+        <Navbar>
+          <img src={ImgLogo} alt="logo" width={"45rem"} height={"45rem"}/>
+          <NavGroup>
+            <NavLinks>
+              <PagISNavLink to="/">Gráficos</PagISNavLink>
+              <PagISNavLink to="/">Alertas</PagISNavLink>
+              <PagISNavLink to="/">Clima</PagISNavLink>
+            </NavLinks>
+  
+            <AuthButtons>
+              <BotaoLogin to="/login">Login</BotaoLogin>
+              <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
+            </AuthButtons>
+          </NavGroup>
+        </Navbar>
+
+      
+        <HeroText>
+          <Title>Cloud.IO</Title>
+          <Subtitle>Plataforma para monitorar o clima.</Subtitle>
+          <BotaoIniciarSessao to="/login">Iniciar sessão</BotaoIniciarSessao>
+        </HeroText>
+      </Hero>
+
+      <Features>
+        <FeatureCard>
+          <FeatureIcon>O</FeatureIcon>
+          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureDescription>
+            Descrição sobre o projeto
+          </FeatureDescription>
+        </FeatureCard>
+
+        <FeatureCard>
+          <FeatureIcon>O</FeatureIcon>
+          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureDescription>
+          Descrição sobre o projeto
+          </FeatureDescription>
+        </FeatureCard>
+
+        <FeatureCard>
+          <FeatureIcon>O</FeatureIcon>
+          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureDescription>
+            Descrição sobre o projeto
+          </FeatureDescription>
+        </FeatureCard>
+      </Features>
+    </Container>
+  );
+};
+
+export default HomePage;
 
 const Container = styled.div`
-  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
   color: white;
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
@@ -14,6 +73,8 @@ const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 2rem 4rem;
+  width: 100%;
+  height: 4rem;
 `;
 
 const NavGroup = styled.div`
@@ -27,15 +88,22 @@ const AuthButtons = styled.div`
   gap: 1rem;
 `;
 
-const SignIn = styled.button`
+const BotaoLogin = styled(NavLink)`
   background: transparent;
   border: none;
   color: white;
   font-size: 1rem;
   cursor: pointer;
+  text-decoration: none;
+  padding-top: 8px;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6
+  }
 `;
 
-const SignUp = styled.button`
+const BotaoCadastro = styled(NavLink)`
   background: transparent;
   border: 1px solid white;
   padding: 0.5rem 1.2rem;
@@ -44,16 +112,12 @@ const SignUp = styled.button`
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.3s;
+  text-decoration: none;
 
   &:hover {
     background: white;
     color: #0e0e1a;
   }
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
 `;
 
 const NavLinks = styled.div`
@@ -62,7 +126,7 @@ const NavLinks = styled.div`
   align-items: center;
 `;
 
-const NavLink = styled.a`
+const PagISNavLink = styled(NavLink)`
   text-decoration: none;
   color: white;
   font-weight: 500;
@@ -75,14 +139,15 @@ const NavLink = styled.a`
 
 const Hero = styled.section`
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 4rem;
-  min-height: 80vh;
+  flex-wrap: wrap;
+  min-height: 85vh;
+  background: url(${ImgFundo}) no-repeat; 
 `;
 
 const HeroText = styled.div`
-  max-width: 600px;
+  padding-left: 4rem;
+  width: 100%;
 `;
 
 const Title = styled.h1`
@@ -96,7 +161,7 @@ const Subtitle = styled.p`
   margin-bottom: 2rem;
 `;
 
-const Button = styled.button`
+const BotaoIniciarSessao = styled(NavLink)`
   background: #6366f1;
   color: white;
   padding: 0.75rem 2rem;
@@ -104,16 +169,11 @@ const Button = styled.button`
   border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background: #4f46e5;
   }
-`;
-
-const HeroImage = styled.div`
-  width: 400px;
-  height: 400px;
-  background: url("/your-image-path.png") no-repeat center/contain;
 `;
 
 const Features = styled.section`
@@ -151,71 +211,3 @@ const FeatureDescription = styled.p`
   font-size: 0.9rem;
   color: #666;
 `;
-
-const HomePage = () => {
-  const navigate = useNavigate();  // Use o hook useNavigate aqui
-
-  // Função para redirecionar para a página de login
-  const handleSignInClick = () => {
-    navigate("/login");  // Redireciona para a página de login
-  };
-
-  return (
-    <Container>
-      <Navbar>
-        <Logo>Logo Cloud.io</Logo>
-        <NavGroup>
-          <NavLinks>
-            <NavLink href="/grafic">Home</NavLink>
-            <NavLink href="#">Shop</NavLink>
-            <NavLink href="#">About</NavLink>
-            <NavLink href="#">Blog</NavLink>
-          </NavLinks>
-
-          <AuthButtons>
-            <SignIn>Sign in</SignIn>
-            <SignUp>Sign up</SignUp>
-          </AuthButtons>
-        </NavGroup>
-      </Navbar>
-
-      <Hero>
-        <HeroText>
-          <Title>Where Creativity Meets Innovation</Title>
-          <Subtitle>Lorem ipsum dolor sit amet consectetur.</Subtitle>
-          <Button onClick={handleSignInClick}>Iniciar sessão</Button>  {/* Chama a função handleSignInClick */}
-        </HeroText>
-
-        <HeroImage />
-      </Hero>
-
-      <Features>
-        <FeatureCard>
-          <FeatureIcon>⚡</FeatureIcon>
-          <FeatureTitle>Cursus Metus</FeatureTitle>
-          <FeatureDescription>
-            It's fast and numbers confirm that...
-          </FeatureDescription>
-        </FeatureCard>
-
-        <FeatureCard>
-          <FeatureIcon>💎</FeatureIcon>
-          <FeatureTitle>Tincidunt Ornare</FeatureTitle>
-          <FeatureDescription>
-            Built from scratch to be 100% compatible...
-          </FeatureDescription>
-        </FeatureCard>
-
-        <FeatureCard>
-          <FeatureIcon>🛒</FeatureIcon>
-          <FeatureTitle>Quis Vulputate</FeatureTitle>
-          <FeatureDescription>
-            Easily build and customize your online store...
-          </FeatureDescription>
-        </FeatureCard>
-      </Features>
-    </Container>
-  );
-};
-
-export default HomePage;

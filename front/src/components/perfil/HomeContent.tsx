@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import WeatherDashboard from "./WeatherDashboard";
+<<<<<<< HEAD
 import TempWidget from "../widgets/TempWidget";
 import HumWidget from "../widgets/HumWidget";
 import PressWidget from "../widgets/PressWidget";
@@ -7,19 +8,27 @@ import TempCabineWidget from "../widgets/TempCabineWidget";
 import ChargeWidget from "../widgets/ChargeWidget";
 import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
 import ReservoirLevelChart from "../graficos/ReservoirlevelChart";
+=======
+// import TempWidget from "../widgets/TempWidget";
+// import HumWidget from "../widgets/HumWidget";
+// import PressWidget from "../widgets/PressWidget";
+// import TempCabineWidget from "../widgets/TempCabineWidget";
+// import ChargeWidget from "../widgets/ChargeWidget";
+// import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
+>>>>>>> 9d755b09d16a8bc666b016bfa4a82ab693e40ab4
 
 export default function HomeContent() {
     return(
       <Main>
       <MainDiv>
-        <WidgetsContainer>
+        {/* <WidgetsContainer>
           <TempWidget />
           <HumWidget />
           <PressWidget />
           <TempCabineWidget />
           <ChargeWidget />
           <SolarRadiationWidget />
-        </WidgetsContainer>
+        </WidgetsContainer> */}
         <WeatherDashboard />
         {/* <ReservoirLevelChart/> */}
       </MainDiv>

@@ -8,7 +8,11 @@ import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
+<<<<<<< HEAD
 import Grafics from "./components/perfil/pagesP/grafics";
+=======
+import Dados from "./pages/Dados";
+>>>>>>> 9d755b09d16a8bc666b016bfa4a82ab693e40ab4
 
 function App() {
   return (
@@ -22,7 +26,11 @@ function App() {
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>}/>
+<<<<<<< HEAD
           <Route path="/grafic" element={<MainLayout><Grafics /></MainLayout>}/>
+=======
+          <Route path="/dados" element={<MainLayout><Dados /></MainLayout>}/>
+>>>>>>> 9d755b09d16a8bc666b016bfa4a82ab693e40ab4
         </Routes>
       </BrowserRouter>
     </AuthProvider>

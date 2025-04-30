@@ -68,6 +68,13 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
               </motion.div>
 
               <motion.div variants={item}>
+                <NavLink to="/dados">
+                  <IonStyledIcon icon={Icons.informationCircle} />
+                  <span>Dados</span>
+                </NavLink>
+              </motion.div>
+
+              <motion.div variants={item}>
                 <NavLink to="/alerts">
                   <IonStyledIcon icon={Icons.warning} />
                   <span>Alertas</span>

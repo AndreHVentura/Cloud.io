@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import AlertsMap from "../AlertsMap";
 // import AlertsMap from "./AlertsMap";
 
 export default function AlertsContent() {

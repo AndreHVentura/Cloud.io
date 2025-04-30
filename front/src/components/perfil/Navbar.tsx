@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { NavLink } from "react-router-dom"
-import { IonIcon } from "./Icons"
-import { Icons } from "./Icons"
+import { Icons, IonIcon } from "./Icons"
 import styled from "styled-components"
 
 export default function NavBar({ isOpen }: { isOpen: boolean }) {

@@ -76,8 +76,8 @@ const WindDirChart: React.FC = () => {
   };
 
   return (
-  <div style={{ width: '400px', margin: '0 auto' }}>
-    <ReactApexChart options={options} series={series} type="radar" height={300} width="100%" />
+  <div>
+    <ReactApexChart options={options} series={series} type="radar" height={400} width={650}/>
   </div>
   );
 };

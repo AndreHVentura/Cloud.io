@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import ReservoirLevelChart from "../graficos/ReservoirlevelChart";
-import WeatherDashboard from "../perfil/WeatherDashboard";
+import { useNavigate } from "react-router-dom";
+import Graficsmodels from "./graficsmodel";
 
 export default function Grafics(){
+  const navigate = useNavigate()
     return(
     <Container>
       <Navbar>
@@ -10,13 +11,13 @@ export default function Grafics(){
         <NavGroup>
           <NavLinks>
             <NavLink href="/grafic">Gráficos</NavLink>
-            <NavLink href="#">Alertas</NavLink>
+            <NavLink href="/alert">Alertas</NavLink>
             <NavLink href="#">Clima</NavLink>
           </NavLinks>
 
           <AuthButtons>
-            <SignIn>Login</SignIn>
-            <SignUp>Cadastrar</SignUp>
+          <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
+          <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
           </AuthButtons>
         </NavGroup>
       </Navbar>
@@ -25,7 +26,7 @@ export default function Grafics(){
         <StationButton>Estação 2</StationButton>
         <StationButton>Estação 3</StationButton>
       </ButtonGroup>
-      <div><WeatherDashboard/></div>
+      <div><Graficsmodels/></div>
       {/* <div><ReservoirLevelChart/></div> */}
     </Container>
     );

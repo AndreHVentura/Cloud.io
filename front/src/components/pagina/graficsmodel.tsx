@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import WindPeakChart from '../graficos/WindpeakChart';
-import WindSpeedChart from '../graficos/WindspeedChart';
-import WindDirChart from '../graficos/WindDirChart';
-import WaveHeightChart from '../graficos/WaveheightChart';
-import ReservoirLevelChart from '../graficos/ReservoirlevelChart';
+import WindPeakChart from './graficosPa/WindpeakChart';
+import WindDirChart from './graficosPa/WindDirChart';
+import ReservoirLevelChart from './graficosPa/ReservoirlevelChart';
+import WaveHeightChart from './graficosPa/WaveheightChart';
+import WindspeedChart from './graficosPa/WindspeedChart';
 
-const WeatherDashboard = () => {
+
+const Graficsmodels = () => {
   return (
     <Wrapper>
       <ChartRow>
@@ -13,13 +14,17 @@ const WeatherDashboard = () => {
           <ChartTitle>Velocidade Máxima do Vento</ChartTitle>
           <WindPeakChart />
         </ChartCard>
+      </ChartRow>
+      <ChartRow>
         <ChartCard>
           <ChartTitle>Direção do Vento</ChartTitle>
           <WindDirChart />
         </ChartCard>
-        <ChartCard>
+      </ChartRow>
+      <ChartRow>
+      <ChartCard>
           <ChartTitle>Velocidade do Vento</ChartTitle>
-          <WindSpeedChart />
+          <WindspeedChart />
         </ChartCard>
       </ChartRow>
       <ChartRow>
@@ -27,16 +32,19 @@ const WeatherDashboard = () => {
           <ChartTitle>Altura das ondas</ChartTitle>
           <WaveHeightChart />
         </ChartCard>
+      </ChartRow>
+      <ChartRow>
         <ChartCard>
-          <ChartTitle>Nivel do reservatório</ChartTitle>
-          <ReservoirLevelChart />
+            <ChartTitle>Nível do reservatório</ChartTitle>
+            <ReservoirLevelChart/>
         </ChartCard>
       </ChartRow>
+      
     </Wrapper>
   );
 };
 
-export default WeatherDashboard;
+export default Graficsmodels;
 
 const Wrapper = styled.div`
   display: flex;

@@ -5,7 +5,7 @@ const WaveHeightChart = () => {
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: 'area',
-      height: 350,
+      height: 300,
       toolbar: { show: false }
     },
     stroke: {
@@ -42,7 +42,7 @@ const WaveHeightChart = () => {
     }
   ];
 
-  return <ApexCharts options={options} series={series} type="area" height={300} width={650} />;
+  return <ApexCharts options={options} series={series} type="area" height={400} width={650} />;
 };
 
 export default WaveHeightChart;

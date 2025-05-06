@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
-
 import LogoAlternativo from "../logo/icone-nuvem.png";
 import SnowFlorest from "../logo/snow-florest.jpg";
 import OregonLandscape from "../logo/oregon-landscape.jpg";

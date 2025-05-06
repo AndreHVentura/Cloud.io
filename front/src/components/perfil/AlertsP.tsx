@@ -2,10 +2,10 @@ import styled from "styled-components";
 import AlertsMap from "../AlertsMap";
 // import AlertsMap from "./AlertsMap";
 
-export default function AlertsContent() {
+export default function AlertsP() {
   return(
     <AlertsMain>
-      <AlertsFilterDiv>Criar um alerta de atividade meteorológica</AlertsFilterDiv>
+      <AlertsFilterDiv>meteorológica</AlertsFilterDiv>
       <AlertsMessages>Dados da estação dentro do raio de atividade</AlertsMessages>
       <AlertsMapDiv>
         <AlertsMap />

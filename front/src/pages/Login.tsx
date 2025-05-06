@@ -4,11 +4,11 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
 import LogoAlternativo from "../logo/icone-nuvem.png";
-import SnowFlorest from "../logo/snow-florest.jpg";
-import OregonLandscape from "../logo/oregon-landscape.jpg";
-import RainField from "../logo/rain-field.jpg";
+import lagoFurnas from "../logo/lago_furnas.jpg";
+import capitolio from "../logo/capitolio.jpg";
+import nuvens from "../logo/nuvens.jpg";
 
-const images = [SnowFlorest, OregonLandscape, RainField];
+const images = [lagoFurnas, capitolio, nuvens];
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ const Login: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -56,28 +56,27 @@ const Login: React.FC = () => {
           <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
-            <InputLabel htmlFor="email">Insira seu E-mail:</InputLabel>
-            <InputField
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+            <InputLabel htmlFor="email">E-mail:</InputLabel>
+            <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-            <InputLabel htmlFor="senha">Insira sua senha:</InputLabel>
-            <InputField
-              type="password"
-              id="senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              required
-            />
+            <InputLabel htmlFor="senha">Senha:</InputLabel>
+            <InputField type="password" id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+
+            <OptionsRow>
+              <CheckboxWrapper>
+                <input type="checkbox" id="remember" />
+                <label htmlFor="remember">Manter conectado</label>
+              </CheckboxWrapper>
+              <PasswordLink onClick={() => navigate("/recuperar-senha")}>
+                Esqueceu sua senha?
+              </PasswordLink>
+            </OptionsRow>
 
             <LoginButton type="submit">ENTRAR</LoginButton>
           </LoginForm>
-
-          <SignupLink onClick={() => navigate("/cadastro")}>CADASTRE-SE AQUI!</SignupLink>
+          <RegisterText>
+            Não possui conta? Cadastre-se<SignupLink onClick={() => navigate("/cadastro")}> aqui!</SignupLink>
+          </RegisterText>
         </LoginContainer>
 
         <ImageContainer>
@@ -115,7 +114,8 @@ const Container = styled.div`
 
 const LoginContainer = styled.div`
   flex: 1;
-  background-color: #0e2843;
+  max-width: 33.33%;
+  background-color: #ffffff;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -125,12 +125,13 @@ const LoginContainer = styled.div`
 
 const Logo = styled.h1`
   margin-top: 10px;
-  color: white;
   font-size: 2.5rem;
   font-family: 'Inter Tight', sans-serif;
-  span {
-    color: #0066cc;
-  }
+  background: linear-gradient(to right, #0073e6, #00cc66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 `;
 
 const LogoImage = styled.img`
@@ -147,7 +148,7 @@ const LoginForm = styled.form`
 `;
 
 const InputLabel = styled.label`
-  color: white;
+  color: #232323;
   margin-bottom: 8px;
   font-size: 1rem;
   font-weight: bold;
@@ -159,22 +160,60 @@ const InputField = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  width: 100%;
+  width: 90%;
 `;
 
 const LoginButton = styled.button`
   align-self: center;
   padding: 10px;
   width: 55%;
-  background-color: #4caf50;
+  background-color: #00e074;
   color: white;
   font-size: 1rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   &:hover {
-    background-color: #45a049;
+    background-color: #4eee81;
   }
+`;
+
+const OptionsRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CheckboxWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  input {
+    margin-right: 6px;
+  }
+
+  label {
+    color: #232323;
+    font-size: 0.95rem;
+  }
+`;
+
+const PasswordLink = styled.p`
+  color: #0073e6;
+  font-size: 0.95rem;
+  cursor: pointer;
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
+const RegisterText = styled.p`
+  margin-top: 20px;
+  color: #232323;
+  font-size: 1rem;
+  text-align: center;
+  display: inline;
 `;
 
 const SignupLink = styled.p`
@@ -183,13 +222,14 @@ const SignupLink = styled.p`
   font-size: 1rem;
   color: #0073e6;
   cursor: pointer;
+  display: inline;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 
 const ImageContainer = styled.div`
-  flex: 1;
+  flex: 2.5;
   position: relative;
   overflow: hidden;
 `;

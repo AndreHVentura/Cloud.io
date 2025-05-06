@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
-import Grafics from "./components/perfil/pagesP/grafics";
+import Grafics from "./components/pagina/grafics";
 import AlertsP from "./components/perfil/AlertsP";
 
 function App() {

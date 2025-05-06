@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import ReservoirLevelChart from "../../graficos/ReservoirlevelChart";
-import WeatherDashboard from "../WeatherDashboard";
+import ReservoirLevelChart from "../graficos/ReservoirlevelChart";
+import WeatherDashboard from "../perfil/WeatherDashboard";
 
 export default function Grafics(){
     return(

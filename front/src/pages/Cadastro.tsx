@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import LoadingScreen from "../components/perfil/LoadingScreen"; // Importe o componente LoadingScreen
-import {
-  MainContainer,
-  Container,
-  Logo,
-  Form,
-  InputLabel,
-  InputField,
-  Button,
-  SignupLink,
-  SelectField // Adicionando o SelectField
-} from "../styles/cadastro"; // ajuste o caminho conforme necessário
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../components/perfil/LoadingScreen";
+import styled from "styled-components";
+import LogoAlternativo from "../logo/icone-nuvem.png";
+import lagoFurnas from "../logo/lago_furnas.jpg";
+import capitolio from "../logo/capitolio.jpg";
+import nuvens from "../logo/nuvens.jpg";
+
+const images = [lagoFurnas, capitolio, nuvens];
 
 const Cadastro: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +21,7 @@ const Cadastro: React.FC = () => {
     city: ""
   });
   
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
   const navigate = useNavigate();
 
@@ -72,11 +69,21 @@ const Cadastro: React.FC = () => {
   }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return loading ? (
     <LoadingScreen /> // Exibe a LoadingScreen enquanto o estado `loading` for true
   ) : (
     <MainContainer>
       <Container>
+        <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
         <Logo>Cloud.<span>io</span></Logo>
         <Form onSubmit={handleSubmit}>
           <InputLabel htmlFor="nome">Nome</InputLabel>
@@ -131,11 +138,120 @@ const Cadastro: React.FC = () => {
 
           <Button type="submit">Cadastrar</Button>
         </Form>
-
-        <SignupLink href="/">Já possui conta? Faça login</SignupLink>
+        <ImageContainer>
+          {images.map((imgSrc, index) => (
+            <CarouselImage
+              key={index}
+              src={imgSrc}
+              alt={`imagem-login-${index}`}
+              isVisible={index === currentImageIndex}
+            />
+          ))}
+        </ImageContainer>
       </Container>
     </MainContainer>
   );
 };
   
 export default Cadastro;
+
+// Styled Components
+
+const MainContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column; /* para empilhar logo + formulário */
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImageContainer = styled.div`
+  flex: 2.5;
+  position: relative;
+  overflow: hidden;
+`;
+
+const CarouselImage = styled.img<{ isVisible: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+`;
+
+const Logo = styled.h1`
+  margin-top: 10px;
+  font-size: 2.5rem;
+  font-family: 'Inter Tight', sans-serif;
+  background: linear-gradient(to right, #0073e6, #00cc66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+`;
+
+const LogoImage = styled.img`
+  width: 120px;
+  margin-bottom: 5px;
+  object-fit: contain;
+`;
+
+const Form = styled.form`
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputLabel = styled.label`
+  color: #232323;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+`;
+
+const InputField = styled.input`
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 90%;
+`;
+
+const SelectField = styled.select`
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 95%;
+`;
+
+const Button = styled.button`
+  align-self: center;
+  padding: 10px;
+  width: 55%;
+  background-color: #00e074;
+  color: white;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #4eee81;
+  }
+`;

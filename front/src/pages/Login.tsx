@@ -56,10 +56,10 @@ const Login: React.FC = () => {
           <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
-            <InputLabel htmlFor="email">E-mail:</InputLabel>
+            <InputLabel htmlFor="email">E-mail</InputLabel>
             <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-            <InputLabel htmlFor="senha">Senha:</InputLabel>
+            <InputLabel htmlFor="senha">Senha</InputLabel>
             <InputField type="password" id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
 
             <OptionsRow>

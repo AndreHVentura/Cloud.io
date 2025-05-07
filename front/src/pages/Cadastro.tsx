@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import api from "../services/api";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "../components/perfil/LoadingScreen";
+import api from "../services/api";
 import styled from "styled-components";
 import LogoAlternativo from "../logo/icone-nuvem.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
+import axios from "axios";
+import LoadingScreen from "../components/perfil/LoadingScreen";
 
 const images = [lagoFurnas, capitolio, nuvens];
 
@@ -83,61 +83,64 @@ const Cadastro: React.FC = () => {
   ) : (
     <MainContainer>
       <Container>
-        <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
-        <Logo>Cloud.<span>io</span></Logo>
-        <Form onSubmit={handleSubmit}>
-          <InputLabel htmlFor="nome">Nome</InputLabel>
-          <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
+        <FormContainer>
+          <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
+          <Logo>Cloud.<span>io</span></Logo>
 
-          <InputLabel htmlFor="email">Email</InputLabel>
-          <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
+          <Form onSubmit={handleSubmit}>
+            <InputLabel htmlFor="nome">Nome</InputLabel>
+            <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
 
-          <InputLabel htmlFor="senha">Senha</InputLabel>
-          <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
-          <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
-          <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
 
-          <InputLabel htmlFor="city">Cidade:</InputLabel>
-          <SelectField name="city" onChange={handleChange} required>
-            <option value={""}>Selecione sua cidade</option>
-            <option value={"Aguanil"}>Aguanil</option>
-            <option value={"Alfenas"}>Alfenas</option>
-            <option value={"Alpinópolis"}>Alpinópolis</option>
-            <option value={"Alterosa"}>Alterosa</option>
-            <option value={"Areado"}>Areado</option>
-            <option value={"Boa_Esperança"}>Boa Esperança</option>
-            <option value={"Cabo_Verde"}>Cabo Verde</option>
-            <option value={"Camacho"}>Camacho</option>
-            <option value={"Campo_Belo"}>Campo Belo</option>
-            <option value={"Campo_do_Meio"}>Campo do Meio</option>
-            <option value={"Campos_Gerais"}>Campos Gerais</option>
-            <option value={"Cana_Verde"}>Cana Verde</option>
-            <option value={"Candeias"}>Candeias</option>
-            <option value={"Capitólio"}>Capitólio</option>
-            <option value={"Carmo_do_Rio_Claro"}>Carmo do Rio Claro</option>
-            <option value={"Conceição_da_Aparecida"}>Conceição da Aparecida</option>
-            <option value={"Coqueiral"}>Coqueiral</option>
-            <option value={"Cristais"}>Cristais</option>
-            <option value={"Divisa_Nova"}>Divisa Nova</option>
-            <option value={"Elói_Mendes"}>Elói Mendes</option>
-            <option value={"Fama"}>Fama</option>
-            <option value={"Formiga"}>Formiga</option>
-            <option value={"Guapé"}>Guapé</option>
-            <option value={"Ilicínea"}>Ilicínea</option>
-            <option value={"Itaú_de_Minas"}>Itaú de Minas</option>
-            <option value={"Juruaia"}>Juruaia</option>
-            <option value={"Lavras"}>Lavras</option>
-            <option value={"Luminárias"}>Luminárias</option>
-            <option value={"Machado"}>Machado</option>
-            <option value={"Mato_Verde"}>Mato Verde</option>
-            <option value={"Nova_Resende"}>Nova Resende</option>
-            <option value={"Passos"}>Passos</option>
-            <option value={"São_João_Batista_do_Glória"}>São João Batista do Glória</option>
-            <option value={"São_José_da_Barra"}>São José da Barra</option>
-          </SelectField>
+            <InputLabel htmlFor="senha">Senha</InputLabel>
+            <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
+            <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
+            <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
 
-          <Button type="submit">Cadastrar</Button>
-        </Form>
+            <InputLabel htmlFor="city">Cidade:</InputLabel>
+            <SelectField name="city" onChange={handleChange} required>
+              <option value={""}>Selecione sua cidade</option>
+              <option value={"Aguanil"}>Aguanil</option>
+              <option value={"Alfenas"}>Alfenas</option>
+              <option value={"Alpinópolis"}>Alpinópolis</option>
+              <option value={"Alterosa"}>Alterosa</option>
+              <option value={"Areado"}>Areado</option>
+              <option value={"Boa_Esperança"}>Boa Esperança</option>
+              <option value={"Cabo_Verde"}>Cabo Verde</option>
+              <option value={"Camacho"}>Camacho</option>
+              <option value={"Campo_Belo"}>Campo Belo</option>
+              <option value={"Campo_do_Meio"}>Campo do Meio</option>
+              <option value={"Campos_Gerais"}>Campos Gerais</option>
+              <option value={"Cana_Verde"}>Cana Verde</option>
+              <option value={"Candeias"}>Candeias</option>
+              <option value={"Capitólio"}>Capitólio</option>
+              <option value={"Carmo_do_Rio_Claro"}>Carmo do Rio Claro</option>
+              <option value={"Conceição_da_Aparecida"}>Conceição da Aparecida</option>
+              <option value={"Coqueiral"}>Coqueiral</option>
+              <option value={"Cristais"}>Cristais</option>
+              <option value={"Divisa_Nova"}>Divisa Nova</option>
+              <option value={"Elói_Mendes"}>Elói Mendes</option>
+              <option value={"Fama"}>Fama</option>
+              <option value={"Formiga"}>Formiga</option>
+              <option value={"Guapé"}>Guapé</option>
+              <option value={"Ilicínea"}>Ilicínea</option>
+              <option value={"Itaú_de_Minas"}>Itaú de Minas</option>
+              <option value={"Juruaia"}>Juruaia</option>
+              <option value={"Lavras"}>Lavras</option>
+              <option value={"Luminárias"}>Luminárias</option>
+              <option value={"Machado"}>Machado</option>
+              <option value={"Mato_Verde"}>Mato Verde</option>
+              <option value={"Nova_Resende"}>Nova Resende</option>
+              <option value={"Passos"}>Passos</option>
+              <option value={"São_João_Batista_do_Glória"}>São João Batista do Glória</option>
+              <option value={"São_José_da_Barra"}>São José da Barra</option>
+            </SelectField>
+
+            <Button type="submit">Cadastrar</Button>
+          </Form>
+        </FormContainer> 
         <ImageContainer>
           {images.map((imgSrc, index) => (
             <CarouselImage
@@ -167,11 +170,19 @@ const MainContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column; /* para empilhar logo + formulário */
   height: 100vh;
   width: 100%;
-  align-items: center;
+`;
+
+const FormContainer = styled.div`
+  flex: 1;
+  max-width: 33.33%;
+  background-color: #ffffff;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const ImageContainer = styled.div`

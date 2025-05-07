@@ -8,8 +8,10 @@ import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
-import Grafics from "./components/pagina/grafics";
 import AlertsP from "./components/perfil/AlertsP";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Graphics from "./components/pagina/graphics";
+import Climate from "./pages/Climate";
 
 function App() {
   return (
@@ -21,10 +23,16 @@ function App() {
           <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
           <Route path="/cadastro" element={<MainLayout><Cadastro /></MainLayout>} />
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
-          <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
-          <Route path="/grafic" element={<MainLayout><Grafics /></MainLayout>} />
+          <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
           <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
+          <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
+          <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
+          {/* Rotas protegidas agrupadas */}
+          <Route element={<ProtectedRoute />}>
+            
+            
+          </Route>
         </Routes>
       </BrowserRouter>
     </AuthProvider>

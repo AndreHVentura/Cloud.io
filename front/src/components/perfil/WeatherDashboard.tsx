@@ -17,12 +17,12 @@ const WeatherDashboard = () => {
           <ChartTitle>Direção do Vento</ChartTitle>
           <WindDirChart />
         </ChartCard>
-      </ChartRow>
-      <ChartRow>
         <ChartCard>
           <ChartTitle>Velocidade do Vento</ChartTitle>
           <WindSpeedChart />
         </ChartCard>
+      </ChartRow>
+      <ChartRow>
         <ChartCard>
           <ChartTitle>Altura das ondas</ChartTitle>
           <WaveHeightChart />

@@ -1,7 +1,7 @@
 import React from 'react';
 import ApexCharts from 'react-apexcharts';
 
-const WindspeedChart = () => {
+const WaveHeightChart = () => {
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: 'area',
@@ -45,4 +45,4 @@ const WindspeedChart = () => {
   return <ApexCharts options={options} series={series} type="area" height={300} width={650} />;
 };
 
-export default WindspeedChart;
+export default WaveHeightChart;

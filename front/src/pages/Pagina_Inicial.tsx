@@ -18,26 +18,26 @@ const HomePage = () => {
 
       <Features>
         <FeatureCard>
-          <FeatureIcon>O</FeatureIcon>
-          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureIcon>🌩</FeatureIcon>
+          <FeatureTitle>Quem somos</FeatureTitle>
           <FeatureDescription>
-            Descrição sobre o projeto
+            Uma equipe de desenvolvedores empenhada
           </FeatureDescription>
         </FeatureCard>
 
         <FeatureCard>
-          <FeatureIcon>O</FeatureIcon>
-          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureIcon>⚙</FeatureIcon>
+          <FeatureTitle>O projeto</FeatureTitle>
           <FeatureDescription>
-          Descrição sobre o projeto
+            O site exibe dados meteorológicos em tempo real
           </FeatureDescription>
         </FeatureCard>
 
         <FeatureCard>
-          <FeatureIcon>O</FeatureIcon>
-          <FeatureTitle>Placeholder</FeatureTitle>
+          <FeatureIcon>✔</FeatureIcon>
+          <FeatureTitle>Objetivo</FeatureTitle>
           <FeatureDescription>
-            Descrição sobre o projeto
+            Fornecer informações relevantes à população sobre os ventos da região de furnas
           </FeatureDescription>
         </FeatureCard>
       </Features>

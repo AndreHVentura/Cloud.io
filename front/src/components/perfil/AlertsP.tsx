@@ -1,153 +1,151 @@
+import { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Circle,
+  useMap,
+} from "react-leaflet";
+import { LatLngTuple } from "leaflet";
 import styled from "styled-components";
-import AlertsMap from "../pagina/AlertsMap";
-import { useNavigate } from "react-router-dom";
-// import AlertsMap from "./AlertsMap";
+import NavbarPI from "../perfil/NavbarPI"; // ajuste o caminho conforme seu projeto
 
 export default function AlertsP() {
-  const navigate = useNavigate();
-  return(
-    <Container>
-      <Navbar>
-        <Logo>Logo Cloud.io</Logo>
-        <NavGroup>
-          <NavLinks>
-            <NavLink href="/graphic">Gráficos</NavLink>
-            <NavLink href="/alert">Alertas</NavLink>
-            <NavLink href="/climate">Clima</NavLink>
-          </NavLinks>
+  const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
 
-          <AuthButtons>
-            <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
-            <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
-          </AuthButtons>
-        </NavGroup>
-      </Navbar>
-    <AlertsMain>
-      <AlertsFilterDiv>meteorológica</AlertsFilterDiv>
-      <AlertsMessages>Dados da estação dentro do raio de atividade</AlertsMessages>
-      <AlertsMapDiv>
-        <AlertsMap />
-      </AlertsMapDiv>
-    </AlertsMain>
-    </Container>
+  const positions = {
+    station1: [-21.039668, -46.060912] as LatLngTuple,
+    station2: [-20.733301, -45.925631] as LatLngTuple,
+    station3: [-20.792253, -45.702784] as LatLngTuple,
+  };
+
+  return (
+    <>
+      <NavbarPI background="#0e2843" />
+      <AlertsMain>
+        <ButtonGroup>
+          <StationButton onClick={() => setSelectedStation("station1")}>
+            Estação 1
+          </StationButton>
+          <StationButton onClick={() => setSelectedStation("station2")}>
+            Estação 2
+          </StationButton>
+          <StationButton onClick={() => setSelectedStation("station3")}>
+            Estação 3
+          </StationButton>
+        </ButtonGroup>
+        <AlertsMapDiv>
+          <StyledMapContainer
+            center={positions[selectedStation]}
+            zoom={12} // zoom inicial ajustado
+            minZoom={12} // zoom mínimo ajustado para a região
+            maxZoom={14} // zoom máximo ajustado para não ficar tão distante
+            maxBounds={[
+              [-21.2, -46.3], // canto sudoeste
+              [-20.6, -45.5], // canto nordeste
+            ]}
+            maxBoundsViscosity={1.0} // força o limite de movimentação
+          >
+            <MapUpdater position={positions[selectedStation]} />
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <Marker position={positions.station1}>
+              <Popup>Estação 1</Popup>
+            </Marker>
+            <Circle
+              center={positions.station1}
+              radius={10000}
+              pathOptions={{ fillColor: "orange", color: "orange" }}
+            />
+
+            <Marker position={positions.station2}>
+              <Popup>Estação 2</Popup>
+            </Marker>
+            <Circle
+              center={positions.station2}
+              radius={10000}
+              pathOptions={{ fillColor: "lime", color: "lime" }}
+            />
+
+            <Marker position={positions.station3}>
+              <Popup>Estação 3</Popup>
+            </Marker>
+            <Circle
+              center={positions.station3}
+              radius={10000}
+              pathOptions={{ fillColor: "red", color: "red" }}
+            />
+          </StyledMapContainer>
+        </AlertsMapDiv>
+      </AlertsMain>
+    </>
   );
-};
+}
 
-const Container = styled.div`
-  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
-  color: white;
-  min-height: 100vh;
-  font-family: "Poppins", sans-serif;
-`;
+function MapUpdater({ position }: { position: LatLngTuple }) {
+  const map = useMap(); // Aqui você pode acessar o mapa com o hook useMap
+  useEffect(() => {
+    // Quando a posição for alterada, fazemos o flyTo para a nova posição
+    map.flyTo(position, 12, { duration: 1.5 });
+  }, [position, map]);
+  
+  useEffect(() => {
+    // Configura o limite máximo do mapa
+    map.setMaxBounds([
+      [-21.2, -46.3], // canto sudoeste
+      [-20.6, -45.5], // canto nordeste
+    ]);
+  }, [map]); // Isso vai ser executado quando o mapa for carregado
 
-const Navbar = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 4rem;
-`;
-
-const NavGroup = styled.div`
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-`;
-
-const AuthButtons = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-const SignIn = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-`;
-
-const SignUp = styled.button`
-  background: transparent;
-  border: 1px solid white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: white;
-    color: #0e0e1a;
-  }
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-`;
-
-const NavLink = styled.a`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
+  return null;
+}
 
 const AlertsMain = styled.main`
-  height: 100vh;
+  height: calc(100vh - 4rem);
   padding: 2rem;
+  background-color: #0e2843;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  flex-flow: column wrap;
-  background-color: #f8f9fa;
-
-   @media (max-width: 735px) {
-    flex-flow: column-reverse nowrap;
-  }
+  gap: 2rem;
 `;
 
-const AlertsBaseDiv = styled.div`
-  background-color: white;
-  margin: 0.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-`;
-
-const AlertsMapDiv = styled(AlertsBaseDiv)`
-  width: 60%;
+const AlertsMapDiv = styled.div`
+  width: 100%;
   height: 100%;
-
-  @media (max-width: 735px) {
-    width: 100%;
-  }
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
 `;
 
-const AlertsFilterDiv = styled(AlertsBaseDiv)`
-  width: 35%;
-  height: 46%;
-
-  @media (max-width: 735px) {
-    width: auto;
-  }
+const StyledMapContainer = styled(MapContainer)`
+  height: 600px;
+  width: 100%;
 `;
 
-const AlertsMessages = styled(AlertsBaseDiv)`
-  width: 35%;
-  height: 46%;
+const ButtonGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+`;
 
-  @media (max-width: 735px) {
-    width: auto;
+const StationButton = styled.button`
+  background-color: #8b5cf6;
+  color: white;
+  border: 2px solid #6d28d9;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+
+  &:hover {
+    background-color: #6d28d9;
+    transform: scale(1.05);
   }
 `;

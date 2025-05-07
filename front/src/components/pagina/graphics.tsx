@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import AlertsMap from "../pagina/AlertsMap";
 import { useNavigate } from "react-router-dom";
-// import AlertsMap from "./AlertsMap";
+import Graficsmodels from "./graphicsmodel";
 
-export default function AlertsP() {
-  const navigate = useNavigate();
-  return(
+export default function Grafics(){
+  const navigate = useNavigate()
+    return(
     <Container>
       <Navbar>
         <Logo>Logo Cloud.io</Logo>
@@ -17,22 +16,21 @@ export default function AlertsP() {
           </NavLinks>
 
           <AuthButtons>
-            <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
-            <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
+          <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
+          <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
           </AuthButtons>
         </NavGroup>
       </Navbar>
-    <AlertsMain>
-      <AlertsFilterDiv>meteorológica</AlertsFilterDiv>
-      <AlertsMessages>Dados da estação dentro do raio de atividade</AlertsMessages>
-      <AlertsMapDiv>
-        <AlertsMap />
-      </AlertsMapDiv>
-    </AlertsMain>
+      <ButtonGroup>
+        <StationButton>Estação 1</StationButton>
+        <StationButton>Estação 2</StationButton>
+        <StationButton>Estação 3</StationButton>
+      </ButtonGroup>
+      <div><Graficsmodels/></div>
+      {/* <div><ReservoirLevelChart/></div> */}
     </Container>
-  );
-};
-
+    );
+}
 const Container = styled.div`
   background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
   color: white;
@@ -104,50 +102,25 @@ const NavLink = styled.a`
   }
 `;
 
-const AlertsMain = styled.main`
-  height: 100vh;
-  padding: 2rem;
+const ButtonGroup = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-flow: column wrap;
-  background-color: #f8f9fa;
-
-   @media (max-width: 735px) {
-    flex-flow: column-reverse nowrap;
-  }
+  justify-content: center;
+  margin: 3rem 0;
+  gap: 2rem;
 `;
 
-const AlertsBaseDiv = styled.div`
-  background-color: white;
-  margin: 0.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-`;
+const StationButton = styled.button`
+  background-color: #8b5cf6;
+  color: white;
+  border: 2px solid #6d28d9;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
 
-const AlertsMapDiv = styled(AlertsBaseDiv)`
-  width: 60%;
-  height: 100%;
-
-  @media (max-width: 735px) {
-    width: 100%;
-  }
-`;
-
-const AlertsFilterDiv = styled(AlertsBaseDiv)`
-  width: 35%;
-  height: 46%;
-
-  @media (max-width: 735px) {
-    width: auto;
-  }
-`;
-
-const AlertsMessages = styled(AlertsBaseDiv)`
-  width: 35%;
-  height: 46%;
-
-  @media (max-width: 735px) {
-    width: auto;
+  &:hover {
+    background-color: #6d28d9;
+    transform: scale(1.05);
   }
 `;

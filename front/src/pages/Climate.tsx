@@ -1,41 +1,70 @@
+import React, { useState } from "react";
+import TempWidget from "../components/widgets/TempWidget";
+import HumWidget from "../components/widgets/HumWidget";
+import PressWidget from "../components/widgets/PressWidget";
+import TempCabineWidget from "../components/widgets/TempCabineWidget";
+import ChargeWidget from "../components/widgets/ChargeWidget";
+import SolarRadiationWidget from "../components/widgets/SolarRadiationWidget";
 import styled from "styled-components";
+import { navigate } from "ionicons/icons";
 import { useNavigate } from "react-router-dom";
-import Graficsmodels from "./graficsmodel";
 
-export default function Grafics(){
+export default function Climate() {
+
   const navigate = useNavigate()
-    return(
+
+  return (
     <Container>
       <Navbar>
         <Logo>Logo Cloud.io</Logo>
         <NavGroup>
           <NavLinks>
-            <NavLink href="/grafic">Gráficos</NavLink>
+            <NavLink href="/graphic">Gráficos</NavLink>
             <NavLink href="/alert">Alertas</NavLink>
-            <NavLink href="#">Clima</NavLink>
+            <NavLink href="/climate">Clima</NavLink>
           </NavLinks>
 
           <AuthButtons>
-          <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
-          <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
+            <SignIn onClick={() => navigate("/login")}>Login</SignIn>
+            <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
           </AuthButtons>
         </NavGroup>
       </Navbar>
-      <ButtonGroup>
-        <StationButton>Estação 1</StationButton>
-        <StationButton>Estação 2</StationButton>
-        <StationButton>Estação 3</StationButton>
-      </ButtonGroup>
-      <div><Graficsmodels/></div>
-      {/* <div><ReservoirLevelChart/></div> */}
-    </Container>
-    );
+      <Main>
+        <MainDiv>
+          <WidgetsContainer>
+            <TempWidget />
+            <HumWidget />
+            <PressWidget />
+            <TempCabineWidget />
+            <ChargeWidget />
+            <SolarRadiationWidget />
+          </WidgetsContainer>
+        </MainDiv>
+      </Main>
+</Container>
+  );
 }
+
 const Container = styled.div`
   background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
   color: white;
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
+`;
+
+
+const Main = styled.main`
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  background-color: whitesmoke;
+`;
+
+const MainDiv = styled.div`
+  max-width: 1200px;
+  width: 100%;
 `;
 
 const Navbar = styled.nav`
@@ -102,25 +131,9 @@ const NavLink = styled.a`
   }
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 3rem 0;
-  gap: 2rem;
-`;
-
-const StationButton = styled.button`
-  background-color: #8b5cf6;
-  color: white;
-  border: 2px solid #6d28d9;
-  padding: 1rem 2rem;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-
-  &:hover {
-    background-color: #6d28d9;
-    transform: scale(1.05);
-  }
+const WidgetsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
 `;

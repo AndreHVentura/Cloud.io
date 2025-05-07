@@ -24,13 +24,14 @@ function App() {
           <Route path="/cadastro" element={<MainLayout><Cadastro /></MainLayout>} />
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
-
+          <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
+          <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
+          <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
+          <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
           {/* Rotas protegidas agrupadas */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
-            <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
-            <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
-            <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
+            
+            
           </Route>
         </Routes>
       </BrowserRouter>

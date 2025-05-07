@@ -8,7 +8,7 @@ export default function NavbarPI({ background = "transparent" }) {
       <img src={ImgLogo} alt="logo" width={"45rem"} height={"45rem"} />
       <NavGroup>
         <NavLinks>
-          <PagISNavLink to="/grafic">Gráficos</PagISNavLink>
+          <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
           <PagISNavLink to="/alert">Alertas</PagISNavLink>
           <PagISNavLink to="/">Clima</PagISNavLink>
         </NavLinks>

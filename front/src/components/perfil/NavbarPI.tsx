@@ -1,16 +1,16 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import ImgLogo from "../../logo/icone-nuvem.png"
+import ImgLogo from "../../logo/icone-nuvem.png";
 
-export default function NavbarPI() {
+export default function NavbarPI({ background = "transparent" }) {
   return (
-    <Navbar>
-      <img src={ImgLogo} alt="logo" width={"45rem"} height={"45rem"}/>
+    <Navbar style={{ backgroundColor: background }}>
+      <img src={ImgLogo} alt="logo" width={"45rem"} height={"45rem"} />
       <NavGroup>
         <NavLinks>
-          <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
+          <PagISNavLink to="/grafic">Gráficos</PagISNavLink>
           <PagISNavLink to="/alert">Alertas</PagISNavLink>
-          <PagISNavLink to="/climate">Clima</PagISNavLink>
+          <PagISNavLink to="/">Clima</PagISNavLink>
         </NavLinks>
 
         <AuthButtons>
@@ -20,8 +20,9 @@ export default function NavbarPI() {
       </NavGroup>
     </Navbar>
   );
-};
+}
 
+// Styled components
 const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -29,6 +30,7 @@ const Navbar = styled.nav`
   padding: 2rem 4rem;
   width: 100%;
   height: 4rem;
+  background-color: inherit; /* Herda da prop inline */
 `;
 
 const NavGroup = styled.div`
@@ -70,7 +72,7 @@ const BotaoLogin = styled(NavLink)`
   transition: 0.3s;
 
   &:hover {
-    color: #8b5cf6
+    color: #8b5cf6;
   }
 `;
 

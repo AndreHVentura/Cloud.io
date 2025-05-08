@@ -91,6 +91,10 @@ const SignIn = styled.button`
   color: white;
   font-size: 1rem;
   cursor: pointer;
+  
+  &:hover {
+    color: #8b5cf6;
+  }
 `;
 
 const SignUp = styled.button`

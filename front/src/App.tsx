@@ -22,16 +22,17 @@ function App() {
           <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
           <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
           <Route path="/cadastro" element={<MainLayout><Cadastro /></MainLayout>} />
-          <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
-          <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
+          {/* <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/history" element={<MainLayout><Historico /></MainLayout>} /> */}
           <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
           <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
-          <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
+          {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
           <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
           {/* Rotas protegidas agrupadas */}
           <Route element={<ProtectedRoute />}>
-            
-            
+          <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
+          <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
+          <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
           </Route>
         </Routes>
       </BrowserRouter>

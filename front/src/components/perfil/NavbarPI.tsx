@@ -10,7 +10,7 @@ export default function NavbarPI({ background = "transparent" }) {
         <NavLinks>
           <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
           <PagISNavLink to="/alert">Alertas</PagISNavLink>
-          <PagISNavLink to="/">Clima</PagISNavLink>
+          <PagISNavLink to="/climate">Clima</PagISNavLink>
         </NavLinks>
 
         <AuthButtons>

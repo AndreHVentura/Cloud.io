@@ -9,9 +9,9 @@ Cloud.io é um software meteorológico com o objetivo de manter as pessoas infor
 # 🗂️SPRINTS
 | Sprint | Data de Início | Data de Entrega | Status |
 |---------------------|--------------------|---------------------|--------------------| 
-|  1  | :calendar:  ➡ (24/03/2025) | 📆 ➡ (14/04/2025) |  em andamento |            
-|  2  | :calendar:  ➡ (16/04/2025) | 📆 ➡ (12/05/2025) |  em andamento |
-|  3  | :calendar:  ➡ (14/05/2025) | 📆 ➡ (09/06/2025)|  em andamento |
+|  1  | :calendar:  ➡ (24/03/2025) | 📆 ➡ (14/04/2025) |  Encerrado |            
+|  2  | :calendar:  ➡ (16/04/2025) | 📆 ➡ (12/05/2025) |  Em andamento |
+|  3  | :calendar:  ➡ (14/05/2025) | 📆 ➡ (09/06/2025)|  A ser iniciado |
 
 
 # 📑PRODUCT BACKLOG

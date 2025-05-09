@@ -7,6 +7,8 @@ import LogoAlternativo from "../logo/icone-nuvem.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
+import { IonIcon } from "@ionic/react";
+import { Icons } from "../components/perfil/Icons";
 
 const images = [lagoFurnas, capitolio, nuvens];
 
@@ -16,6 +18,15 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [pwdVisible, setPwdVisible] = useState("password");
+
+  const changeVisibility = () => {
+    if(pwdVisible === "password") {
+      setPwdVisible("text");
+    } else {
+      setPwdVisible("password");
+    }
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +71,13 @@ const Login: React.FC = () => {
             <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
             <InputLabel htmlFor="senha">Senha</InputLabel>
-            <InputField type="password" id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+            <InputLabelWrapper>
+              <InputField type={pwdVisible} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+              <PasswordVisibilityBtn type="button" onClick={changeVisibility}>
+                <IonIcon icon={Icons.eyeOutline} />
+              </PasswordVisibilityBtn>
+            </InputLabelWrapper>
+            
 
             <OptionsRow>
               <CheckboxWrapper>
@@ -244,4 +261,13 @@ const CarouselImage = styled.img<{ isVisible: boolean }>`
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transition: opacity 1s ease-in-out;
   pointer-events: none;
+`;
+
+const InputLabelWrapper = styled.div`
+`;
+
+const PasswordVisibilityBtn = styled.button`
+  background: none;
+  border: none;
+  position: absolute;
 `;

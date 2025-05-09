@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { IonIcon } from './Icons';
 import { Icons } from "./Icons";
+import Notificacao from "./Notificacao";
 
 
 const Path = (props: any) => (
@@ -18,7 +19,7 @@ export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNa
   return(
       <Upperdiv>
           <NotificationIcon>
-            <IonStyledIcon icon={Icons.notificationsCircleSharp} />
+            <Notificacao/>
           </NotificationIcon>
           <IonStyledIcon icon={Icons.personCircleSharp} />
           <P>Usuário</P>
@@ -112,5 +113,6 @@ const ToggleDiv = styled.div`
 `;
 
 const NotificationIcon = styled.div`
+  padding-top: 4px;
   margin-left: 1rem;
 `;

@@ -10,6 +10,8 @@ import {
   settingsSharp,
   informationCircle,
   logOut,
+  eyeOutline,
+  eyeOffOutline
 } from "ionicons/icons";
 
 export const Icons = {
@@ -23,6 +25,8 @@ export const Icons = {
   settingsSharp,
   informationCircle,
   logOut,
+  eyeOutline,
+  eyeOffOutline
 };
 
 export { IonIcon };

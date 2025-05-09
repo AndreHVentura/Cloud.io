@@ -21,7 +21,7 @@ const HomePage = () => {
           <FeatureIcon>🌩</FeatureIcon>
           <FeatureTitle>Quem somos</FeatureTitle>
           <FeatureDescription>
-            Uma equipe de desenvolvedores empenhada
+            Somos uma equipe de desenvolvedores de websites focados em criar plataformas digitais intuitivas e funcionais, sempre com o objetivo de otimizar a experiência do usuário
           </FeatureDescription>
         </FeatureCard>
 
@@ -29,7 +29,7 @@ const HomePage = () => {
           <FeatureIcon>⚙</FeatureIcon>
           <FeatureTitle>O projeto</FeatureTitle>
           <FeatureDescription>
-            O site exibe dados meteorológicos em tempo real
+            Este projeto é um site meteorológico que monitora e identifica fortes ventos em tempo real, oferecendo alertas precisos para ajudar os usuários a se prepararem e se protegerem contra condições climáticas adversas
           </FeatureDescription>
         </FeatureCard>
 
@@ -37,7 +37,7 @@ const HomePage = () => {
           <FeatureIcon>✔</FeatureIcon>
           <FeatureTitle>Objetivo</FeatureTitle>
           <FeatureDescription>
-            Fornecer informações relevantes à população sobre os ventos da região de furnas
+            Fornecer informações relevantes à população sobre os ventos na região de Furnas, com o objetivo de prevenir situações de alto risco e garantir a segurança da comunidade
           </FeatureDescription>
         </FeatureCard>
       </Features>

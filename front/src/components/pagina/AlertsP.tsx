@@ -9,7 +9,8 @@ import {
 } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import styled from "styled-components";
-import NavbarPI from "../perfil/NavbarPI"; // ajuste o caminho conforme seu projeto
+import { useNavigate } from "react-router-dom";
+//import NavbarPI from "../perfil/NavbarPI"; 
 
 export default function AlertsP() {
   const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
@@ -20,9 +21,24 @@ export default function AlertsP() {
     station3: [-20.792253, -45.702784] as LatLngTuple,
   };
 
+  const navigate = useNavigate()
   return (
     <>
-      <NavbarPI background="#0e2843" />
+      <Navbar>
+        <Logo>Logo Cloud.io</Logo>
+        <NavGroup>
+          <NavLinks>
+            <NavLink href="/graphic">Gráficos</NavLink>
+            <NavLink href="/alert">Alertas</NavLink>
+            <NavLink href="/climate">Clima</NavLink>
+          </NavLinks>
+
+          <AuthButtons>
+          <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
+          <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
+          </AuthButtons>
+        </NavGroup>
+      </Navbar>
       <AlertsMain>
         <ButtonGroup>
           <StationButton onClick={() => setSelectedStation("station1")}>
@@ -128,17 +144,87 @@ const StyledMapContainer = styled(MapContainer)`
   width: 100%;
 `;
 
+
+const Navbar = styled.nav`
+  background-color: #0e2843;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 4rem;
+`;
+
+const NavGroup = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+`;
+
+const AuthButtons = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const SignIn = styled.button`
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
+const SignUp = styled.button`
+  background: transparent;
+  border: 1px solid white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background: white;
+    color: #0e0e1a;
+  }
+`;
+
+const Logo = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
+const NavLinks = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+`;
+
+const NavLink = styled.a`
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
 const ButtonGroup = styled.div`
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  margin: 3rem 0;
+  gap: 2rem;
 `;
 
 const StationButton = styled.button`
   background-color: #8b5cf6;
   color: white;
   border: 2px solid #6d28d9;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 2rem;
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;

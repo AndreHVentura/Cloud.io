@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import GlobalStyle from "./styles/globalStyle";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
-import AlertsP from "./components/perfil/AlertsP";
+import AlertsP from "./components/pagina/AlertsP";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
@@ -28,11 +28,14 @@ function App() {
           <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
           {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
           <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
-          {/* Rotas protegidas agrupadas */}
-          <Route element={<ProtectedRoute />}>
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
           <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
+          {/* Rotas protegidas agrupadas */}
+          <Route element={<ProtectedRoute />}>
+          {/* <Route path="/home" element={<MainLayout><Home /></MainLayout>} /> */}
+          {/* <Route path="/history" element={<MainLayout><Historico /></MainLayout>} /> */}
+          {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

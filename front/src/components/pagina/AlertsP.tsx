@@ -9,10 +9,11 @@ import {
 } from "react-leaflet";
 import { LatLngTuple } from "leaflet";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Logo_minimalista from "../../logo/Logo_minimalista.png";
 //import NavbarPI from "../perfil/NavbarPI"; 
 
-export default function AlertsP() {
+export default function AlertsP({ background = "navblue" }) {
   const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
 
   const positions = {
@@ -21,21 +22,22 @@ export default function AlertsP() {
     station3: [-20.792253, -45.702784] as LatLngTuple,
   };
 
-  const navigate = useNavigate()
+  
   return (
     <>
-      <Navbar>
-        <Logo>Logo Cloud.io</Logo>
+      <Navbar style={{ backgroundColor: background }}>
+        <img src={Logo_minimalista} alt="logo" width={"200px"} height={"200px"} />
         <NavGroup>
           <NavLinks>
-            <NavLink href="/graphic">Gráficos</NavLink>
-            <NavLink href="/alert">Alertas</NavLink>
-            <NavLink href="/climate">Clima</NavLink>
+            <PagISNavLink to="/homepage">Início</PagISNavLink>
+            <PagISNavLink to="/climate">Clima</PagISNavLink>
+            <PagISNavLink to="/alert">Alertas</PagISNavLink>
+            <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
           </NavLinks>
 
           <AuthButtons>
-          <SignIn  onClick={() => navigate("/login")}>Login</SignIn>
-          <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
+            <BotaoLogin to="/login">Login</BotaoLogin>
+            <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
           </AuthButtons>
         </NavGroup>
       </Navbar>
@@ -153,6 +155,49 @@ const Navbar = styled.nav`
   padding: 2rem 4rem;
 `;
 
+const PagISNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
+const BotaoLogin = styled(NavLink)`
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  padding-top: 8px;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
+const BotaoCadastro = styled(NavLink)`
+  background: transparent;
+  border: 1px solid white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+
+  &:hover {
+    background: white;
+    color: #0e0e1a;
+  }
+`;
+
 const NavGroup = styled.div`
   display: flex;
   gap: 2rem;
@@ -164,37 +209,7 @@ const AuthButtons = styled.div`
   gap: 1rem;
 `;
 
-const SignIn = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
 
-const SignUp = styled.button`
-  background: transparent;
-  border: 1px solid white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: white;
-    color: #0e0e1a;
-  }
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
 
 const NavLinks = styled.div`
   display: flex;
@@ -202,16 +217,6 @@ const NavLinks = styled.div`
   align-items: center;
 `;
 
-const NavLink = styled.a`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
 
 const ButtonGroup = styled.div`
   display: flex;

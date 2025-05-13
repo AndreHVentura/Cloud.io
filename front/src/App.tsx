@@ -27,6 +27,7 @@ function App() {
           <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
           <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
           {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
+          <Route path="/homepage" element={<MainLayout><HomePage /></MainLayout>} />
           <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
           <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
           <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />

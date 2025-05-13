@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
 import TempWidget from "../components/widgets/TempWidget";
 import HumWidget from "../components/widgets/HumWidget";
 import PressWidget from "../components/widgets/PressWidget";
@@ -7,26 +7,26 @@ import ChargeWidget from "../components/widgets/ChargeWidget";
 import SolarRadiationWidget from "../components/widgets/SolarRadiationWidget";
 import styled from "styled-components";
 import { navigate } from "ionicons/icons";
-import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import Logo_minimalista from "../logo/Logo_minimalista.png";
 
-export default function Climate() {
-
-  const navigate = useNavigate()
+export default function Climate({ background = "navblue" }) {
 
   return (
     <Container>
-      <Navbar>
-        <Logo>Logo Cloud.io</Logo>
+      <Navbar style={{ backgroundColor: background }}>
+        <img src={Logo_minimalista} alt="logo" width={"200px"} height={"200px"} />
         <NavGroup>
           <NavLinks>
-            <NavLink href="/graphic">Gráficos</NavLink>
-            <NavLink href="/alert">Alertas</NavLink>
-            <NavLink href="/climate">Clima</NavLink>
+            <PagISNavLink to="/homepage">Início</PagISNavLink>
+            <PagISNavLink to="/climate">Clima</PagISNavLink>
+            <PagISNavLink to="/alert">Alertas</PagISNavLink>
+            <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
           </NavLinks>
 
           <AuthButtons>
-            <SignIn onClick={() => navigate("/login")}>Login</SignIn>
-            <SignUp onClick={() => navigate("/cadastro")}>Cadastrar</SignUp>
+            <BotaoLogin to="/login">Login</BotaoLogin>
+            <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
           </AuthButtons>
         </NavGroup>
       </Navbar>
@@ -42,7 +42,7 @@ export default function Climate() {
           </WidgetsContainer>
         </MainDiv>
       </Main>
-</Container>
+    </Container>
   );
 }
 
@@ -74,6 +74,49 @@ const Navbar = styled.nav`
   padding: 2rem 4rem;
 `;
 
+const PagISNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
+const BotaoLogin = styled(NavLink)`
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  padding-top: 8px;
+  transition: 0.3s;
+
+  &:hover {
+    color: #8b5cf6;
+  }
+`;
+
+const BotaoCadastro = styled(NavLink)`
+  background: transparent;
+  border: 1px solid white;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-decoration: none;
+
+  &:hover {
+    background: white;
+    color: #0e0e1a;
+  }
+`;
+
 const NavGroup = styled.div`
   display: flex;
   gap: 2rem;
@@ -85,54 +128,12 @@ const AuthButtons = styled.div`
   gap: 1rem;
 `;
 
-const SignIn = styled.button`
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
 
-const SignUp = styled.button`
-  background: transparent;
-  border: 1px solid white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: white;
-    color: #0e0e1a;
-  }
-`;
-
-const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-`;
 
 const NavLinks = styled.div`
   display: flex;
   gap: 2rem;
   align-items: center;
-`;
-
-const NavLink = styled.a`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-
-  &:hover {
-    color: #8b5cf6;
-  }
 `;
 
 const WidgetsContainer = styled.div`

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import styled from "styled-components";
-import LogoAlternativo from "../logo/icone-nuvem.png";
+import Logo_cloud from "../logo/Logo_cloud.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
     <MainContainer>
       <Container>
         <LoginContainer>
-          <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
+          <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
@@ -152,7 +152,7 @@ const Logo = styled.h1`
 `;
 
 const LogoImage = styled.img`
-  width: 120px;
+  width: 70%;
   margin-bottom: 5px;
   object-fit: contain;
 `;

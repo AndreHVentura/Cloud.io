@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import styled from "styled-components";
-import LogoAlternativo from "../logo/icone-nuvem.png";
+import Logo_cloud from "../logo/Logo_cloud.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
@@ -84,7 +84,7 @@ const Cadastro: React.FC = () => {
     <MainContainer>
       <Container>
         <FormContainer>
-          <LogoImage src={LogoAlternativo} alt="Logo Alternativo" />
+          <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
           <Form onSubmit={handleSubmit}>
@@ -215,7 +215,7 @@ const Logo = styled.h1`
 `;
 
 const LogoImage = styled.img`
-  width: 120px;
+  width: 30%;
   margin-bottom: 5px;
   object-fit: contain;
 `;

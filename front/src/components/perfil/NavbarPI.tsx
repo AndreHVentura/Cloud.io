@@ -1,16 +1,17 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import ImgLogo from "../../logo/icone-nuvem.png";
+import Logo_minimalista from "../../logo/Logo_minimalista.png";
 
 export default function NavbarPI({ background = "transparent" }) {
   return (
     <Navbar style={{ backgroundColor: background }}>
-      <img src={ImgLogo} alt="logo" width={"45rem"} height={"45rem"} />
+      <img src={Logo_minimalista} alt="logo" width={"200px"} height={"200px"} />
       <NavGroup>
         <NavLinks>
-          <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
-          <PagISNavLink to="/alert">Alertas</PagISNavLink>
+          <PagISNavLink to="/homepage">Início</PagISNavLink>
           <PagISNavLink to="/climate">Clima</PagISNavLink>
+          <PagISNavLink to="/alert">Alertas</PagISNavLink>
+          <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
         </NavLinks>
 
         <AuthButtons>

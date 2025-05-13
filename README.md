@@ -1,6 +1,6 @@
 # 🚀 Cloud.IO
 
-<img src='./logo/cloud.io_logo.jpeg' widht='200'/>
+<img src='' widht='200'/>
 
 <h1>DESCRIÇÃO:</h1>    
 Cloud.io é um software meteorológico com o objetivo de manter as pessoas informadas sobre condições climáticas extremas. A principal função é o monitoramento do clima e a emissão de alertar para a população sobre fortes ventos na região, garantindo mais segurança e antecedência para evitar situações de risco.
@@ -37,7 +37,7 @@ Cloud.io é um software meteorológico com o objetivo de manter as pessoas infor
 
 # BURNDOWN SP1
  <div align = center>
- <img src="https://github.com/">
+ <img src="./imagens/burndown1.PNG">
  </div>
 
 -----------------------------------------------------------------------------------

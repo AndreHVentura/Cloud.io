@@ -78,7 +78,18 @@ const Subtitle = styled.p`
 `;
 
 const BotaoIniciarSessao = styled(NavLink)`
-  background: #6366f1;
+  @property --myColor1 {
+    syntax: '<color>';
+    initial-value: #2A7B9B;
+    inherits: false;
+  }
+  
+  @property --myColor2 {
+    syntax: '<color>';
+    initial-value: #57C785;
+    inherits: false;
+  }
+
   color: white;
   padding: 0.75rem 2rem;
   border: none;
@@ -86,9 +97,12 @@ const BotaoIniciarSessao = styled(NavLink)`
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
+  background: linear-gradient(90deg, var(--myColor1), var(--myColor2));
+  transition: --myColor1 500ms, --myColor2 500ms;
 
   &:hover {
-    background: #4f46e5;
+    --myColor1: #57C785;
+    --myColor2: #EDDD53;
   }
 `;
 
@@ -107,7 +121,7 @@ const FeatureCard = styled.div`
 `;
 
 const FeatureIcon = styled.div`
-  background: #6366f1;
+  background: #2A7B9B;
   width: 60px;
   height: 60px;
   margin: 0 auto 1rem auto;

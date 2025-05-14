@@ -53,7 +53,7 @@ const PagISNavLink = styled(NavLink)`
   transition: 0.3s;
 
   &:hover {
-    color: #8b5cf6;
+    color: #57C785;
   }
 `;
 
@@ -73,7 +73,7 @@ const BotaoLogin = styled(NavLink)`
   transition: 0.3s;
 
   &:hover {
-    color: #8b5cf6;
+    color: #57C785;
   }
 `;
 
@@ -90,6 +90,6 @@ const BotaoCadastro = styled(NavLink)`
 
   &:hover {
     background: white;
-    color: #0e0e1a;
+    color: #57C785;
   }
 `;

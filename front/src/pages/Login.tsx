@@ -18,15 +18,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [senha, setSenha] = useState<string>('');
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [pwdVisible, setPwdVisible] = useState("password");
-
-  const changeVisibility = () => {
-    if(pwdVisible === "password") {
-      setPwdVisible("text");
-    } else {
-      setPwdVisible("password");
-    }
-  }
+  const [pwdVisible, setPwdVisible] = useState(true);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,9 +64,9 @@ const Login: React.FC = () => {
 
             <InputLabel htmlFor="senha">Senha</InputLabel>
             <InputLabelWrapper>
-              <InputField type={pwdVisible} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-              <PasswordVisibilityBtn type="button" onClick={changeVisibility}>
-                <IonIcon icon={Icons.eyeOutline} />
+              <InputField type={pwdVisible?"password":"text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+              <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
+                <IonIcon icon={pwdVisible?Icons.eyeOutline:Icons.eyeOffOutline} />
               </PasswordVisibilityBtn>
             </InputLabelWrapper>
             

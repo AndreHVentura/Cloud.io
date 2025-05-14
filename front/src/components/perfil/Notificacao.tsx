@@ -8,8 +8,17 @@ export default function Notificacao() {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
-    
-  });
+    function clickOutside(event) {
+      if (isOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    window.addEventListener("mousedown", clickOutside);
+    return () => {
+      document.removeEventListener("mousedown", clickOutside);
+    }
+  }, [isOpen, dropdownRef]);
 
   return (
     <>

@@ -1,36 +1,49 @@
-import { useEffect, useRef, useState } from 'react';
-import { IonIcon } from './Icons';
+import { useEffect, useRef, useState } from "react";
+import { IonIcon } from "./Icons";
 import { Icons } from "./Icons";
 import styled from "styled-components";
 
 export default function Notificacao() {
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownBtn = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    function clickOutside(event) {
-      if (isOpen && dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
+    function clickOutside(event: MouseEvent) {
+      if (
+        dropdownBtn.current &&
+        !dropdownBtn.current.contains(event.target as Node)
+      ) {
+        if (
+          isOpen &&
+          dropdownRef.current &&
+          !dropdownRef.current.contains(event.target as Node)
+        ) {
+          setIsOpen(false);
+        }
       }
     }
 
-    window.addEventListener("mousedown", clickOutside);
+    document.addEventListener("mousedown", clickOutside);
     return () => {
       document.removeEventListener("mousedown", clickOutside);
-    }
-  }, [isOpen, dropdownRef]);
+    };
+  }, [isOpen]);
 
   return (
     <>
-      <DropdownBtn onClick={() => setIsOpen(prevState => !prevState)}>
-        <IonIcon icon={Icons.notificationsCircleSharp}/>
-      </DropdownBtn> 
+      <DropdownBtn
+        onClick={() => setIsOpen((prevState) => !prevState)}
+        ref={dropdownBtn}
+      >
+        <IonIcon icon={Icons.notificationsCircleSharp} />
+      </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
         <p>Alerta de ventos fortes</p>
       </DropdownMenu>
     </>
   );
-};
+}
 
 const DropdownBtn = styled.button`
   display: inline-block;
@@ -53,12 +66,18 @@ const DropdownMenu = styled.div`
   min-width: 150px;
   min-height: 200px;
   padding: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
 
-  &.hide {display: none;}
-  &.show {display: block;}
+  &.hide {
+    display: none;
+  }
+  &.show {
+    display: block;
+  }
 
-  & p {color: black;}
+  & p {
+    color: black;
+  }
 `;

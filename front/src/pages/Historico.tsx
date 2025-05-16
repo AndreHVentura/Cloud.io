@@ -1,19 +1,24 @@
 import { useState } from "react";
 import NavBar from "../components/perfil/Navbar";
 import Topbar from "../components/perfil/Topbar";
-import styled from "styled-components";
 import { ButtonGroup, Container, StyledTable } from "../styles/historico";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import MyDocument from "../styles/pdf";
 
 export default function Historico() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const toggleNav = () => setIsNavOpen(!isNavOpen);
+  const tableData = [
+    { date: "2021-10-01", time: "10:00", tempC: 25, hum: 60, pressBar: 1013, tempCabine: 22, charge: 75, srWm2: 500, windPeakMs: 15, windSpeedAvg: 5, windDirInst: "N", windDirAvg: "NE", waveHeight: 2 },
+    { date: "2021-10-02", time: "11:00", tempC: 26, hum: 55, pressBar: 1012, tempCabine: 23, charge: 80, srWm2: 550, windPeakMs: 14, windSpeedAvg: 6, windDirInst: "S", windDirAvg: "SW", waveHeight: 1.8 },
+    // Adicione mais dados conforme necessário
+  ];
+
     
     return(
         <>
          <NavBar isOpen={isNavOpen} />
          <Topbar helper={toggleNav} isNavOpen={isNavOpen} />
-
-        {/* <>Graficos com registros meterologicos do dia ,com filtro para registros passados</> */}
         <br></br>
         <Container>
       <ButtonGroup>
@@ -26,21 +31,8 @@ export default function Historico() {
       <StyledTable>
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Temp_C</th>
-            <th>Hum_%</th>
-            <th>Press_Bar</th>
-            <th>TempCabine_C</th>
-            <th>Charge</th>
-            <th>SR_Wm2</th>
-            <th>WindPeak_ms</th>
-            <th>WindSpeed_Avg</th>
-            <th>WindDir_Inst</th>
-            <th>WindDir_Avg</th>
-            <th>Wave_height</th>
             <th>Data</th>
-        {/* <th>Hora</th>
+            <th>Hora</th>
             <th>Temperatura (°C)</th>
             <th>Umidade (%)</th>
             <th>Pressão (Bar)</th>
@@ -51,27 +43,32 @@ export default function Historico() {
             <th>Vel. Média do Vento (m/s)</th>
             <th>Dir. Inst. do Vento</th>
             <th>Dir. Média do Vento</th>
-            <th>Altura da Onda</th> */}
+            <th>Altura da Onda</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            {/* <td id="Date"></td>
-            <td id="Time"></td>
-            <td id="Temp_C"></td>
-            <td id="Hum_%"></td>
-            <td id="Press_Bar"></td>
-            <td id="TempCabine_C"></td>
-            <td id="Charge"></td>
-            <td id="SR_Wm2"></td>
-            <td id="WindPeak_ms"></td>
-            <td id="WindSpeed_Avg"></td>
-            <td id="WindDir_Inst"></td>
-            <td id="WindDir_Avg"></td>
-            <td id="Wave_height"></td> */}
-          </tr>
-        </tbody>
+            {tableData.map((row, index) => (
+              <tr key={index}>
+                <td>{row.date}</td>
+                <td>{row.time}</td>
+                <td>{row.tempC}</td>
+                <td>{row.hum}</td>
+                <td>{row.pressBar}</td>
+                <td>{row.tempCabine}</td>
+                <td>{row.charge}</td>
+                <td>{row.srWm2}</td>
+                <td>{row.windPeakMs}</td>
+                <td>{row.windSpeedAvg}</td>
+                <td>{row.windDirInst}</td>
+                <td>{row.windDirAvg}</td>
+                <td>{row.waveHeight}</td>
+              </tr>
+            ))}
+          </tbody>
       </StyledTable>
+      <PDFDownloadLink document={<MyDocument />} fileName="relatorio_meteológico.pdf">
+          {({ loading }) => (loading ? 'Carregando PDF...' : 'Baixar Relatório em PDF')}
+        </PDFDownloadLink>
     </Container>
         </>
     )

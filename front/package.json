@@ -5,6 +5,7 @@
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@ionic/react": "^8.5.4",
+    "@react-pdf/renderer": "^4.3.0",
     "apexcharts": "^4.5.0",
     "axios": "^1.7.9",
     "chart.js": "^4.4.8",

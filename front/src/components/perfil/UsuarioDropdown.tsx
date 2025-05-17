@@ -39,9 +39,15 @@ export default function UsuarioDropdown() {
         <IonIcon icon={Icons.personCircleSharp} />
       </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
-        <p>Perfil</p>
-        <p>Configurações</p>
-        <p>Sair</p>
+        <MenuItem>
+          <IonIcon icon={Icons.home} /> <span>Meu Perfil</span>
+        </MenuItem>
+        <MenuItem>
+          <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>
+        </MenuItem>
+        <MenuItem>
+          <IonIcon icon={Icons.logOut} /> <span>Sair</span>
+        </MenuItem>
       </DropdownMenu>
     </>
   );
@@ -53,6 +59,7 @@ const DropdownBtn = styled.button`
   margin: 0;
   border: 0;
   background: transparent;
+  cursor: pointer;
 
   & ion-icon {
     display: block;
@@ -60,30 +67,58 @@ const DropdownBtn = styled.button`
     height: 2rem;
     color: white;
   }
+
+  &:hover ion-icon {
+    color: #aaa; /* Cor ao passar o mouse */
+  }
 `;
 
 const DropdownMenu = styled.div`
   position: absolute;
-  right: 1rem;
-  background-color: white;
-  min-width: 150px;
-  padding: 10px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  botton: 100px;
+  right: 0;
+  background-color: #333; /* Fundo escuro */
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-out;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 
   &.hide {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
   }
-  &.show {
-    display: block;
+`;
+
+const MenuItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #444; /* Cor de fundo ao passar o mouse */
   }
 
-  & p {
-    color: black;
-    cursor: pointer;
+  ion-icon {
+    margin-right: 10px;
+    font-size: 1.2rem;
   }
-  & p:hover {
-    background-color: #f0f0f0;
+
+  span {
+    font-size: 1rem;
   }
 `;

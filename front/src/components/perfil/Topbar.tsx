@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { IonIcon } from './Icons';
 import { Icons } from "./Icons";
 import Notificacao from "./Notificacao";
-
+import UsuarioDropdown from "./UsuarioDropdown"; // Importar o componente que criamos
 
 const Path = (props: any) => (
   <motion.path
@@ -19,9 +19,9 @@ export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNa
   return(
       <Upperdiv>
           <NotificationIcon>
-            <Notificacao/>
+            <Notificacao />
           </NotificationIcon>
-          <IonStyledIcon icon={Icons.personCircleSharp} />
+          <UsuarioDropdown /> {/* Adicionar o dropdown do usuário */}
           <P>Usuário</P>
           <ToggleDiv>
             <MenuToggle toggle={helper} isOpen={isNavOpen} />
@@ -59,7 +59,7 @@ const MenuToggle = ({ toggle, isOpen }: { toggle: () => void, isOpen: boolean })
       </svg>
   </Button>
 );
-  
+
 const Upperdiv = styled.div`
   background-color: #191919; 
   height: 3rem;
@@ -71,7 +71,6 @@ const Upperdiv = styled.div`
   padding: 0 1rem;
   position: relative;
   z-index: 3;
-
 `;
 
 const IonStyledIcon = styled(IonIcon)`

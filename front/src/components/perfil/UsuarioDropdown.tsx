@@ -76,7 +76,8 @@ const DropdownBtn = styled.button`
 const DropdownMenu = styled.div`
   position: absolute;
   botton: 100px;
-  right: 0;
+  right: 3rem;
+  top: 2.7rem;
   background-color: #333; /* Fundo escuro */
   min-width: 200px;
   padding: 1rem;

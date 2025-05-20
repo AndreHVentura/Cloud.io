@@ -63,12 +63,12 @@ const Login: React.FC = () => {
             <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
             <InputLabel htmlFor="senha">Senha</InputLabel>
-            <InputLabelWrapper>
-              <InputField type={pwdVisible?"password":"text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+            <div style={{position: "relative"}}>
+              <InputField type={pwdVisible ? "password" : "text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
               <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
-                <IonIcon icon={pwdVisible?Icons.eyeOutline:Icons.eyeOffOutline} />
+                <IonIcon icon={pwdVisible ? Icons.eyeOutline : Icons.eyeOffOutline} />
               </PasswordVisibilityBtn>
-            </InputLabelWrapper>
+            </div>
             
 
             <OptionsRow>
@@ -255,11 +255,10 @@ const CarouselImage = styled.img<{ isVisible: boolean }>`
   pointer-events: none;
 `;
 
-const InputLabelWrapper = styled.div`
-`;
-
 const PasswordVisibilityBtn = styled.button`
   background: none;
   border: none;
   position: absolute;
+  top: 13px;
+  right: 20px;
 `;

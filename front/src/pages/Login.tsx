@@ -65,9 +65,9 @@ const Login: React.FC = () => {
             <InputLabel htmlFor="senha">Senha</InputLabel>
             <InputLabelWrapper>
               <InputField type={pwdVisible?"password":"text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-              <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
+              {/* <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
                 <IonIcon icon={pwdVisible?Icons.eyeOutline:Icons.eyeOffOutline} />
-              </PasswordVisibilityBtn>
+              </PasswordVisibilityBtn> */}
             </InputLabelWrapper>
             
 
@@ -145,7 +145,7 @@ const Logo = styled.h1`
 
 const LogoImage = styled.img`
   width: 70%;
-  margin-bottom: 5px;
+  margin-bottom: -110px;
   object-fit: contain;
 `;
 

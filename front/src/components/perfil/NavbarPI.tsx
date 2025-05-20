@@ -1,13 +1,15 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import AccessibilityMenu from "../pagina/AccessibilityMenu";
 import Logo_minimalista from "../../logo/Logo_minimalista.png";
 
 export default function NavbarPI({ background = "transparent" }) {
   return (
     <Navbar style={{ backgroundColor: background }}>
-      <img src={Logo_minimalista} alt="logo" width={"200px"} height={"200px"} />
+      <img src={Logo_minimalista} alt="logo" width={"150px"} height={"150px"} />
       <NavGroup>
         <NavLinks>
+          <AccessibilityMenu />
           <PagISNavLink to="/homepage">Início</PagISNavLink>
           <PagISNavLink to="/climate">Clima</PagISNavLink>
           <PagISNavLink to="/alert">Alertas</PagISNavLink>
@@ -28,7 +30,7 @@ const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 4rem;
+  padding: 1rem 1rem;
   width: 100%;
   height: 4rem;
   background-color: inherit; /* Herda da prop inline */

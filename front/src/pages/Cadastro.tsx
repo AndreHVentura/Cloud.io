@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import styled from "styled-components";
 import Logo_cloud from "../logo/Logo_cloud.png";
@@ -139,6 +139,7 @@ const Cadastro: React.FC = () => {
             </SelectField>
 
             <Button type="submit">Cadastrar</Button>
+            <BackLink to="/Login">← Voltar para o login</BackLink>
           </Form>
         </FormContainer> 
         <ImageContainer>
@@ -170,8 +171,19 @@ const MainContainer = styled.div`
 
 const Container = styled.div`
   display: flex;
-  height: 100vh;
+  height: auto;
   width: 100%;
+`;
+
+const BackLink = styled(Link)`
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #0073e6;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const FormContainer = styled.div`
@@ -215,8 +227,9 @@ const Logo = styled.h1`
 `;
 
 const LogoImage = styled.img`
-  width: 30%;
-  margin-bottom: 5px;
+  width: 70%;
+  margin-bottom: -110px;
+  margin-top: -100px;
   object-fit: contain;
 `;
 

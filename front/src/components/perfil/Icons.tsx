@@ -11,7 +11,15 @@ import {
   informationCircle,
   logOut,
   eyeOutline,
-  eyeOffOutline
+  eyeOffOutline,
+  moonOutline,
+  sunnyOutline, 
+  volumeHighOutline, 
+  accessibilityOutline, 
+  removeOutline, 
+  addOutline, 
+  handLeftOutline,
+  textOutline
 } from "ionicons/icons";
 
 export const Icons = {
@@ -26,7 +34,15 @@ export const Icons = {
   informationCircle,
   logOut,
   eyeOutline,
-  eyeOffOutline
+  eyeOffOutline,
+  moonOutline, 
+  sunnyOutline, 
+  volumeHighOutline, 
+  accessibilityOutline, 
+  removeOutline, 
+  addOutline, 
+  handLeftOutline,
+  textOutline
 };
 
 export { IonIcon };

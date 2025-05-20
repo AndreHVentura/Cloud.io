@@ -11,7 +11,7 @@ import { LatLngTuple } from "leaflet";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import Logo_minimalista from "../../logo/Logo_minimalista.png";
-//import NavbarPI from "../perfil/NavbarPI"; 
+import NavbarPI from "../perfil/NavbarPI"; 
 
 export default function AlertsP({ background = "navblue" }) {
   const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
@@ -25,22 +25,9 @@ export default function AlertsP({ background = "navblue" }) {
   
   return (
     <>
-      <Navbar style={{ backgroundColor: background }}>
-        <img src={Logo_minimalista} alt="logo" width={"200px"} height={"200px"} />
-        <NavGroup>
-          <NavLinks>
-            <PagISNavLink to="/homepage">Início</PagISNavLink>
-            <PagISNavLink to="/climate">Clima</PagISNavLink>
-            <PagISNavLink to="/alert">Alertas</PagISNavLink>
-            <PagISNavLink to="/graphic">Gráficos</PagISNavLink>
-          </NavLinks>
-
-          <AuthButtons>
-            <BotaoLogin to="/login">Login</BotaoLogin>
-            <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
-          </AuthButtons>
-        </NavGroup>
-      </Navbar>
+      
+    <Container>
+      <NavbarPI />
       <AlertsMain>
         <ButtonGroup>
           <StationButton onClick={() => setSelectedStation("station1")}>
@@ -100,6 +87,7 @@ export default function AlertsP({ background = "navblue" }) {
           </StyledMapContainer>
         </AlertsMapDiv>
       </AlertsMain>
+      </Container>
     </>
   );
 }
@@ -122,10 +110,17 @@ function MapUpdater({ position }: { position: LatLngTuple }) {
   return null;
 }
 
+const Container = styled.div`
+  color: white;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
+`;
+
 const AlertsMain = styled.main`
   height: calc(100vh - 4rem);
   padding: 2rem;
-  background-color: #0e2843;
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -145,78 +140,6 @@ const StyledMapContainer = styled(MapContainer)`
   height: 600px;
   width: 100%;
 `;
-
-
-const Navbar = styled.nav`
-  background-color: #0e2843;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem 4rem;
-`;
-
-const PagISNavLink = styled(NavLink)`
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
-
-const BotaoLogin = styled(NavLink)`
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  text-decoration: none;
-  padding-top: 8px;
-  transition: 0.3s;
-
-  &:hover {
-    color: #8b5cf6;
-  }
-`;
-
-const BotaoCadastro = styled(NavLink)`
-  background: transparent;
-  border: 1px solid white;
-  padding: 0.5rem 1.2rem;
-  border-radius: 6px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-  text-decoration: none;
-
-  &:hover {
-    background: white;
-    color: #0e0e1a;
-  }
-`;
-
-const NavGroup = styled.div`
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-`;
-
-const AuthButtons = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
-
-
-
-const NavLinks = styled.div`
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-`;
-
 
 const ButtonGroup = styled.div`
   display: flex;

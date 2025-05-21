@@ -15,6 +15,8 @@ import AlertsP from "./components/pagina/AlertsP";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
+import Configuracoes from "./pages/Configuracoes";
+
 
 function App() {
   const [isLightTheme, setIsLightTheme] = useState(true);
@@ -69,6 +71,7 @@ function App() {
             {/* <Route path="/home" element={<MainLayout><Home /></MainLayout>} /> */}
             {/* <Route path="/history" element={<MainLayout><Historico /></MainLayout>} /> */}
             {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
+            <Route path="/configuracoes" element={<MainLayout><Configuracoes /></MainLayout>} />
             </Route>
           </Routes>
         </BrowserRouter>

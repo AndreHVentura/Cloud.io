@@ -2,11 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { IonIcon } from "./Icons";
 import { Icons } from "./Icons";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function UsuarioDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownBtn = useRef<HTMLButtonElement>(null);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
     function clickOutside(event: MouseEvent) {
@@ -42,7 +45,7 @@ export default function UsuarioDropdown() {
         <MenuItem>
           <IonIcon icon={Icons.home} /> <span>Meu Perfil</span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigate("/configuracoes")}>
           <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>
         </MenuItem>
         <MenuItem>

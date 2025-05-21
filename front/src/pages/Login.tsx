@@ -35,7 +35,8 @@ const Login: React.FC = () => {
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      login(response.data.token);
+      const user ={name: 'teste', email: 'aa@aa.com', }
+      login(response.data.token,user);
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -63,21 +64,12 @@ const Login: React.FC = () => {
             <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
             <InputLabel htmlFor="senha">Senha</InputLabel>
-<<<<<<< HEAD
-            <InputLabelWrapper>
-              <InputField type={pwdVisible?"password":"text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-              {/* <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
-                <IonIcon icon={pwdVisible?Icons.eyeOutline:Icons.eyeOffOutline} />
-              </PasswordVisibilityBtn> */}
-            </InputLabelWrapper>
-=======
             <div style={{position: "relative"}}>
               <InputField type={pwdVisible ? "password" : "text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
               <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
                 <IonIcon icon={pwdVisible ? Icons.eyeOutline : Icons.eyeOffOutline} />
               </PasswordVisibilityBtn>
             </div>
->>>>>>> ac698bd72bcc25ebb436aade85b3758df2afea9d
             
 
             <OptionsRow>

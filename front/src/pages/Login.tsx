@@ -9,6 +9,7 @@ import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
 import { IonIcon } from "@ionic/react";
 import { Icons } from "../components/perfil/Icons";
+import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
 
 const images = [lagoFurnas, capitolio, nuvens];
 
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   const [senha, setSenha] = useState<string>('');
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [pwdVisible, setPwdVisible] = useState(true);
+  const [isLoadingToSignup, setIsLoadingToSignup] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,21 +58,39 @@ const Login: React.FC = () => {
     <MainContainer>
       <Container>
         <LoginContainer>
+          {isLoadingToSignup && <LoadingCircleSpinner />}
+
           <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
 
           <LoginForm onSubmit={handleLogin}>
             <InputLabel htmlFor="email">E-mail</InputLabel>
-            <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <InputField
+              type="email"
+              id="email"
+              placeholder="Insira seu e-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
             <InputLabel htmlFor="senha">Senha</InputLabel>
-            <div style={{position: "relative"}}>
-              <InputField type={pwdVisible ? "password" : "text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
-              <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prevState => !prevState)}>
+            <div style={{ position: "relative" }}>
+              <InputField
+                type={pwdVisible ? "password" : "text"}
+                id="senha"
+                placeholder="Insira sua senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                required
+              />
+              <PasswordVisibilityBtn
+                type="button"
+                onClick={() => setPwdVisible(prev => !prev)}
+              >
                 <IonIcon icon={pwdVisible ? Icons.eyeOutline : Icons.eyeOffOutline} />
               </PasswordVisibilityBtn>
             </div>
-            
 
             <OptionsRow>
               <CheckboxWrapper>
@@ -84,8 +104,19 @@ const Login: React.FC = () => {
 
             <LoginButton type="submit">ENTRAR</LoginButton>
           </LoginForm>
+
           <RegisterText>
-            Não possui conta? Cadastre-se<SignupLink onClick={() => navigate("/cadastro")}> aqui!</SignupLink>
+            Não possui conta? Cadastre-se
+            <SignupLink
+              onClick={() => {
+                setIsLoadingToSignup(true);
+                setTimeout(() => {
+                  navigate("/cadastro");
+                }, 1500);
+              }}
+            >
+              {" "}aqui!
+            </SignupLink>
           </RegisterText>
         </LoginContainer>
 
@@ -123,10 +154,9 @@ const Container = styled.div`
 `;
 
 const LoginContainer = styled.div`
-  flex: 1;
-  max-width: 33.33%;
-  background-color: #ffffff;
-  padding: 20px;
+  position: relative;
+  width: 30%;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -174,17 +204,33 @@ const InputField = styled.input`
 `;
 
 const LoginButton = styled.button`
-  align-self: center;
-  padding: 10px;
-  width: 55%;
-  background-color: #00e074;
+  @property --myColor1 {
+    syntax: '<color>';
+    initial-value: #2A7B9B;
+    inherits: false;
+  }
+  
+  @property --myColor2 {
+    syntax: '<color>';
+    initial-value: #57C785;
+    inherits: false;
+  }
+
   color: white;
-  font-size: 1rem;
+  padding: 0.75rem 2rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight:bold;
+  text-transform:uppercase;
   cursor: pointer;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--myColor1), var(--myColor2));
+  transition: --myColor1 500ms, --myColor2 500ms;
+
   &:hover {
-    background-color: #4eee81;
+    --myColor1: #57C785;
+    --myColor2: #EDDD53;
   }
 `;
 

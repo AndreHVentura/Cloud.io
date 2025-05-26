@@ -216,7 +216,7 @@ const CarouselImage = styled.img<{ isVisible: boolean }>`
 `;
 
 const Logo = styled.h1`
-  margin-top: 10px;
+  margin-top: -8px;
   font-size: 2.5rem;
   font-family: 'Inter Tight', sans-serif;
   background: linear-gradient(to right, #0073e6, #00cc66);
@@ -266,16 +266,32 @@ const SelectField = styled.select`
 `;
 
 const Button = styled.button`
-  align-self: center;
-  padding: 10px;
-  width: 55%;
-  background-color: #00e074;
+  @property --myColor1 {
+    syntax: '<color>';
+    initial-value: #2A7B9B;
+    inherits: false;
+  }
+  
+  @property --myColor2 {
+    syntax: '<color>';
+    initial-value: #57C785;
+    inherits: false;
+  }
+
   color: white;
-  font-size: 1rem;
+  padding: 0.75rem 2rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight:bold;
+  text-transform:uppercase;
   cursor: pointer;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--myColor1), var(--myColor2));
+  transition: --myColor1 500ms, --myColor2 500ms;
+
   &:hover {
-    background-color: #4eee81;
+    --myColor1: #57C785;
+    --myColor2: #EDDD53;
   }
 `;

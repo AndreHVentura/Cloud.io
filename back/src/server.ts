@@ -5,6 +5,7 @@ import express from 'express';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
 import protectedUserRouter from './routes/protectedRoutes/userRoutes';
+import sensorRoutes from './routes/sensorRoutes';
 import cors from 'cors';
 
 const app = express();
@@ -22,6 +23,9 @@ app.use('/api/users', userRoutes);
 
 // Rotas protegidas
 app.use('/api/protected', protectedUserRouter);
+
+// Rota para os sensores
+app.use('/api/sensors', sensorRoutes);
 
 
 app.listen(PORT, () => {

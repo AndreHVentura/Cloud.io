@@ -36,7 +36,7 @@ export default function AccessibilityMenu() {
   return (
     <Wrapper>
       <Button onClick={toggleDropdown}>
-        <IonIcon icon={Icons.accessibilityOutline} />
+        <Icone icon={Icons.accessibilityOutline} />
       </Button>
       {isOpen && (
         <Dropdown>
@@ -62,6 +62,12 @@ const Button = styled.button`
   color: white;
   font-size: 1.5rem;
   cursor: pointer;
+`;
+
+const Icone = styled(IonIcon)`
+  &:hover {
+    color: #57C785;
+  }
 `;
 
 const Dropdown = styled.div`

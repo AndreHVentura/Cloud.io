@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import topoImage from "../logo/nuvens.jpg";
+import topoImage from "../logo/canyon-furnas.jpg";
 
 export default function Configuracoes() {
   const [nomeUsuario, setNomeUsuario] = useState("joao123");
@@ -25,20 +25,25 @@ export default function Configuracoes() {
     <PageContainer>
       <TopImageContainer>
         <TopImage src={topoImage} alt="Imagem de topo" />
-        {/* O card flutua sobre a imagem */}
-        <FloatingCard>
-          <Logo src="/logo-cloudy.png" alt="Logo" />
-
+        <Container>
           <Form onSubmit={handleSubmit}>
-            {preview && <PreviewImage src={preview} alt="Foto de perfil" />}
-            <label htmlFor="foto">
-              <InputFile
+            <h2>Configurações da Conta</h2>
+
+            <FotoPerfil>
+              <LabelFoto htmlFor="foto">
+                <PreviewImage
+                  src={preview || "https://via.placeholder.com/100x100.png?text=Perfil"}
+                  alt="Foto de Perfil"
+                />
+                <OverlayTexto>Alterar</OverlayTexto>
+              </LabelFoto>
+              <input
                 type="file"
                 id="foto"
                 accept="image/*"
                 onChange={handleFotoChange}
               />
-            </label>
+            </FotoPerfil>
 
             <InputGroup>
               <label>Nome</label>
@@ -67,7 +72,7 @@ export default function Configuracoes() {
 
             <BotaoSalvar type="submit">Registrar</BotaoSalvar>
           </Form>
-        </FloatingCard>
+        </Container>
       </TopImageContainer>
 
       <PageBackground />
@@ -90,39 +95,70 @@ const TopImageContainer = styled.div`
 `;
 
 const TopImage = styled.img`
+  opacity: 0.8; /* Transparência */
+  filter: brightness(70%); /* Escurece a imagem */
   width: 100%;
-  height: 80%;
+  height: 100%;
   object-fit: cover;
 `;
 
-const FloatingCard = styled.div`
-  position: relative;
-  top: 10%;
+const Container = styled.div`
+  position: absolute;
+  top: 70px;
   left: 50%;
-  transform: translate(-50%, -40%);
-  background-color: #152033;
-  padding: 2.5rem;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 2rem;
   border-radius: 8px;
   width: 100%;
   max-width: 400px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  color: black;
   z-index: 2;
-`;
-
-const PageBackground = styled.div`
-  background-color: #0a4a5c;
-  height: calc(100vh - 250px);
-`;
-
-const Logo = styled.img`
-  display: block;
-  margin: 0 auto 1.5rem auto;
-  height: 60px;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+`;
+
+const FotoPerfil = styled.div`
+  text-align: center;
+  margin-bottom: 1.5rem;
+
+  input {
+    display: none;
+  }
+`;
+
+const LabelFoto = styled.label`
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+const PreviewImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #444;
+`;
+
+const OverlayTexto = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 0.75rem;
+  text-align: center;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
 `;
 
 const InputGroup = styled.div`
@@ -131,46 +167,37 @@ const InputGroup = styled.div`
   label {
     display: block;
     margin-bottom: 0.5rem;
-    color: white;
+    color: #ccc;
   }
 
   input {
     width: 100%;
     padding: 0.6rem;
+    border-color: black;
     border-radius: 4px;
-    border: none;
     background-color: white;
-    color: black;
+    color: white;
   }
 `;
 
 const BotaoSalvar = styled.button`
-  background-color: #3486eb;
-  color: white;
-  font-weight: bold;
-  padding: 0.8rem;
+  width: 100%;
+  padding: 0.75rem;
   border: none;
   border-radius: 4px;
-  margin-top: 1rem;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
   cursor: pointer;
 
   &:hover {
-    background-color: #296fcc;
+    background-color: #45a049;
   }
 `;
 
-const PreviewImage = styled.img`
-  display: block;
-  margin: 0 auto 1rem auto;
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-`;
-
-const InputFile = styled.input`
-  display: none;
+const PageBackground = styled.div`
+  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
+  height: calc(100vh - 250px);
 `;
 
 const Rodape = styled.footer`

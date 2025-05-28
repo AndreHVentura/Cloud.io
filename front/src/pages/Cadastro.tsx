@@ -7,7 +7,8 @@ import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
 import axios from "axios";
-import LoadingScreen from "../components/perfil/LoadingScreen";
+import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
+import ConfirmModal from "../components/pagina/ModalCadastro";
 
 const images = [lagoFurnas, capitolio, nuvens];
 
@@ -22,7 +23,9 @@ const Cadastro: React.FC = () => {
   });
   
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [loading, setLoading] = useState(false); // Estado para controlar a tela de loading
+  const [loading, setLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [modalStatus, setModalStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const navigate = useNavigate();
 
   const handleChange = (
@@ -50,24 +53,39 @@ const Cadastro: React.FC = () => {
     return true;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true); // Ativa a tela de carregamento ao iniciar o cadastro
-    if (Verificar()){
-    try {
-      const response = await api.post('api/users/register', formData);
-      if (response.status === 201) {
-        alert("Cadastro concluído com sucesso!");
-        setLoading(false); // Desativa a tela de carregamento após o cadastro
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Erro ao cadastrar:", error);
-      alert("Erro ao cadastrar usuário!");
-      setLoading(false); // Desativa a tela de carregamento se houver erro
+    if (Verificar()) {
+      setShowConfirmModal(true);
     }
-  }
   };
+
+  const confirmCadastro = async () => {
+    setModalStatus("loading");
+    try {
+      const response = await api.post("api/users/register", formData);
+       setTimeout(() => {
+      if (response.status === 201) {
+        setModalStatus("success");
+        setTimeout(() => {
+          setShowConfirmModal(false);
+          navigate("/login");
+        }, 1500); // Tempo de exibição da mensagem de sucesso
+      }
+    }, 2000); // Delay antes da mensagem de sucesso
+
+  } catch (error) {
+    console.error("Erro ao cadastrar:", error);
+
+    // Delay antes de mostrar a mensagem de erro
+    setTimeout(() => {
+      setModalStatus("error");
+      setTimeout(() => {
+        setModalStatus("idle");
+      }, 2000); // Tempo de exibição da mensagem de erro
+    }, 2000); // Delay antes da mensagem de erro
+  }
+};
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -78,83 +96,101 @@ const Cadastro: React.FC = () => {
   }, []);
 
 
-  return loading ? (
-    <LoadingScreen /> // Exibe a LoadingScreen enquanto o estado `loading` for true
-  ) : (
-    <MainContainer>
-      <Container>
-        <FormContainer>
-          <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
-          <Logo>Cloud.<span>io</span></Logo>
+ return (
+  <>
+    {loading ? (
+      <LoadingCircleSpinner />
+    ) : (
+      <MainContainer>
+        <Container>
+          <FormContainer>
+            <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
+            <Logo>Cloud.<span>io</span></Logo>
 
-          <Form onSubmit={handleSubmit}>
-            <InputLabel htmlFor="nome">Nome</InputLabel>
-            <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
+            <Form onSubmit={handleSubmit}>
+              <InputLabel htmlFor="nome">Nome</InputLabel>
+              <InputField name="name" placeholder="Digite seu nome" onChange={handleChange} required />
 
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
+              <InputLabel htmlFor="email">Email</InputLabel>
+              <InputField name="email" type="email" placeholder="Digite seu email" onChange={handleChange} required />
 
-            <InputLabel htmlFor="senha">Senha</InputLabel>
-            <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
-            <InputLabel htmlFor="confirmar senha">Confirme seu senha</InputLabel>
-            <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
+              <InputLabel htmlFor="senha">Senha</InputLabel>
+              <InputField name="password" type="password" placeholder="Digite sua senha" onChange={handleChange} required />
 
-            <InputLabel htmlFor="city">Cidade:</InputLabel>
-            <SelectField name="city" onChange={handleChange} required>
-              <option value={""}>Selecione sua cidade</option>
-              <option value={"Aguanil"}>Aguanil</option>
-              <option value={"Alfenas"}>Alfenas</option>
-              <option value={"Alpinópolis"}>Alpinópolis</option>
-              <option value={"Alterosa"}>Alterosa</option>
-              <option value={"Areado"}>Areado</option>
-              <option value={"Boa_Esperança"}>Boa Esperança</option>
-              <option value={"Cabo_Verde"}>Cabo Verde</option>
-              <option value={"Camacho"}>Camacho</option>
-              <option value={"Campo_Belo"}>Campo Belo</option>
-              <option value={"Campo_do_Meio"}>Campo do Meio</option>
-              <option value={"Campos_Gerais"}>Campos Gerais</option>
-              <option value={"Cana_Verde"}>Cana Verde</option>
-              <option value={"Candeias"}>Candeias</option>
-              <option value={"Capitólio"}>Capitólio</option>
-              <option value={"Carmo_do_Rio_Claro"}>Carmo do Rio Claro</option>
-              <option value={"Conceição_da_Aparecida"}>Conceição da Aparecida</option>
-              <option value={"Coqueiral"}>Coqueiral</option>
-              <option value={"Cristais"}>Cristais</option>
-              <option value={"Divisa_Nova"}>Divisa Nova</option>
-              <option value={"Elói_Mendes"}>Elói Mendes</option>
-              <option value={"Fama"}>Fama</option>
-              <option value={"Formiga"}>Formiga</option>
-              <option value={"Guapé"}>Guapé</option>
-              <option value={"Ilicínea"}>Ilicínea</option>
-              <option value={"Itaú_de_Minas"}>Itaú de Minas</option>
-              <option value={"Juruaia"}>Juruaia</option>
-              <option value={"Lavras"}>Lavras</option>
-              <option value={"Luminárias"}>Luminárias</option>
-              <option value={"Machado"}>Machado</option>
-              <option value={"Mato_Verde"}>Mato Verde</option>
-              <option value={"Nova_Resende"}>Nova Resende</option>
-              <option value={"Passos"}>Passos</option>
-              <option value={"São_João_Batista_do_Glória"}>São João Batista do Glória</option>
-              <option value={"São_José_da_Barra"}>São José da Barra</option>
-            </SelectField>
+              <InputLabel htmlFor="confirmar senha">Confirme sua senha</InputLabel>
+              <InputField name="c_password" type="password" placeholder="Digite sua senha novamente" onChange={handleChange} required />
 
-            <Button type="submit">Cadastrar</Button>
-            <BackLink to="/Login">← Voltar para o login</BackLink>
-          </Form>
-        </FormContainer> 
-        <ImageContainer>
-          {images.map((imgSrc, index) => (
-            <CarouselImage
-              key={index}
-              src={imgSrc}
-              alt={`imagem-login-${index}`}
-              isVisible={index === currentImageIndex}
-            />
-          ))}
-        </ImageContainer>
-      </Container>
-    </MainContainer>
-  );
+              <InputLabel htmlFor="city">Cidade:</InputLabel>
+              <SelectField name="city" onChange={handleChange} required>
+                <option value={""}>Selecione sua cidade</option>
+                <option value={"Aguanil"}>Aguanil</option>
+                <option value={"Alfenas"}>Alfenas</option>
+                <option value={"Alpinópolis"}>Alpinópolis</option>
+                <option value={"Alterosa"}>Alterosa</option>
+                <option value={"Areado"}>Areado</option>
+                <option value={"Boa_Esperança"}>Boa Esperança</option>
+                <option value={"Cabo_Verde"}>Cabo Verde</option>
+                <option value={"Camacho"}>Camacho</option>
+                <option value={"Campo_Belo"}>Campo Belo</option>
+                <option value={"Campo_do_Meio"}>Campo do Meio</option>
+                <option value={"Campos_Gerais"}>Campos Gerais</option>
+                <option value={"Cana_Verde"}>Cana Verde</option>
+                <option value={"Candeias"}>Candeias</option>
+                <option value={"Capitólio"}>Capitólio</option>
+                <option value={"Carmo_do_Rio_Claro"}>Carmo do Rio Claro</option>
+                <option value={"Conceição_da_Aparecida"}>Conceição da Aparecida</option>
+                <option value={"Coqueiral"}>Coqueiral</option>
+                <option value={"Cristais"}>Cristais</option>
+                <option value={"Divisa_Nova"}>Divisa Nova</option>
+                <option value={"Elói_Mendes"}>Elói Mendes</option>
+                <option value={"Fama"}>Fama</option>
+                <option value={"Formiga"}>Formiga</option>
+                <option value={"Guapé"}>Guapé</option>
+                <option value={"Ilicínea"}>Ilicínea</option>
+                <option value={"Itaú_de_Minas"}>Itaú de Minas</option>
+                <option value={"Juruaia"}>Juruaia</option>
+                <option value={"Lavras"}>Lavras</option>
+                <option value={"Luminárias"}>Luminárias</option>
+                <option value={"Machado"}>Machado</option>
+                <option value={"Mato_Verde"}>Mato Verde</option>
+                <option value={"Nova_Resende"}>Nova Resende</option>
+                <option value={"Passos"}>Passos</option>
+                <option value={"São_João_Batista_do_Glória"}>São João Batista do Glória</option>
+                <option value={"São_José_da_Barra"}>São José da Barra</option>
+              </SelectField>
+
+              <Button type="submit">Cadastrar</Button>
+              <BackLink to="/Login">← Voltar para o login</BackLink>
+            </Form>
+          </FormContainer>
+
+          <ImageContainer>
+            {images.map((imgSrc, index) => (
+              <CarouselImage
+                key={index}
+                src={imgSrc}
+                alt={`imagem-login-${index}`}
+                isVisible={index === currentImageIndex}
+              />
+            ))}
+          </ImageContainer>
+        </Container>
+      </MainContainer>
+    )}
+
+    {/* Modal de confirmação */}
+    {showConfirmModal && (
+    <ConfirmModal
+      onConfirm={confirmCadastro}
+      onCancel={() => {
+        setShowConfirmModal(false);
+        setModalStatus("idle");
+      }}
+      status={modalStatus}
+    />
+    )}
+  </>
+);
 };
   
 export default Cadastro;

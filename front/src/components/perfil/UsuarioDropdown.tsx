@@ -3,13 +3,15 @@ import { IonIcon } from "./Icons";
 import { Icons } from "./Icons";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+  import { useAuth } from "../../contexts/AuthContext"; 
 
 export default function UsuarioDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownBtn = useRef<HTMLButtonElement>(null);
   const navigate = useNavigate();
-  
+  const { user } = useAuth();
+
 
   useEffect(() => {
     function clickOutside(event: MouseEvent) {
@@ -40,6 +42,7 @@ export default function UsuarioDropdown() {
         ref={dropdownBtn}
       >
         <IonIcon icon={Icons.personCircleSharp} />
+        <span>{user?.nome}</span> {/* ou user?.name, depende do que você está armazenando */}
       </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
         <MenuItem>

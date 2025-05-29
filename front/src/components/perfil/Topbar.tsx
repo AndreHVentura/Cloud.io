@@ -4,6 +4,7 @@ import { IonIcon } from './Icons';
 import { Icons } from "./Icons";
 import Notificacao from "./Notificacao";
 import UsuarioDropdown from "./UsuarioDropdown"; // Importar o componente que criamos
+import { useAuth } from "../../contexts/AuthContext";
 
 const Path = (props: any) => (
   <motion.path
@@ -16,13 +17,15 @@ const Path = (props: any) => (
 );
 
 export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNavOpen: boolean }) {
+  const { user } = useAuth();
+
   return(
       <Upperdiv>
           <NotificationIcon>
             <Notificacao />
           </NotificationIcon>
           <UsuarioDropdown /> {/* Adicionar o dropdown do usuário */}
-          <P>Usuário</P>
+          <P>{user?.name}</P>
           <ToggleDiv>
             <MenuToggle toggle={helper} isOpen={isNavOpen} />
           </ToggleDiv>

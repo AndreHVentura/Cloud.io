@@ -18,7 +18,7 @@ export default function NavbarPI({ background = "transparent" }) {
 
         <AuthButtons>
           <BotaoLogin to="/login">Login</BotaoLogin>
-          <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
+          <BotaoCadastro to="/register">Cadastrar</BotaoCadastro>
         </AuthButtons>
       </NavGroup>
     </Navbar>

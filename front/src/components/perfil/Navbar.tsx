@@ -97,7 +97,7 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
                 </motion.div>
                 
                 <motion.div variants={item}>
-                  <NavLink to="/logout">
+                  <NavLink to="/">
                     <IonStyledIcon icon={Icons.logOut} />
                     <span>Sair</span>
                   </NavLink>

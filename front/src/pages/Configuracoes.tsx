@@ -1,12 +1,56 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import topoImage from "../logo/canyon-furnas.jpg";
+import { Pencil } from "lucide-react"; // ou use um emoji: ✏️
+import { AuthContext } from "../contexts/AuthContext"; // exemplo do caminho
 
 export default function Configuracoes() {
-  const [nomeUsuario, setNomeUsuario] = useState("joao123");
+  const [nomeUsuario, setNomeUsuario] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [fotoPerfil, setFotoPerfil] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [editandoNome, setEditandoNome] = useState(false);
+  const [editandoEmail, setEditandoEmail] = useState(false);
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("AuthContext não encontrado. Certifique-se de que o componente está dentro de <AuthProvider>.");
+  }
+
+  const { user } = context;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // ✅ Agora aqui dentro
+
+    if (!token) return;
+
+    async function fetchUserData() {
+      try {
+        const response = await fetch("http://localhost:5000/api/protected/user", {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // <- isso é essencial!
+          },
+        });
+
+        if (!response.ok) throw new Error("Erro ao buscar dados do usuário");
+
+        const data = await response.json();
+
+        setNomeUsuario(data.user?.nome || "");
+        setEmail(data.user?.email || "");
+        if (data.user?.photoUrl) {
+          setPreview(data.user.photoUrl);
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dados do usuário:", error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
   const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -16,9 +60,33 @@ export default function Configuracoes() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Alterações salvas!");
+
+    const userId = 1; // substitua pelo ID real do usuário logado
+    const formData = new FormData();
+    formData.append("nome", nomeUsuario);
+    formData.append("email", email);
+    formData.append("senha", senha);
+    if (fotoPerfil) {
+      formData.append("foto", fotoPerfil);
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/users/${userId}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao atualizar usuário");
+      }
+
+      alert("Alterações salvas com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar alterações:", error);
+      alert("Ocorreu um erro ao salvar. Tente novamente.");
+    }
   };
 
   return (
@@ -47,17 +115,34 @@ export default function Configuracoes() {
 
             <InputGroup>
               <label>Nome</label>
-              <input
-                type="text"
-                value={nomeUsuario}
-                onChange={(e) => setNomeUsuario(e.target.value)}
-                required
-              />
+              <InputComIcone>
+                <input
+                  type="text"
+                  value={nomeUsuario}
+                  onChange={(e) => setNomeUsuario(e.target.value)}
+                  disabled={!editandoNome}
+                  required
+                />
+                <IconeBotao type="button" onClick={() => setEditandoNome(!editandoNome)}>
+                  <Pencil size={16} />
+                </IconeBotao>
+              </InputComIcone>
             </InputGroup>
 
             <InputGroup>
               <label>Email</label>
-              <input type="email" required />
+              <InputComIcone>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={!editandoEmail}
+                  required
+                />
+                <IconeBotao type="button" onClick={() => setEditandoEmail(!editandoEmail)}>
+                  <Pencil size={16} />
+                </IconeBotao>
+              </InputComIcone>
             </InputGroup>
 
             <InputGroup>
@@ -167,7 +252,7 @@ const InputGroup = styled.div`
   label {
     display: block;
     margin-bottom: 0.5rem;
-    color: #ccc;
+    color: #000000;
   }
 
   input {
@@ -176,7 +261,7 @@ const InputGroup = styled.div`
     border-color: black;
     border-radius: 4px;
     background-color: white;
-    color: white;
+    color: #000000;
   }
 `;
 
@@ -207,4 +292,26 @@ const Rodape = styled.footer`
   color: white;
   font-family: sans-serif;
   font-size: 1rem;
+`;
+
+const InputComIcone = styled.div`
+  display: flex;
+  align-items: center;
+
+  input {
+    flex: 1;
+    padding-right: 8px;
+  }
+`;
+
+const IconeBotao = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 8px;
+  color: #555;
+
+  &:hover {
+    color: #000;
+  }
 `;

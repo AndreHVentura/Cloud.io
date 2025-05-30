@@ -67,6 +67,21 @@ class UserService{
             }
         }
     }
+    async buscar(name:string){
+        try{
+            const user = await User.findOne({name:name}).select("-password")
+            if(!user){
+                throw new Error("erro ao buscar nome de usuário")
+            }
+            return{user};
+        }catch (error) {
+            if (error instanceof Error) {
+                throw new Error("Erro: " + error.message);
+            } else {
+                throw new Error('Erro desconhecido');
+            }
+        }
+    }
 }
 
 export default UserService;

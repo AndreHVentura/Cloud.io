@@ -48,7 +48,7 @@ export default function UsuarioDropdown() {
         <MenuItem>
           <IonIcon icon={Icons.home} /> <span>Meu Perfil</span>
         </MenuItem>
-        <MenuItem onClick={() => navigate("/configuracoes")}>
+        <MenuItem onClick={() => navigate("/settings")}>
           <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>
         </MenuItem>
         <MenuItem>

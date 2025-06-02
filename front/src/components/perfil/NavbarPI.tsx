@@ -33,7 +33,7 @@ const Navbar = styled.nav`
   align-items: center;
   padding: 1rem 1rem;
   width: 100%;
-  height: 4rem;
+  height: 6rem;
   background-color: inherit; /* Herda da prop inline */
 `;
 

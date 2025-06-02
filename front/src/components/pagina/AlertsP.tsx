@@ -27,7 +27,7 @@ export default function AlertsP({ background = "navblue" }) {
     <>
       
     <Container>
-      <NavbarPI />
+    <NavbarPI background="#0e0e1a" />
       <AlertsMain>
         <ButtonGroup>
           <StationButton onClick={() => setSelectedStation("station1")}>
@@ -109,6 +109,16 @@ function MapUpdater({ position }: { position: LatLngTuple }) {
 
   return null;
 }
+
+const Navbar = styled.nav<{ background?: string }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  width: 98%;
+  height: 4rem;
+  background-color: ${({ background }) => background || "transparent"};
+`;
 
 const Container = styled.div`
   color: white;

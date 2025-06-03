@@ -7,15 +7,13 @@ import {
   Circle,
   useMap,
 } from "react-leaflet";
-import { LatLngTuple } from "leaflet";
+import { LatLngTuple, Icon } from "leaflet";
 import styled from "styled-components";
 import Footer from "../pagina/Footer";
 import NavbarPI from "../perfil/NavbarPI";
 
 export default function AlertsP() {
-  const [selectedStation, setSelectedStation] = useState<
-    "station1" | "station2" | "station3"
-  >("station1");
+  const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
 
   const positions = {
     station1: [-21.039668, -46.060912] as LatLngTuple,
@@ -23,9 +21,16 @@ export default function AlertsP() {
     station3: [-20.792253, -45.702784] as LatLngTuple,
   };
 
+  // Ícone de alerta
+  const alertIcon = new Icon({
+    iconUrl: "/icons/alert-icon.svg", // Usando caminho local
+    iconSize: [30, 30], // Tamanho do ícone
+    iconAnchor: [15, 30], // Posição de ancoragem
+    popupAnchor: [0, -30], // Posição do popup
+  });
+
   return (
     <>
-<<<<<<< HEAD
       <Container>
         <NavbarPI />
         <AlertsMain>
@@ -33,8 +38,9 @@ export default function AlertsP() {
             <StationSelector
               value={selectedStation}
               onChange={(e) =>
-                setSelectedStation( e.target.value as "station1" | "station2" | "station3" )
-              }>
+                setSelectedStation(e.target.value as "station1" | "station2" | "station3")
+              }
+            >
               <StationOption value="station1">Estação 1</StationOption>
               <StationOption value="station2">Estação 2</StationOption>
               <StationOption value="station3">Estação 3</StationOption>
@@ -45,52 +51,18 @@ export default function AlertsP() {
               Ventos fortes
             </AlertBox>
           </LeftColumn>
-=======
-      
-    <Container>
-    <NavbarPI background="#0e0e1a" />
-      <AlertsMain>
-        <ButtonGroup>
-          <StationButton onClick={() => setSelectedStation("station1")}>
-            Estação 1
-          </StationButton>
-          <StationButton onClick={() => setSelectedStation("station2")}>
-            Estação 2
-          </StationButton>
-          <StationButton onClick={() => setSelectedStation("station3")}>
-            Estação 3
-          </StationButton>
-        </ButtonGroup>
-        <AlertsMapDiv>
-          <StyledMapContainer
-            center={positions[selectedStation]}
-            zoom={12} // zoom inicial ajustado
-            minZoom={12} // zoom mínimo ajustado para a região
-            maxZoom={14} // zoom máximo ajustado para não ficar tão distante
-            maxBounds={[
-              [-21.2, -46.3], // canto sudoeste
-              [-20.6, -45.5], // canto nordeste
-            ]}
-            maxBoundsViscosity={1.0} // força o limite de movimentação
-          >
-            <MapUpdater position={positions[selectedStation]} />
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
->>>>>>> e2b6b80d25bdf67cc0e1d5068e88a92d2eef60e9
 
           <AlertsMapDiv>
             <StyledMapContainer
               center={positions[selectedStation]}
-              zoom={12} // zoom inicial ajustado
-              minZoom={12} // zoom mínimo ajustado para a região
-              maxZoom={14} // zoom máximo ajustado para não ficar tão distante
+              zoom={12}
+              minZoom={12}
+              maxZoom={14}
               maxBounds={[
-                [-21.2, -46.3], // canto sudoeste
-                [-20.6, -45.5], // canto nordeste
+                [-21.2, -46.3],
+                [-20.6, -45.5],
               ]}
-              maxBoundsViscosity={1.0} // força o limite de movimentação
+              maxBoundsViscosity={1.0}
             >
               <MapUpdater position={positions[selectedStation]} />
               <TileLayer
@@ -98,8 +70,9 @@ export default function AlertsP() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-              <Marker position={positions.station1}>
-                <Popup>Estação 1</Popup>
+              {/* Adicionando os Markers com ícone de alerta */}
+              <Marker position={positions.station1} icon={alertIcon}>
+                <Popup>Estação 1 - Alerta de Ventos fortes</Popup>
               </Marker>
               <Circle
                 center={positions.station1}
@@ -107,22 +80,22 @@ export default function AlertsP() {
                 pathOptions={{ fillColor: "orange", color: "orange" }}
               />
 
-              <Marker position={positions.station2}>
-                <Popup>Estação 2</Popup>
+              <Marker position={positions.station2} icon={alertIcon}>
+                <Popup>Estação 2 - Alerta de Ventos fortes</Popup>
               </Marker>
               <Circle
                 center={positions.station2}
                 radius={10000}
-                pathOptions={{ fillColor: "lime", color: "lime" }}
+                pathOptions={{ fillColor: "orange", color: "orange" }}
               />
 
-              <Marker position={positions.station3}>
-                <Popup>Estação 3</Popup>
+              <Marker position={positions.station3} icon={alertIcon}>
+                <Popup>Estação 3 - Alerta de Ventos fortes</Popup>
               </Marker>
               <Circle
                 center={positions.station3}
                 radius={10000}
-                pathOptions={{ fillColor: "red", color: "red" }}
+                pathOptions={{ fillColor: "orange", color: "orange" }}
               />
             </StyledMapContainer>
           </AlertsMapDiv>
@@ -134,19 +107,17 @@ export default function AlertsP() {
 }
 
 function MapUpdater({ position }: { position: LatLngTuple }) {
-  const map = useMap(); // Aqui você pode acessar o mapa com o hook useMap
+  const map = useMap();
   useEffect(() => {
-    // Quando a posição for alterada, fazemos o flyTo para a nova posição
     map.flyTo(position, 12, { duration: 1.5 });
   }, [position, map]);
 
   useEffect(() => {
-    // Configura o limite máximo do mapa
     map.setMaxBounds([
-      [-21.2, -46.3], // canto sudoeste
-      [-20.6, -45.5], // canto nordeste
+      [-21.2, -46.3],
+      [-20.6, -45.5],
     ]);
-  }, [map]); // Isso vai ser executado quando o mapa for carregado
+  }, [map]);
 
   return null;
 }
@@ -194,7 +165,7 @@ const AlertsMain = styled.main`
   padding: 2rem;
   background-color: whitesmoke;
   display: flex;
-  flex-direction: row; /* <-- Linha horizontal */
+  flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   gap: 2rem;

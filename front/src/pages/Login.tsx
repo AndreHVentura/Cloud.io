@@ -37,8 +37,7 @@ const Login: React.FC = () => {
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      const user ={name: 'teste', email: 'aa@aa.com', }
-      login(response.data.token,user);
+      login(response.data.token, response.data.user);
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);

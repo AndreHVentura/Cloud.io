@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import topoImage from "../logo/canyon-furnas.jpg";
-import { Pencil } from "lucide-react"; // ou use um emoji: ✏️
-import { AuthContext } from "../contexts/AuthContext"; // exemplo do caminho
+import { Pencil } from "lucide-react";
+import { AuthContext } from "../contexts/AuthContext";
+import api from "../services/api";
 
 export default function Configuracoes() {
   const [nomeUsuario, setNomeUsuario] = useState("");
@@ -12,6 +13,7 @@ export default function Configuracoes() {
   const [preview, setPreview] = useState<string | null>(null);
   const [editandoNome, setEditandoNome] = useState(false);
   const [editandoEmail, setEditandoEmail] = useState(false);
+
   const context = useContext(AuthContext);
 
   if (!context) {
@@ -21,23 +23,13 @@ export default function Configuracoes() {
   const { user } = context;
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // ✅ Agora aqui dentro
-
-    if (!token) return;
-
     async function fetchUserData() {
+      if (!user) return;
+
       try {
-        const response = await fetch("http://localhost:5000/api/protected/user", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // <- isso é essencial!
-          },
-        });
-
-        if (!response.ok) throw new Error("Erro ao buscar dados do usuário");
-
-        const data = await response.json();
+        // Aqui só chamamos o endpoint, o token já vai pelo interceptor do axios
+        const response = await api.get('/api/protected/user');
+        const data = response.data;
 
         setNomeUsuario(data.user?.nome || "");
         setEmail(data.user?.email || "");
@@ -50,7 +42,7 @@ export default function Configuracoes() {
     }
 
     fetchUserData();
-  }, []);
+  }, [user]);
 
   const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -63,7 +55,11 @@ export default function Configuracoes() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const userId = 1; // substitua pelo ID real do usuário logado
+    if (!user?.id) {
+      alert("Usuário não identificado");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("nome", nomeUsuario);
     formData.append("email", email);
@@ -73,14 +69,12 @@ export default function Configuracoes() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/users/${userId}`, {
-        method: "PUT",
-        body: formData,
+      // O token também será enviado automaticamente pelo interceptor
+      await api.put(`/api/protected/${user.id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // correto para upload
+        },
       });
-
-      if (!response.ok) {
-        throw new Error("Erro ao atualizar usuário");
-      }
 
       alert("Alterações salvas com sucesso!");
     } catch (error) {

@@ -5,44 +5,78 @@ import ReservoirLevelChart from './graficosPa/ReservoirlevelChart';
 import WaveHeightChart from './graficosPa/WaveheightChart';
 import WindspeedChart from './graficosPa/WindspeedChart';
 
+type Props = {
+  chartType: "maxVel" | "dirVel" | "vel" | "onda" | "nivel";
+  station: "station1" | "station2" | "station3" | "";
+};
 
-const Graficsmodels = () => {
+const Graficsmodels = ({ chartType, station }: Props) => {
+  const renderChart = () => { switch (chartType) { case "maxVel":
+   return (
+          <ChartRow>
+            <ChartCard>
+              <ChartTitle>Velocidade Máxima do Vento</ChartTitle>
+              <WindPeakChart />
+            </ChartCard>
+          </ChartRow>
+        );
+      case "dirVel":
+        return (
+          <ChartRow>
+            <ChartCard>
+              <ChartTitle>Direção do Vento</ChartTitle>
+              <WindDirChart />
+            </ChartCard>
+          </ChartRow>
+        );
+      case "vel":
+        return (
+          <ChartRow>
+            <ChartCard>
+              <ChartTitle>Velocidade do Vento</ChartTitle>
+              <WindspeedChart />
+            </ChartCard>
+          </ChartRow>
+        );
+      case "onda":
+        return (
+          <ChartRow>
+            <ChartCard>
+              <ChartTitle>Altura das Ondas</ChartTitle>
+              <WaveHeightChart />
+            </ChartCard>
+          </ChartRow>
+        );
+      case "nivel":
+        return (
+          <ChartRow>
+            <ChartCard>
+              <ChartTitle>Nível do Reservatório</ChartTitle>
+              <ReservoirLevelChart />
+            </ChartCard>
+          </ChartRow>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Wrapper>
-      <ChartRow>
-        <ChartCard>
-          <ChartTitle>Velocidade Máxima do Vento</ChartTitle>
-          <WindPeakChart />
-        </ChartCard>
-      </ChartRow>
-      <ChartRow>
-        <ChartCard>
-          <ChartTitle>Direção do Vento</ChartTitle>
-          <WindDirChart />
-        </ChartCard>
-      </ChartRow>
-      <ChartRow>
-      <ChartCard>
-          <ChartTitle>Velocidade do Vento</ChartTitle>
-          <WindspeedChart />
-        </ChartCard>
-      </ChartRow>
-      <ChartRow>
-        <ChartCard>
-          <ChartTitle>Altura das ondas</ChartTitle>
-          <WaveHeightChart />
-        </ChartCard>
-      </ChartRow>
-      <ChartRow>
-        <ChartCard>
-            <ChartTitle>Nível do reservatório</ChartTitle>
-            <ReservoirLevelChart/>
-        </ChartCard>
-      </ChartRow>
-      
+      {station && (
+        <h2 style={{ color: "#333", marginBottom: "1rem" }}>
+          {station === "station1"
+            ? "Estação 1"
+            : station === "station2"
+            ? "Estação 2"
+            : "Estação 3"}
+        </h2>
+      )}
+      {renderChart()}
     </Wrapper>
   );
 };
+
 
 export default Graficsmodels;
 

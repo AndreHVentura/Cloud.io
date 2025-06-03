@@ -27,7 +27,8 @@ const WaveHeightChart = () => {
     tooltip: {
       x: {
         format: 'dd/MM/yy HH:mm'
-      }
+      },
+      theme: 'dark'
     }
   };
 

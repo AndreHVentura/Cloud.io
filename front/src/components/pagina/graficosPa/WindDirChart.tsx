@@ -59,7 +59,7 @@ const WindDirChart: React.FC = () => {
         blur: 1,
         left: 1,
         top: 1
-      }
+      },
     },
     stroke: {
       width: 2
@@ -72,6 +72,9 @@ const WindDirChart: React.FC = () => {
     },
     xaxis: {
       categories
+    },
+    tooltip: {
+    theme: 'dark'
     }
   };
 

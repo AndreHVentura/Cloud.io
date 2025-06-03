@@ -1,28 +1,36 @@
 
+import styled from "styled-components";
 import TempWidget from "../components/widgets/TempWidget";
 import HumWidget from "../components/widgets/HumWidget";
 import PressWidget from "../components/widgets/PressWidget";
 import SolarRadiationWidget from "../components/widgets/SolarRadiationWidget";
+import ClimaSearch from "../components/pagina/ClimaSearch";
 import WeatherMap from "../components/pagina/WeatherMap";
-import styled from "styled-components";
 import NavbarPI from "../components/perfil/NavbarPI";
+import Footer from "../components/pagina/Footer";
 
-export default function Climate({ background = "navblue" }) {
+export default function Climate() {
 
   return (
     <Container>
       <NavbarPI />
       <Main>
         <MainDiv>
-          <WidgetsContainer>
-            <TempWidget />
-            <HumWidget />
-            <PressWidget />
-            <SolarRadiationWidget />
-          </WidgetsContainer>
-          <WeatherMap />
+            <ClimaSearch />
+          <ContentRow>
+            <WidgetsContainer>
+              <TempWidget />
+              <HumWidget />
+              <PressWidget />
+              <SolarRadiationWidget />
+            </WidgetsContainer>
+            <MapContainer>
+              <WeatherMap />
+            </MapContainer>
+          </ContentRow>
         </MainDiv>
       </Main>
+      <Footer />
     </Container>
   );
 }
@@ -47,9 +55,23 @@ const MainDiv = styled.div`
   width: 100%;
 `;
 
+const ContentRow = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+`;
+
+const MapContainer = styled.div`
+  flex: 2;
+  max-width: 900px;
+  height: 700px;
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
 const WidgetsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(2, 1fr); // 2 colunas
   gap: 1rem;
-  margin-bottom: 2rem;
+  flex: 1;
 `;

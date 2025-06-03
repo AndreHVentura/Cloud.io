@@ -51,7 +51,8 @@ const WindPeakChart = () => {
     tooltip: {
       x: {
         format: 'dd/MM/yy HH:mm'
-      }
+      },
+      theme: 'dark'
     }
   };
 
@@ -62,7 +63,7 @@ const WindPeakChart = () => {
     }
   ];
 
-  return <ApexCharts options={options} series={series} type="area" height={400} width={650} />;
+  return <ApexCharts options={options} series={series} type="area" height={350} width={700} />;
 };
 
 export default WindPeakChart;

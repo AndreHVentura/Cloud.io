@@ -39,7 +39,7 @@ const ReservoirLevelChart: React.FC = () => {
   const options: ApexOptions = {
     chart: {
       height: 350,
-      type: 'bar'
+      type: 'bar',
     },
     tooltip: {
       enabled: true,
@@ -47,7 +47,8 @@ const ReservoirLevelChart: React.FC = () => {
       intersect: false,
       y: {
         formatter: (val: number) => `${val} litros`
-      }
+      },
+      theme: 'dark'
     },
     plotOptions: {
       bar: {
@@ -56,7 +57,10 @@ const ReservoirLevelChart: React.FC = () => {
     },
     colors: ['#00E396'],
     dataLabels: {
-      enabled: true
+      enabled: true,
+      style: {
+        colors: ['#535353']
+      }
     },
     yaxis: {
       min: 0,

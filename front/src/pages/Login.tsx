@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
 import Logo_cloud from "../logo/Logo_cloud.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
@@ -37,8 +37,7 @@ const Login: React.FC = () => {
       });
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
-      const user ={name: 'teste', email: 'aa@aa.com', }
-      login(response.data.token,user);
+      login(response.data.token, response.data.user);
       navigate('/home');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
@@ -111,7 +110,7 @@ const Login: React.FC = () => {
               onClick={() => {
                 setIsLoadingToSignup(true);
                 setTimeout(() => {
-                  navigate("/cadastro");
+                  navigate("/register");
                 }, 1500);
               }}
             >

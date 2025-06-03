@@ -5,14 +5,14 @@ import AuthMiddleware from '../../middlewares/authMiddleware';
 const protectedUserRouter = express.Router();
 
 // Rota protegida para usuários autenticados
-protectedUserRouter.get('/user', AuthMiddleware.verifyToken(),AuthMiddleware.getUserData ,AuthMiddleware.checkRole('user'), (req, res) => {
+protectedUserRouter.get('/user', AuthMiddleware.verifyToken(),AuthMiddleware.getUserData ,AuthMiddleware.checkRole('user'), (_req, res) => {
     const user = res.locals.user; // Acessa os dados do usuário
     
     res.json({ message: 'Bem-vindo ao seu perfil', user});
 });
 
 // Rota protegida para administradores
-protectedUserRouter.get('/admin', AuthMiddleware.verifyToken(), AuthMiddleware.getUserData, AuthMiddleware.checkRole('admin'), (req, res) => {
+protectedUserRouter.get('/admin', AuthMiddleware.verifyToken(), AuthMiddleware.getUserData, AuthMiddleware.checkRole('admin'), (_req, res) => {
     const user = res.locals.user; // Acessa os dados do usuário
   res.json({ message: 'Bem-vindo, administrador', user });
 });

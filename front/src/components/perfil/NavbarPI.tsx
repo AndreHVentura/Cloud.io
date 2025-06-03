@@ -18,7 +18,7 @@ export default function NavbarPI({ background = "transparent" }) {
 
         <AuthButtons>
           <BotaoLogin to="/login">Login</BotaoLogin>
-          <BotaoCadastro to="/cadastro">Cadastrar</BotaoCadastro>
+          <BotaoCadastro to="/register">Cadastrar</BotaoCadastro>
         </AuthButtons>
       </NavGroup>
     </Navbar>
@@ -27,12 +27,13 @@ export default function NavbarPI({ background = "transparent" }) {
 
 // Styled components
 const Navbar = styled.nav`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 0rem;
   width: 100%;
-  height: 4rem;
+  height: 6rem;
   background-color: inherit; /* Herda da prop inline */
 `;
 

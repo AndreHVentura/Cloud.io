@@ -25,6 +25,7 @@ export default function AlertsP() {
 
   return (
     <>
+<<<<<<< HEAD
       <Container>
         <NavbarPI />
         <AlertsMain>
@@ -44,6 +45,40 @@ export default function AlertsP() {
               Ventos fortes
             </AlertBox>
           </LeftColumn>
+=======
+      
+    <Container>
+    <NavbarPI background="#0e0e1a" />
+      <AlertsMain>
+        <ButtonGroup>
+          <StationButton onClick={() => setSelectedStation("station1")}>
+            Estação 1
+          </StationButton>
+          <StationButton onClick={() => setSelectedStation("station2")}>
+            Estação 2
+          </StationButton>
+          <StationButton onClick={() => setSelectedStation("station3")}>
+            Estação 3
+          </StationButton>
+        </ButtonGroup>
+        <AlertsMapDiv>
+          <StyledMapContainer
+            center={positions[selectedStation]}
+            zoom={12} // zoom inicial ajustado
+            minZoom={12} // zoom mínimo ajustado para a região
+            maxZoom={14} // zoom máximo ajustado para não ficar tão distante
+            maxBounds={[
+              [-21.2, -46.3], // canto sudoeste
+              [-20.6, -45.5], // canto nordeste
+            ]}
+            maxBoundsViscosity={1.0} // força o limite de movimentação
+          >
+            <MapUpdater position={positions[selectedStation]} />
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+>>>>>>> e2b6b80d25bdf67cc0e1d5068e88a92d2eef60e9
 
           <AlertsMapDiv>
             <StyledMapContainer
@@ -115,6 +150,16 @@ function MapUpdater({ position }: { position: LatLngTuple }) {
 
   return null;
 }
+
+const Navbar = styled.nav<{ background?: string }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  width: 98%;
+  height: 4rem;
+  background-color: ${({ background }) => background || "transparent"};
+`;
 
 const Container = styled.div`
   color: white;

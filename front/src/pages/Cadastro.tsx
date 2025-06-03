@@ -19,7 +19,8 @@ const Cadastro: React.FC = () => {
     password: "",
     dataNascimento: "",
     c_password: "",
-    city: ""
+    city: "",
+    role: "user"
   });
   
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);

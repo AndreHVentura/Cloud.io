@@ -6,13 +6,15 @@ export interface IUser{
     email: string;
     password: string;
     city:string;
+    role: string;
 }
 
 const UserSchema = new Schema<IUser>({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    city:{type:String, required:true}
+    city:{type:String, required:true},
+    role: { type: String, required: true, enum: ['user', 'admin'] } // <-- isso também
 });
 
 //criptografar senha

@@ -27,12 +27,13 @@ export default function NavbarPI({ background = "transparent" }) {
 
 // Styled components
 const Navbar = styled.nav`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1rem;
-  width: 98%;
-  height: 4rem;
+  width: 100%;
+  height: 6rem;
   background-color: inherit; /* Herda da prop inline */
 `;
 

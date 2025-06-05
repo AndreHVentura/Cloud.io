@@ -15,17 +15,10 @@ router.get(
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const data = await sensorService.getSensorDataById(Number(req.params.id));
+    const data = await sensorService.getSensorDataById((req.params.id));
     res.json(data);
   })
 );
 
-router.post(
-  '/',
-  asyncHandler(async (req, res) => {
-    const result = await sensorService.insertSensorData(req.body);
-    res.json(result);
-  })
-);
 
 export default router;

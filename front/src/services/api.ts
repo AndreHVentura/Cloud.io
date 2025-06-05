@@ -5,9 +5,8 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // <- importante para enviar cookies se backend usa autenticação via cookie
 });
-
-axios.defaults.withCredentials = true;
 
 // Interceptor para adicionar o token às requisições
 api.interceptors.request.use((config) => {

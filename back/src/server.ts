@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import express from 'express';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
 import protectedUserRouter from './routes/protectedRoutes/userRoutes';
@@ -9,8 +8,15 @@ import sensorRoutes from './routes/sensorRoutes';
 import cors from 'cors';
 import syncRoutes from './routes/syncRoutes';
 import syncService from './services/syncService';
+import express from 'express';
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
+
 const PORT = process.env.PORT || 5000;
 
 connectDB();
@@ -25,7 +31,6 @@ syncService.checkMySQLHealth().then(status => {
   console.error('Erro ao verificar MySQL:', err);
 });
 
-app.use(cors());
 app.use(express.json());
 
 //rotas

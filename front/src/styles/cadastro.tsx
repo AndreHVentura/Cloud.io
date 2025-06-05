@@ -1,5 +1,31 @@
 import styled from "styled-components";
 
+// Estilo para o campo select (semelhante ao estilo dos inputs)
+const SelectField = styled.select`
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  color: #888;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+  }
+
+  &::placeholder {
+    color: #888;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.9rem;  // Ajuste do padding para telas pequenas
+  }
+`;
+
 // Contêiner principal (garante que o layout ocupe toda a tela e se ajuste ao tamanho)
 const MainContainer = styled.div`
   display: flex;
@@ -9,7 +35,8 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: flex-start; // Alinha o conteúdo ao topo
   background-color: rgb(7, 78, 120);
-  padding: 10px;
+  padding: 0px;
+  margin: 0px;
   box-sizing: border-box;
   overflow-y: auto; // Permite rolagem vertical
 
@@ -177,13 +204,14 @@ const SignupLink = styled.a`
   }
 `;
 
-export { 
+export {
+  SelectField,  // Exporte o SelectField
   MainContainer,
-  Container, 
-  Logo, 
-  Form, 
-  InputLabel, 
-  InputField, 
-  Button, 
-  SignupLink 
+  Container,
+  Logo,
+  Form,
+  InputLabel,
+  InputField,
+  Button,
+  SignupLink
 };

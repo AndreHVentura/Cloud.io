@@ -1,19 +1,17 @@
 import { useState } from "react";
-import NavBar from "../components/Navbar";
-import Topbar from "../components/Topbar";
-import MainContent from "../components/Maincontent";
+import NavBar from "../components/perfil/Navbar";
+import TopBar from "../components/perfil/Topbar";
+import HomeContent from "../components/perfil/HomeContent";
 
 export default function Home() {
-  const [isActive, setIsActive] = useState<string>("close");
-  const toggle = () => {
-    setIsActive(prev => prev === "close" ? "open" : "close");
-  };
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const toggleNav = () => setIsNavOpen(!isNavOpen);
 
   return (
-    <>
-      <NavBar state={isActive} />
-      <Topbar helper={toggle} />
-      <MainContent />
-    </>
+      <>
+        <NavBar isOpen={isNavOpen} />
+        <TopBar helper={toggleNav} isNavOpen={isNavOpen} />
+        <HomeContent />
+      </>
   );
 }

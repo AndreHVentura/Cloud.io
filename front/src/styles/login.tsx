@@ -8,11 +8,13 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgb(7, 78, 120);
-  padding: 10px;
+  padding: 0; /* Removendo o padding que poderia causar o contorno */
+  margin: 0; /* Removendo qualquer margem externa */
   box-sizing: border-box;
 
+  /* Garantir que o contêiner ocupe toda a tela */
   @media (max-width: 768px) {
-    padding: 20px; // Mais espaço em dispositivos móveis
+    padding: 0; /* Removendo o padding também em dispositivos móveis */
   }
 `;
 

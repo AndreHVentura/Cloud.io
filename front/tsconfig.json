@@ -2,11 +2,11 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "ESNext",
-    "module": "NodeNext",
+    "module": "ESNext",
     "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

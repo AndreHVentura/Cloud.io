@@ -16,7 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
 import Configuracoes from "./pages/Configuracoes";
-
+import RedefinirSenha from "./pages/Redefinir_Senha"; 
 
 function App() {
   const [isLightTheme, setIsLightTheme] = useState(true);
@@ -34,23 +34,21 @@ function App() {
           <Routes>
             <Route path="/" element={<MainLayout><HomePage /></MainLayout>} />
             <Route path="/login" element={<MainLayout><Login /></MainLayout>} />
+            {/* Corrigido para usar a página RedefinirSenha */}
+            <Route path="/redefinir_senha" element={<MainLayout><RedefinirSenha /></MainLayout>} />
             <Route path="/register" element={<MainLayout><Cadastro /></MainLayout>} />
-            {/* <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
-            <Route path="/history" element={<MainLayout><Historico /></MainLayout>} /> */}
+            {/* Rota para o gráfico */}
             <Route path="/graphic" element={<MainLayout><Graphics /></MainLayout>} />
             <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
-            {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
             <Route path="/homepage" element={<MainLayout><HomePage /></MainLayout>} />
             <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
             <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
             <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
             <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
-            {/* Rotas protegidas agrupadas */}
+            
+            {/* Rotas protegidas */}
             <Route element={<ProtectedRoute />}>
-            {/* <Route path="/home" element={<MainLayout><Home /></MainLayout>} /> */}
-            {/* <Route path="/history" element={<MainLayout><Historico /></MainLayout>} /> */}
-            {/* <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} /> */}
-            <Route path="/settings" element={<MainLayout><Configuracoes /></MainLayout>} />
+              <Route path="/settings" element={<MainLayout><Configuracoes /></MainLayout>} />
             </Route>
           </Routes>
         </BrowserRouter>
@@ -58,4 +56,5 @@ function App() {
     </ThemeProvider>
   );
 }
+
 export default App;

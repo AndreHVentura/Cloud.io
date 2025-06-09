@@ -96,7 +96,7 @@ const Login: React.FC = () => {
                 <input type="checkbox" id="remember" />
                 <label htmlFor="remember">Manter conectado</label>
               </CheckboxWrapper>
-              <PasswordLink onClick={() => navigate("/recuperar-senha")}>
+              <PasswordLink onClick={() => navigate("/Redefinir_Senha")}>
                 Esqueceu sua senha?
               </PasswordLink>
             </OptionsRow>

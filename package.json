@@ -2,6 +2,7 @@
   "dependencies": {
     "@react-pdf/renderer": "^4.3.0",
     "apexcharts": "^4.5.0",
+    "lucide-react": "^0.512.0",
     "react-apexcharts": "^1.7.0"
   }
 }

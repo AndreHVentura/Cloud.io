@@ -54,7 +54,7 @@ const HomePage = () => {
             <p>O Lago de Furnas é monitorado por três estações meteorológicas estrategicamente posicionadas. Essa visualização geográfica é essencial para compreender a extensão da área afetada por ventos extremos e para orientar ações preventivas.</p>
           </TextoImagem>
         </ImagemItem>
-        <ImagemItem reverse>
+        <ImagemItem $reverse={true}>
           <Imagem src={imgLago} alt="Capitólio" />
           <TextoImagem>
             <h2>Apoio aos navegantes</h2>
@@ -202,9 +202,9 @@ const ImagemSecao = styled.section`
   gap: 4rem;
 `;
 
-const ImagemItem = styled.div<{ reverse?: boolean }>`
+const ImagemItem = styled.div<{ $reverse?: boolean }>`
   display: flex;
-  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
+  flex-direction: ${({ $reverse }) => ($reverse ? "row-reverse" : "row")};
   align-items: center;
   gap: 2rem;
   flex-wrap: wrap;

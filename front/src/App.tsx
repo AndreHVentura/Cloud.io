@@ -26,27 +26,6 @@ function App() {
     (window as any).toggleTheme = () => setIsLightTheme(prev => !prev);
   }, []);
 
-  // VLibras
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-    script.async = true;
-    script.onload = () => {
-      setTimeout(() => {
-        try {
-          (window as any).VLibras = (window as any).VLibras || {};
-          new (window as any).VLibras.Widget("https://vlibras.gov.br/app");
-        } catch (e) {
-          console.error("Erro ao iniciar VLibras:", e);
-        }
-      }, 1000);
-    };
-    script.onerror = (e) => {
-      console.error("Erro ao carregar o VLibras:", e);
-    };
-    document.body.appendChild(script);
-  }, []);
-
   return (
     <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
       <AuthProvider>

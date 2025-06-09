@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
-import { ChartTitle } from '../graphicsmodel';
-
 
 type DataPoint = {
   x: string;

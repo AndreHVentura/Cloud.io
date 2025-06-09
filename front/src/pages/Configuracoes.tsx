@@ -4,6 +4,7 @@ import topoImage from "../logo/canyon-furnas.jpg";
 import { Pencil } from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext";
 import api from "../services/api";
+import ConfirmModal from "../components/pagina/ModalAlteração";
 
 export default function Configuracoes() {
   const [nomeUsuario, setNomeUsuario] = useState("");
@@ -12,7 +13,9 @@ export default function Configuracoes() {
   const [fotoPerfil, setFotoPerfil] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [editandoNome, setEditandoNome] = useState(false);
-  const [editandoEmail, setEditandoEmail] = useState(false);
+  const [c_senha, setC_senha] = useState("");
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [modalStatus, setModalStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const context = useContext(AuthContext);
 
@@ -27,7 +30,6 @@ export default function Configuracoes() {
       if (!user) return;
 
       try {
-        // Aqui só chamamos o endpoint, o token já vai pelo interceptor do axios
         const response = await api.get('/api/protected/user');
         const data = response.data;
 
@@ -52,34 +54,48 @@ export default function Configuracoes() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!user?.id) {
-      alert("Usuário não identificado");
-      return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (name === "nome") {
+      setNomeUsuario(value);
+    } else if (name === "email") {
+      setEmail(value);
+    } else if (name === "senha") {
+      setSenha(value);
     }
+  };
 
-    const formData = new FormData();
-    formData.append("nome", nomeUsuario);
-    formData.append("email", email);
-    formData.append("senha", senha);
-    if (fotoPerfil) {
-      formData.append("foto", fotoPerfil);
-    }
-
+  // Função para confirmar as alterações
+  const confirmAlteracao = async () => {
+    setModalStatus("loading");
     try {
-      // O token também será enviado automaticamente pelo interceptor
-      await api.put(`/api/protected/${user.id}`, formData, {
+      const formData = new FormData();
+      formData.append("nome", nomeUsuario);
+      formData.append("email", email);
+      formData.append("senha", senha);
+      if (fotoPerfil) {
+        formData.append("foto", fotoPerfil);
+      }
+
+      const response = await api.put(`/api/protected/${user?.id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data', // correto para upload
+          'Content-Type': 'multipart/form-data',
         },
       });
 
-      alert("Alterações salvas com sucesso!");
+      if (response.status === 200) {
+        setModalStatus("success");
+        setTimeout(() => {
+          setShowConfirmModal(false);
+          alert("Alterações salvas com sucesso!");
+        }, 1500); // Exibe a mensagem de sucesso por 1.5s
+      }
     } catch (error) {
       console.error("Erro ao salvar alterações:", error);
-      alert("Ocorreu um erro ao salvar. Tente novamente.");
+      setModalStatus("error");
+      setTimeout(() => {
+        setModalStatus("idle");
+      }, 2000); // Exibe a mensagem de erro por 2s
     }
   };
 
@@ -88,7 +104,7 @@ export default function Configuracoes() {
       <TopImageContainer>
         <TopImage src={topoImage} alt="Imagem de topo" />
         <Container>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={(e) => e.preventDefault()}>
             <h2>Configurações da Conta</h2>
 
             <FotoPerfil>
@@ -112,12 +128,14 @@ export default function Configuracoes() {
               <InputComIcone>
                 <input
                   type="text"
+                  name="nome"
                   value={nomeUsuario}
-                  onChange={(e) => setNomeUsuario(e.target.value)}
-                  disabled={!editandoNome}
+                  onChange={handleInputChange}
+                  disabled={false}
                   required
                 />
-                <IconeBotao type="button" onClick={() => setEditandoNome(!editandoNome)}>
+                <IconeBotao type="button">
+                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
                   <Pencil size={16} />
                 </IconeBotao>
               </InputComIcone>
@@ -128,34 +146,69 @@ export default function Configuracoes() {
               <InputComIcone>
                 <input
                   type="email"
+                  name="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={!editandoEmail}
+                  onChange={handleInputChange}
+                  disabled={true}
                   required
                 />
-                <IconeBotao type="button" onClick={() => setEditandoEmail(!editandoEmail)}>
-                  <Pencil size={16} />
-                </IconeBotao>
               </InputComIcone>
             </InputGroup>
 
             <InputGroup>
               <label>Senha</label>
+              <InputComIcone>
               <input
                 type="password"
+                name="senha"
                 value={senha}
-                onChange={(e) => setSenha(e.target.value)}
+                onChange={handleInputChange}
                 required
               />
+              <IconeBotao type="button">
+                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
+                  <Pencil size={16} />
+              </IconeBotao>
+              </InputComIcone>
             </InputGroup>
 
-            <BotaoSalvar type="submit">Registrar</BotaoSalvar>
+            <InputGroup>
+              <label>Confirmar senha</label>
+              <InputComIcone>
+              <input
+                type="password"
+                value={c_senha}
+                onChange={(e) => setC_senha(e.target.value)}
+              />
+              <IconeBotao type="button">
+                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
+                  <Pencil size={16} />
+              </IconeBotao>
+              </InputComIcone>
+            </InputGroup>
+
+            {/* Botão que chama a confirmação das alterações */}
+            <BotaoSalvar type="button" onClick={() => setShowConfirmModal(true)}>
+              Salvar alterações
+            </BotaoSalvar>
           </Form>
         </Container>
       </TopImageContainer>
 
       <PageBackground />
       <Rodape>Cloudy.IO</Rodape>
+
+      {/* Modal de confirmação */}
+      {showConfirmModal && (
+        <ConfirmModal
+          onConfirm={confirmAlteracao}
+          onCancel={() => {
+            setShowConfirmModal(false);
+            setModalStatus("idle");
+          }}
+          status={modalStatus}
+        />
+      )}
     </PageContainer>
   );
 }
@@ -174,8 +227,8 @@ const TopImageContainer = styled.div`
 `;
 
 const TopImage = styled.img`
-  opacity: 0.8; /* Transparência */
-  filter: brightness(70%); /* Escurece a imagem */
+  opacity: 0.8;
+  filter: brightness(70%);
   width: 100%;
   height: 100%;
   object-fit: cover;

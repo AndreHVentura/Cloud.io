@@ -5,7 +5,7 @@ import Logo_minimalista from "../../logo/Logo_minimalista.png";
 
 export default function NavbarPI({ background = "transparent" }) {
   return (
-    <Navbar style={{ backgroundColor: background }}>
+    <Navbar>
       <img src={Logo_minimalista} alt="logo" width={"150px"} height={"150px"} />
       <NavGroup>
         <NavLinks>
@@ -33,8 +33,8 @@ const Navbar = styled.nav`
   align-items: center;
   padding: 0.5rem 0rem;
   width: 100%;
-  height: 6rem;
-  background-color: inherit; /* Herda da prop inline */
+  height: 4.5rem;
+  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
 `;
 
 const NavGroup = styled.div`

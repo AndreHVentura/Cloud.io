@@ -16,7 +16,7 @@ export default function Grafics(){
 
   return (
     <Container>
-      <NavbarPI background="#0e0e1a" />
+      <NavbarPI />
       <Content>
         <Sidebar>
           <SelectGroup>
@@ -78,13 +78,15 @@ export default function Grafics(){
 }
 
 const Container = styled.div`
-  background: whitesmoke;
-  color: white;
+  background: ${({ theme }) => theme.backgroundGradient};
+  color: ${({ theme }) => theme.text};
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
 `;
 
 const Content = styled.div`
+  background: ${({ theme }) => theme.backgroundGradient};
+  color: ${({ theme }) => theme.text};
   display: flex;
   flex-direction: row;
   padding: 2rem;
@@ -105,7 +107,7 @@ const Sidebar = styled.div`
 
 const StationTitle = styled.h2`
   margin-top: 1rem;
-  color: #333;
+  color: ${({ theme }) => theme.text};
   font-size: 1.2rem;
   font-weight: bold;
 `;
@@ -118,7 +120,7 @@ const SelectGroup = styled.div`
 `;
 
 const Label = styled.label`
-  color: #333;
+  color: ${({ theme }) => theme.text};
   font-weight: 600;
   margin-bottom: 0.2rem;
 `;
@@ -128,12 +130,12 @@ const Select = styled.select`
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  background-color: white;
-  color: #333;
+  background-color: ${({ theme }) => theme.widgetBackground};
+  color: ${({ theme }) => theme.text};
 
   &:focus {
     outline: none;
-    border-color: #8b5cf6;
-    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3);
+    border-color: #21eb79;
+    box-shadow: 0 0 0 2px rgba(92, 246, 202, 0.3);
   }
 `;

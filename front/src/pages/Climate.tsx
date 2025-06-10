@@ -36,10 +36,10 @@ export default function Climate() {
 }
 
 const Container = styled.div`
-  color: white;
+  color: ${({ theme }) => theme.text};
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
+  background: ${({ theme }) => theme.body};
 `;
 
 const Main = styled.main`
@@ -47,7 +47,7 @@ const Main = styled.main`
   display: flex;
   justify-content: center;
   padding: 4rem;
-  background-color: whitesmoke;
+  background: ${({ theme }) => theme.body};
 `;
 
 const MainDiv = styled.div`

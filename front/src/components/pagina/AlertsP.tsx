@@ -21,12 +21,46 @@ export default function AlertsP() {
     station3: [-20.792253, -45.702784] as LatLngTuple,
   };
 
+  // Estado para os alertas de cada estação (cores e tipo)
+  const [alerts, setAlerts] = useState({
+    station1: { type: "Sem alertas", color: "green" },
+    station2: { type: "Sem alertas", color: "green" },
+    station3: { type: "Sem alertas", color: "green" },
+  });
+
+  // Função que simula a criação de alertas aleatórios, incluindo "Sem alertas"
+  const generateAlert = () => {
+    const alertTypes = [
+      { type: "Sem alertas", color: "green" },
+      { type: "Ventos médios", color: "yellow" },
+      { type: "Ventos fortes", color: "red" },
+      { type: "Ondas médias", color: "yellow" },
+      { type: "Ondas grandes", color: "red" },
+    ];
+    return alertTypes[Math.floor(Math.random() * alertTypes.length)];
+  };
+
+  // Atualizar alertas individualmente a cada 30 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const newAlerts = {
+        station1: generateAlert(),
+        station2: generateAlert(),
+        station3: generateAlert(),
+      };
+
+      setAlerts(newAlerts); // Atualiza os alertas individualmente
+    }, 10 * 60 * 1000); // Atualiza a cada 10 minutos
+
+    return () => clearInterval(interval); // Limpar intervalo quando o componente for desmontado
+  }, []); // O efeito roda uma vez quando o componente é montado
+
   // Ícone de alerta
   const alertIcon = new Icon({
-    iconUrl: "/icons/alert-icon.svg", // Usando caminho local
-    iconSize: [30, 30], // Tamanho do ícone
-    iconAnchor: [15, 30], // Posição de ancoragem
-    popupAnchor: [0, -30], // Posição do popup
+    iconUrl: "/icons/alert-icon.svg",
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -30],
   });
 
   return (
@@ -45,10 +79,26 @@ export default function AlertsP() {
               <StationOption value="station2">Estação 2</StationOption>
               <StationOption value="station3">Estação 3</StationOption>
             </StationSelector>
+
+            {/* Caixa de Alerta para a Estação 1 */}
             <AlertBox>
-              <strong>Alerta estação 1:</strong>
+              <strong>Alerta Estação 1:</strong>
               <br />
-              Ventos fortes
+              {alerts.station1.type}
+            </AlertBox>
+
+            {/* Caixa de Alerta para a Estação 2 */}
+            <AlertBox>
+              <strong>Alerta Estação 2:</strong>
+              <br />
+              {alerts.station2.type}
+            </AlertBox>
+
+            {/* Caixa de Alerta para a Estação 3 */}
+            <AlertBox>
+              <strong>Alerta Estação 3:</strong>
+              <br />
+              {alerts.station3.type}
             </AlertBox>
           </LeftColumn>
 
@@ -70,32 +120,32 @@ export default function AlertsP() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
 
-              {/* Adicionando os Markers com ícone de alerta */}
+              {/* Adicionando os Markers e Círculos para cada estação com cores e alertas individualizados */}
               <Marker position={positions.station1} icon={alertIcon}>
-                <Popup>Estação 1 - Alerta de Ventos fortes</Popup>
+                <Popup>Estação 1 - {alerts.station1.type}</Popup>
               </Marker>
               <Circle
                 center={positions.station1}
                 radius={10000}
-                pathOptions={{ fillColor: "orange", color: "orange" }}
+                pathOptions={{ fillColor: alerts.station1.color, color: alerts.station1.color }}
               />
 
               <Marker position={positions.station2} icon={alertIcon}>
-                <Popup>Estação 2 - Alerta de Ventos fortes</Popup>
+                <Popup>Estação 2 - {alerts.station2.type}</Popup>
               </Marker>
               <Circle
                 center={positions.station2}
                 radius={10000}
-                pathOptions={{ fillColor: "orange", color: "orange" }}
+                pathOptions={{ fillColor: alerts.station2.color, color: alerts.station2.color }}
               />
 
               <Marker position={positions.station3} icon={alertIcon}>
-                <Popup>Estação 3 - Alerta de Ventos fortes</Popup>
+                <Popup>Estação 3 - {alerts.station3.type}</Popup>
               </Marker>
               <Circle
                 center={positions.station3}
                 radius={10000}
-                pathOptions={{ fillColor: "orange", color: "orange" }}
+                pathOptions={{ fillColor: alerts.station3.color, color: alerts.station3.color }}
               />
             </StyledMapContainer>
           </AlertsMapDiv>

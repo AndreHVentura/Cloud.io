@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../components/perfil/Navbar";
 import Topbar from "../components/perfil/Topbar";
 import { ButtonGroup, Container, StyledTable } from "../styles/historico";
@@ -6,36 +6,62 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "../styles/pdf";
 import exportToExcel from "../styles/excel";
 
+interface SensorData {
+  mysqlId: string;
+  temp: number;
+  hum: number;
+  bar: number;
+  cab_temp: number;
+  bat_volts: number;
+  uv_level: number;
+  wind_peak: number;
+  wind_rt: number;
+  wind_avg: number;
+  wind_dir_rt: number;
+  wind_dir_avg: number;
+  reading_time: string | Date;
+}
+
+interface PaginationData {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+}
+
 export default function Historico() {
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [tableData, setTableData] = useState<SensorData[]>([]);
+  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState<PaginationData | null>(null);
+  
+
   const toggleNav = () => setIsNavOpen(!isNavOpen);
-  const tableData = [
-    { date: "2021-10-01", time: "10:00", tempC: 25, hum: 60, pressBar: 1013, tempCabine: 22, charge: 75, srWm2: 500, windPeakMs: 15, windSpeedAvg: 5, windDirInst: "N", windDirAvg: "NE", waveHeight: 2 },
-    { date: "2021-10-02", time: "11:00", tempC: 26, hum: 55, pressBar: 1012, tempCabine: 23, charge: 80, srWm2: 550, windPeakMs: 14, windSpeedAvg: 6, windDirInst: "S", windDirAvg: "SW", waveHeight: 1.8 },
-    // Adicione mais dados conforme necessário
-  ];
 
-  // const exportToExcel = () => {
-  //   const ws = XLSX.utils.table_to_sheet(document.getElementById('tabela') as HTMLTableElement);
-  //   const wb = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Tabela de dados');
-  //   const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-  //   const file = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  //   const url = window.URL.createObjectURL(file);
+  useEffect(() => {
+    async function fetchSensorData(currentPage = 1, limit = 100) {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/sensors?page=${currentPage}&limit=${limit}`
+        );
+        const data = await response.json();
+        // console.log("Dados recebidos:", data);
+        setTableData(data.data);
+        setPagination(data.pagination);
+      } catch (error) {
+        console.error("Erro ao buscar dados do sensor:", error);
+      }
+    }
 
-  //   const link = document.createElement('a');
-  //   link.href = url;
-  //   link.download = 'dados_meterologicos.xlsx'; // Nome do arquivo
-
-  //   link.click(); // Dispara o download
-  //   window.URL.revokeObjectURL(url); // Libera o objeto URL após o uso
-  // };
+    fetchSensorData(page, 100);
+  }, [page]); // Atualiza os dados quando a página muda
 
   return (
     <>
       <NavBar isOpen={isNavOpen} />
       <Topbar helper={toggleNav} isNavOpen={isNavOpen} />
-      <br></br>
+      <br />
       <Container>
         <ButtonGroup>
           <button id="e1">Estação 1</button>
@@ -63,44 +89,69 @@ export default function Historico() {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((row, index) => (
-              <tr key={index}>
-                <td>{row.date}</td>
-                <td>{row.time}</td>
-                <td>{row.tempC}</td>
-                <td>{row.hum}</td>
-                <td>{row.pressBar}</td>
-                <td>{row.tempCabine}</td>
-                <td>{row.charge}</td>
-                <td>{row.srWm2}</td>
-                <td>{row.windPeakMs}</td>
-                <td>{row.windSpeedAvg}</td>
-                <td>{row.windDirInst}</td>
-                <td>{row.windDirAvg}</td>
-                <td>{row.waveHeight}</td>
-              </tr>
-            ))}
+            {tableData.map((row, index) => {
+              const data = new Date(row.reading_time);
+              const dataFormatada = data.toLocaleDateString();
+              const horaFormatada = data.toLocaleTimeString();
+
+              return (
+                <tr key={index}>
+                  <td>{dataFormatada}</td>
+                  <td>{horaFormatada}</td>
+                  <td>{row.temp}°C</td>
+                  <td>{row.hum}%</td>
+                  <td>{row.bar}</td>
+                  <td>{row.cab_temp}</td>
+                  <td>{row.bat_volts}</td>
+                  <td>{row.uv_level}</td>
+                  <td>{row.wind_peak}</td>
+                  <td>{row.wind_avg}</td>
+                  <td>{row.wind_rt}</td>
+                  <td>{row.wind_dir_avg}</td>
+                  <td>{row.wind_dir_rt}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </StyledTable>
 
-        <div style={{ marginTop: '20px' }}>
-          {/* Link para baixar o PDF */}
+        {/* Controles de paginação */}
+        {pagination && (
+          <div style={{ marginTop: "20px", display: "flex", gap: "10px", alignItems: "center" }}>
+            <button
+              onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+              disabled={page === 1}
+            >
+              Página Anterior
+            </button>
+            <span>
+              Página {pagination.page} de {pagination.totalPages}
+            </span>
+            <button
+              onClick={() => setPage((prev) => prev + 1)}
+              disabled={!pagination.hasNextPage}
+            >
+              Próxima Página
+            </button>
+          </div>
+        )}
+
+        <div style={{ marginTop: "20px" }}>
           <PDFDownloadLink document={<MyDocument />} fileName="relatorio_meteológico.pdf">
-            {({ loading }) => (loading ? 'Carregando PDF...' : 'Baixar Relatório em PDF')}
+            {({ loading }) => (loading ? "Carregando PDF..." : "Baixar Relatório em PDF")}
           </PDFDownloadLink>
 
-          {/* Botão para exportar para Excel */}
           <button
             onClick={exportToExcel}
             style={{
-              background: 'none',
-              color: 'blue',
-              border: 'none',
-              textDecoration: 'underline',
-              cursor: 'pointer',
-              marginLeft: '20px',
+              background: "none",
+              color: "blue",
+              border: "none",
+              textDecoration: "underline",
+              cursor: "pointer",
+              marginLeft: "20px",
               padding: 0,
-              fontSize: '1rem'
+              fontSize: "1rem",
             }}
           >
             Exportar para Excel

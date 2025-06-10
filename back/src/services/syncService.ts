@@ -30,7 +30,7 @@ class SyncService {
                     [this.BATCH_SIZE, offset]
                 ) as any;
 
-                if (batch.lenght === 0) {
+                if (batch.length === 0) {
                     hasMore = false;
                     continue;
                 }
@@ -61,7 +61,7 @@ class SyncService {
 
                 //executa operaçao bulk
                 await SensorModel.bulkWrite(bulkOps);
-                processed += batch.lenght;
+                processed += batch.length;
 
                 console.log(`Processados ${processed}/${totalRecords} registros`);
 

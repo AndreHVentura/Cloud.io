@@ -7,10 +7,12 @@ const router = express.Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const data = await sensorService.getSensorData();
+    const { page = 1, limit = 100 } = req.query;
+    const data = await sensorService.getSensorData(Number(page), Number(limit));
     res.json(data);
   })
 );
+
 
 router.get(
   '/:id',

@@ -34,7 +34,7 @@ export default function AccessibilityMenu() {
         <Dropdown>
           <Option onClick={toggleTheme}>
             <IonIcon icon={isLightTheme ? Icons.moonOutline : Icons.sunnyOutline} />
-            {isLightTheme ? "Escuro" : "Claro"}
+            
           </Option>
           <Option onClick={handleReadText}>
             <IonIcon icon={Icons.volumeHighOutline} /> Leitor

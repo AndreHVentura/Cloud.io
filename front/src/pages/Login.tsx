@@ -11,6 +11,7 @@ import { IonIcon } from "@ionic/react";
 import { Icons } from "../components/perfil/Icons";
 import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
 
+
 const images = [lagoFurnas, capitolio, nuvens];
 
 const Login: React.FC = () => {
@@ -21,6 +22,7 @@ const Login: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [pwdVisible, setPwdVisible] = useState(true);
   const [isLoadingToSignup, setIsLoadingToSignup] = useState(false);
+  const [isLoadingToResetPassword, setIsLoadingToResetPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,7 +59,7 @@ const Login: React.FC = () => {
     <MainContainer>
       <Container>
         <LoginContainer>
-          {isLoadingToSignup && <LoadingCircleSpinner />}
+          {(isLoadingToSignup || isLoadingToResetPassword) && <LoadingCircleSpinner />}
 
           <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
@@ -96,7 +98,7 @@ const Login: React.FC = () => {
                 <input type="checkbox" id="remember" />
                 <label htmlFor="remember">Manter conectado</label>
               </CheckboxWrapper>
-              <PasswordLink onClick={() => navigate("/Redefinir_Senha")}>
+              <PasswordLink onClick={() => { setIsLoadingToResetPassword(true); setTimeout(() => { navigate("/Redefinir_Senha"); }, 1500); }} >
                 Esqueceu sua senha?
               </PasswordLink>
             </OptionsRow>

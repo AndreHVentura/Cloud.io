@@ -1,4 +1,6 @@
+'use server'
 import { NavLink } from "react-router-dom";
+import React, { use, useEffect } from 'react';
 import styled from "styled-components";
 import ImgFundo from "../logo/Logo_cloud.png"
 import imgMapa from "../logo/lago_furnas.jpg";
@@ -7,7 +9,15 @@ import imgCeu from "../logo/nuvens.jpg";
 import NavbarPI from "../components/perfil/NavbarPI";
 import Footer from "../components/pagina/Footer";
 
+const UpdadeSensor = async  () => {
+  const response = await fetch ('http://localhost:5000/api/sync/sensores')
+  return response.json
+}
+
 const HomePage = () => {
+  useEffect(()=>{
+    UpdadeSensor() 
+  },[]) 
   return (
     <Container>
       <Hero>

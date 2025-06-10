@@ -6,6 +6,7 @@ import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
 import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
+import ConfirmModal from "../components/pagina/ModalCadastro";
 
 const images = [lagoFurnas, capitolio, nuvens];
 
@@ -15,6 +16,10 @@ const RedefinirSenha: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [modalStatus, setModalStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,55 +38,92 @@ const RedefinirSenha: React.FC = () => {
     }
 
     setError('');
-    alert("Senha redefinida com sucesso!");
+    setShowConfirmModal(true);
     // TODO: chamar API para redefinir a senha
   };
 
+  const confirmarRedefinicaoSenha = async () => {
+    setModalStatus("loading");
+    try {
+      // Simula chamada à API
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulando delay da API
+
+      // Aqui vai a chamada real à API, ex:
+      // await api.post('/api/users/reset-password', { password });
+
+      setModalStatus("success");
+      setTimeout(() => {
+        setShowConfirmModal(false);
+        navigate("/login");
+      }, 1500);
+    } catch (error) {
+      console.error("Erro ao redefinir a senha:", error);
+      setTimeout(() => {
+        setModalStatus("error");
+        setTimeout(() => {
+          setModalStatus("idle");
+        }, 2000);
+      }, 2000);
+    }
+  };
+
   return (
-    <MainContainer>
-      <Container>
-        <FormContainer>
-          <LogoImage src={Logo_cloud} alt="Logo Cloud" />
-          <Logo>Cloud.<span>io</span></Logo>
+    <>
+      <MainContainer>
+        <Container>
+          <FormContainer>
+            <LogoImage src={Logo_cloud} alt="Logo Cloud" />
+            <Logo>Cloud.<span>io</span></Logo>
 
-          <Form onSubmit={handleSubmit}>
-            <InputLabel>Nova Senha</InputLabel>
-            <InputField
-              type="password"
-              placeholder="Digite sua nova senha"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <Form onSubmit={handleSubmit}>
+              <InputLabel>Nova Senha</InputLabel>
+              <InputField
+                type="password"
+                placeholder="Digite sua nova senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-            <InputLabel>Confirmar Nova Senha</InputLabel>
-            <InputField
-              type="password"
-              placeholder="Confirme sua nova senha"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
+              <InputLabel>Confirmar Nova Senha</InputLabel>
+              <InputField
+                type="password"
+                placeholder="Confirme sua nova senha"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
 
-            {error && <ErrorMessage>{error}</ErrorMessage>}
+              {error && <ErrorMessage>{error}</ErrorMessage>}
 
-            <SubmitButton type="submit">Redefinir Senha</SubmitButton>
-            <BackLink to="/Login">← Voltar para o login</BackLink>
-          </Form>
-        </FormContainer>
+              <SubmitButton type="submit">Redefinir Senha</SubmitButton>
+              <BackLink to="/Login">← Voltar para o login</BackLink>
+            </Form>
+          </FormContainer>
 
-        <ImageContainer>
-          {images.map((img, index) => (
-            <CarouselImage
-              key={index}
-              src={img}
-              alt={`background-${index}`}
-              isVisible={index === currentImageIndex}
-            />
-          ))}
-        </ImageContainer>
-      </Container>
-    </MainContainer>
+          <ImageContainer>
+            {images.map((img, index) => (
+              <CarouselImage
+                key={index}
+                src={img}
+                alt={`background-${index}`}
+                isVisible={index === currentImageIndex}
+              />
+            ))}
+          </ImageContainer>
+        </Container>
+      </MainContainer>
+      {showConfirmModal && (
+        <ConfirmModal onConfirm={confirmarRedefinicaoSenha}
+          onCancel={() => {
+            setShowConfirmModal(false);
+            setModalStatus("idle");
+          }
+        }
+        status={modalStatus}
+        />
+      )}
+    </>
   );
 };
 

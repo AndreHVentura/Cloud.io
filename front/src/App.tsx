@@ -17,10 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
 import Configuracoes from "./pages/Configuracoes";
-<<<<<<< HEAD
-=======
 import RedefinirSenha from "./pages/Redefinir_Senha"; 
->>>>>>> 9ccfb56201fa3200382ca6646463859913cf791e
 
 function App() {
   return (

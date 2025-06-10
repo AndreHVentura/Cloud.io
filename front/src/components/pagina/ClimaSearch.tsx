@@ -94,7 +94,8 @@ const SearchContainer = styled.div`
   gap: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
-  background: #f8f9fa;
+  background-color: ${({ theme }) => theme.widgetBackground};
+  color: ${({ theme }) => theme.text};
   border-radius: 8px;
 `;
 

@@ -11,7 +11,8 @@ export default function TempWidget() {
 }
 
 const Card = styled.div`
-  background: white;
+  background: ${({ theme }) => theme.widgetBackground};;
+  color: ${({ theme }) => theme.text};
   padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -20,12 +21,12 @@ const Card = styled.div`
 
 const Title = styled.h3`
   font-size: 1rem;
-  color: #555;
+  color: ${({ theme }) => theme.text};
   margin-bottom: 0.5rem;
 `;
 
 const Value = styled.p`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #222;
+  color: ${({ theme }) => theme.text};
 `;

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { ThemeProvider } from "styled-components";
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { lightTheme, darkTheme } from "./styles/themes";
-import GlobalStyle from "./styles/globalStyle";
 import { AuthProvider } from "./contexts/AuthContext";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./styles/themes";
+import { ThemeProviderCustom, useThemeCustom } from "./contexts/ThemeContext";
+import GlobalStyle from "./styles/globalStyle";
 import MainLayout from "./layouts/MainLayout";
 import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
@@ -17,14 +18,16 @@ import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
 import Configuracoes from "./pages/Configuracoes";
 
-
 function App() {
-  const [isLightTheme, setIsLightTheme] = useState(true);
+  return (
+    <ThemeProviderCustom>
+      <InnerApp />
+    </ThemeProviderCustom>
+  );
+}
 
-  // Expor o setter globalmente (não é o ideal, mas prático neste caso)
-  useEffect(() => {
-    (window as any).toggleTheme = () => setIsLightTheme(prev => !prev);
-  }, []);
+function InnerApp() {
+  const { isLightTheme } = useThemeCustom();
 
   return (
     <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
@@ -58,4 +61,5 @@ function App() {
     </ThemeProvider>
   );
 }
+
 export default App;

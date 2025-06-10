@@ -195,7 +195,7 @@ const FeatureDescription = styled.p`
 `;
 
 const ImagemSecao = styled.section`
-  background: #f4f4f4;
+  background: ${({ theme }) => theme.backgroundGradient};
   padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
@@ -224,7 +224,7 @@ const Imagem = styled.img`
 
 const TextoImagem = styled.div`
   flex: 1;
-  color: #333;
+  color: ${({ theme }) => theme.text};
   padding: 1rem;
 
   h2 {

@@ -123,10 +123,10 @@ function MapUpdater({ position }: { position: LatLngTuple }) {
 }
 
 const Container = styled.div`
-  color: white;
+  color: ${({ theme }) => theme.text};
   min-height: 100vh;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
+  background: ${({ theme }) => theme.backgroundGradient};
 `;
 
 const LeftColumn = styled.div`
@@ -138,10 +138,10 @@ const LeftColumn = styled.div`
 
 const AlertBox = styled.div`
   flex: 1;
-  background-color: white;
+  background-color: ${({ theme }) => theme.widgetBackground};
   border-radius: 12px;
   padding: 1.5rem;
-  color: #1f1f2e;
+  color: ${({ theme }) => theme.text};
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -153,7 +153,7 @@ const AlertBox = styled.div`
 const AlertsMain = styled.main`
   height: calc(100vh - 4rem);
   padding: 2rem;
-  background-color: whitesmoke;
+  background-color: ${({ theme }) => theme.body};
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -176,21 +176,21 @@ const StyledMapContainer = styled(MapContainer)`
 `;
 
 const StationSelector = styled.select`
-  background-color: white;
-  border: 2px solid #6d28d9;
+  background-color: ${({ theme }) => theme.widgetBackground};
+  border: 2px solid #21eb79;
   padding: 0.8rem 1.2rem;
   border-radius: 8px;
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
-  color: #1f1f2e;
+  color: ${({ theme }) => theme.text};
   cursor: pointer;
   &:focus {
     outline: none;
-    border-color: #8b5cf6;
+    border-color: #21eb79;
   }
 `;
 
 const StationOption = styled.option`
   font-size: 1rem;
-  color: #1f1f2e;
+  color: ${({ theme }) => theme.text};
 `;

@@ -1,43 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Icons, IonIcon } from "../perfil/Icons";
-
-declare global {
-  interface Window {
-    VLibras: {
-      Widget: new (url: string) => any;
-    };
-  }
-}
+import { useThemeCustom } from "../../contexts/ThemeContext";
 
 export default function AccessibilityMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const [vlibrasReady, setVlibrasReady] = useState(false);
-
-  useEffect(() => {
-    if ((window as any).VLibras) {
-      setVlibrasReady(true);
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-    script.async = true;
-    script.onload = () => {
-      if ((window as any).VLibras) {
-        // Aguarde um pouco para garantir que o DOM está estável
-        setTimeout(() => {
-          try {
-            new (window as any).VLibras.Widget("https://vlibras.gov.br/app");
-            setVlibrasReady(true);
-          } catch (e) {
-            console.error("Erro ao iniciar VLibras:", e);
-          }
-        }, 500); // aguarde 500ms
-      }
-    };
-    document.body.appendChild(script);
-  }, []);
+  const { isLightTheme, toggleTheme } = useThemeCustom();
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
@@ -57,40 +25,6 @@ export default function AccessibilityMenu() {
     }
   };
 
-  const handleToggleVLibras = () => {
-    const existingWrapper = document.querySelector(".vp-plugin-wrapper");
-
-    // Se já existe, apenas mostrar/ocultar
-    if (existingWrapper) {
-      existingWrapper.classList.toggle("hidden");
-      return;
-    }
-
-    // Se ainda não está pronto, carregue o script e crie
-    const script = document.createElement("script");
-    script.src = "https://vlibras.gov.br/app/vlibras-plugin.js";
-    script.async = true;
-    script.onload = () => {
-      setTimeout(() => {
-        try {
-          new (window as any).VLibras.Widget("https://vlibras.gov.br/app");
-          setVlibrasReady(true);
-        } catch (e) {
-          console.error("Erro ao iniciar VLibras:", e);
-        }
-      }, 500);
-    };
-    script.onerror = () => {
-      console.error("Erro ao carregar o script do VLibras");
-    };
-
-    document.body.appendChild(script);
-  };
-
-  const toggleTheme = () => {
-    (window as any).toggleTheme?.();
-  };
-
   return (
     <Wrapper>
       <Button onClick={toggleDropdown}>
@@ -99,19 +33,17 @@ export default function AccessibilityMenu() {
       {isOpen && (
         <Dropdown>
           <Option onClick={toggleTheme}>
-            <IonIcon icon={Icons.moonOutline} /> Tema
+            <IonIcon icon={isLightTheme ? Icons.moonOutline : Icons.sunnyOutline} />
+            {isLightTheme ? "Escuro" : "Claro"}
           </Option>
           <Option onClick={handleReadText}>
             <IonIcon icon={Icons.volumeHighOutline} /> Leitor
           </Option>
           <Option onClick={() => handleFontSize("increase")}>
-            <IonIcon icon={Icons.textOutline} /> Aumentar fonte
+            <IonIcon icon={Icons.textOutline} /> +
           </Option>
           <Option onClick={() => handleFontSize("decrease")}>
-            <IonIcon icon={Icons.textOutline} /> Diminuir fonte
-          </Option>
-          <Option onClick={handleToggleVLibras}>
-            <IonIcon icon={Icons.handLeftOutline} /> Libras
+            <IonIcon icon={Icons.textOutline} /> -
           </Option>
         </Dropdown>
       )}

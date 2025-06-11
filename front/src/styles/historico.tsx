@@ -60,6 +60,7 @@ export const StyledTable = styled.table`
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
+    color: black;
   }
 
   th {

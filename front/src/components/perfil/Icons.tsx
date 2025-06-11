@@ -19,7 +19,10 @@ import {
   removeOutline, 
   addOutline, 
   handLeftOutline,
-  textOutline
+  textOutline,
+  partlySunny,
+  statsChart,
+  person
 } from "ionicons/icons";
 
 export const Icons = {
@@ -42,7 +45,10 @@ export const Icons = {
   removeOutline, 
   addOutline, 
   handLeftOutline,
-  textOutline
+  textOutline,
+  partlySunny,
+  statsChart,
+  person
 };
 
 export { IonIcon };

@@ -8,7 +8,8 @@ import GlobalStyle from "./styles/globalStyle";
 import MainLayout from "./layouts/MainLayout";
 import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
+import Clima from "./pages/Clima";
+import Grafico from "./pages/Graficos";
 import HomePage from "./pages/Pagina_Inicial";
 import Alerta from "./pages/Alerta";
 import Historico from "./pages/Historico";
@@ -46,7 +47,8 @@ function InnerApp() {
             <Route path="/alert" element={<MainLayout><AlertsP /></MainLayout>} />
             <Route path="/homepage" element={<MainLayout><HomePage /></MainLayout>} />
             <Route path="/climate" element={<MainLayout><Climate /></MainLayout>} />
-            <Route path="/home" element={<MainLayout><Home /></MainLayout>} />
+            <Route path="/clima" element={<MainLayout><Clima /></MainLayout>} />
+            <Route path="/grafico" element={<MainLayout><Grafico /></MainLayout>} />
             <Route path="/history" element={<MainLayout><Historico /></MainLayout>} />
             <Route path="/alerts" element={<MainLayout><Alerta /></MainLayout>} />
             

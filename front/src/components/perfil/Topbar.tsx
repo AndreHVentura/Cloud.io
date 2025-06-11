@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { IonIcon } from './Icons';
-import { Icons } from "./Icons";
 import Notificacao from "./Notificacao";
 import UsuarioDropdown from "./UsuarioDropdown"; // Importar o componente que criamos
 import { useAuth } from "../../contexts/AuthContext";
@@ -64,7 +62,7 @@ const MenuToggle = ({ toggle, isOpen }: { toggle: () => void, isOpen: boolean })
 );
 
 const Upperdiv = styled.div`
-  background-color: #191919; 
+  background-color: #1f1f2e; 
   height: 3rem;
   display: flex;
   flex-direction: row-reverse;
@@ -76,18 +74,12 @@ const Upperdiv = styled.div`
   z-index: 3;
 `;
 
-const IonStyledIcon = styled(IonIcon)`
-  font-size: 2rem;
-  margin-left: 1rem;
-  margin-right: 0.5rem;
-`;
-
 const P = styled.p`
   margin: 0 1rem;
 `;
 
 const Button = styled.button`
-  background-color: #191919;
+  background-color: #1f1f2e;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -98,14 +90,6 @@ const Button = styled.button`
   cursor: pointer; 
   padding: 0.3rem 0;
   color: white;
-
-  &:hover {
-    background-color: #373739;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
 `;
 
 const ToggleDiv = styled.div`

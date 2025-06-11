@@ -61,9 +61,15 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
           {isOpen && (
             <NavContent>
               <motion.div variants={item}>
-                <NavLink to="/home">
-                  <IonStyledIcon icon={Icons.home} />
-                  <span>Inicio</span>
+                <NavLink to="/clima">
+                  <IonStyledIcon icon={Icons.partlySunny} />
+                  <span>Clima</span>
+                </NavLink>
+              </motion.div>
+              <motion.div variants={item}>
+                <NavLink to="/grafico">
+                  <IonStyledIcon icon={Icons.statsChart} />
+                  <span>Gráficos</span>
                 </NavLink>
               </motion.div>
 
@@ -81,28 +87,6 @@ export default function NavBar({ isOpen }: { isOpen: boolean }) {
                 </NavLink>
               </motion.div>
 
-              <motion.div variants={item}>
-                <NavLink to="/settings">
-                  <IonStyledIcon icon={Icons.settingsSharp} />
-                  <span>Configurações</span>
-                </NavLink>
-              </motion.div>
-
-              <BottomLinks>
-                <motion.div variants={item}>
-                  <NavLink to="/about">
-                    <IonStyledIcon icon={Icons.informationCircle} />
-                    <span>Sobre</span>
-                  </NavLink>
-                </motion.div>
-                
-                <motion.div variants={item}>
-                  <NavLink to="/">
-                    <IonStyledIcon icon={Icons.logOut} />
-                    <span>Sair</span>
-                  </NavLink>
-                </motion.div>
-              </BottomLinks>
             </NavContent>
           )}
         </AnimatePresence>
@@ -135,7 +119,7 @@ const NavContainer = styled(motion.nav)`
     left: 0;
     bottom: 0;
     width: 100%;
-    background: #191919;
+    background: #1f1f2e;
   }
 `
 
@@ -166,8 +150,3 @@ const IonStyledIcon = styled(IonIcon)`
   margin-left: 0em;
   margin-right: 1rem;
 `;
-
-const BottomLinks = styled.div`
-  margin-top: auto;
-  padding-bottom: 3rem;
-`

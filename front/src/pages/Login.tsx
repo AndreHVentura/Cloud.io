@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       console.log('Login bem-sucedido:', response.data);
       localStorage.setItem('token', response.data.token);
       login(response.data.token, response.data.user);
-      navigate('/home');
+      navigate('/clima');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       alert('Credenciais inválidas ou erro no servidor.');

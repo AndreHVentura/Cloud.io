@@ -46,7 +46,7 @@ export default function UsuarioDropdown() {
       </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
         <MenuItem>
-          <IonIcon icon={Icons.home} /> <span>Meu Perfil</span>
+          <IonIcon icon={Icons.person} /> <span>Meu Perfil</span>
         </MenuItem>
         <MenuItem onClick={() => navigate("/settings")}>
           <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>

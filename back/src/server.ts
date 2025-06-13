@@ -47,9 +47,8 @@ app.use('/api/sync', syncRoutes);
 
 // Inicia sincronização agendada
 if (process.env.ENABLE_SYNC_SCHEDULE === 'true') {
-  syncService.startScheduledSync(60); // Sincroniza a cada 60 minutos
+  syncService.startScheduledSync(5); // Sincroniza a cada 60 minutos
 }
-
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

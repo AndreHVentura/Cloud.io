@@ -4,7 +4,9 @@ import { Icons } from "./Icons";
 import styled from "styled-components";
 
 export default function Notificacao() {
+  const [windData, setWindData] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const [hasNotif, setHasNotif] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownBtn = useRef<HTMLButtonElement>(null);
 
@@ -30,23 +32,65 @@ export default function Notificacao() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+     async function fetchData() {
+       const dado = await fetch("http://localhost:5000/api/sensors?page=1&limit=1");
+       const json = await dado.json();
+      
+       let x = json.data[0].wind_avg
+       setWindData(x);
+       if(x >= 10) setHasNotif(true);
+     }
+
+     fetchData()
+     const intervalId = setInterval(() => {
+       fetchData();
+     }, 600000);
+     return () => clearInterval(intervalId);
+  }, []);
+
+  function updateState() {
+    setIsOpen((prevState) => !prevState);
+    setHasNotif((prevState) => !prevState);
+  }
   return (
     <>
       <DropdownBtn
-        onClick={() => setIsOpen((prevState) => !prevState)}
+        onClick={updateState}
         ref={dropdownBtn}
       >
         <IonIcon icon={Icons.notificationsCircleSharp} />
+        <RedDot className={hasNotif ? "show" : "hide"}>1</RedDot>
       </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
         <MenuItem>
-          <IonIcon icon={Icons.warning} /> <span>Alerta de ventos fortes</span>
+          {
+            windData >= 17
+            ? <><IonIcon icon={Icons.warning} /><span>Alerta de ventos fortes</span></>
+            : windData >= 10
+              ? <><IonIcon icon={Icons.warning} /><span>Ventos de média intensidade</span></>
+              : <span>Tudo bem por enquanto</span>
+          }
         </MenuItem>
-        {/* Adicionar mais notificações aqui */}
       </DropdownMenu>
     </>
   );
 }
+
+const RedDot = styled.span`
+  &.show {
+    position: absolute;
+    top: 5px;
+    right: 7px;
+    padding: 1px 5px;
+    border-radius: 50%;
+    background: red;
+  }
+
+  &.hide {
+    display: none;
+  }
+`;
 
 const DropdownBtn = styled.button`
   display: inline-block;

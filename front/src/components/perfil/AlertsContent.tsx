@@ -4,14 +4,41 @@ import { useEffect, useState } from "react";
 // import AlertsMap from "./AlertsMap";
 
 export default function AlertsContent() {
+  type AlertaDeVento = {
+    wind: number;
+    data: string;
+    msg: string;
+  }
+
   const [windData, setWindData] = useState(0);
+  const [arrayDados, setArrayDados] = useState<AlertaDeVento[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const dado = await fetch("http://localhost:5000/api/sensors?page=1&limit=1");
       const json = await dado.json();
       
-      setWindData(json.data[0].wind_avg);
+      let windAvgSpeed = json.data[0].wind_avg
+      let timestamp = json.data[0].reading_time
+
+      setWindData(windAvgSpeed);
+
+      if(windAvgSpeed < 10) return;
+
+      let newMessage = "";
+      if(windAvgSpeed >= 17.00) {
+        newMessage = "É perigoso navegar";
+      } else if(windAvgSpeed >= 10.00) {
+        newMessage = "Cuidado ao navegar";
+      }
+
+      const ventoAtual = {
+        wind: windAvgSpeed,
+        data: timestamp,
+        msg: newMessage
+      }
+
+      setArrayDados(a => [ventoAtual, ...a.slice(0,4)]);
     }
 
     fetchData()
@@ -23,29 +50,26 @@ export default function AlertsContent() {
     return () => clearInterval(intervalId);
   }, []);
 
- 
-  let message;
-  if(windData > 17.00) {
-    message = "É perigoso navegar";
-  } else if(windData > 10.00) {
-    message = "Cuidado ao navegar";
-  } else {
-    message = "É seguro navegar";
+  function limparArray() {
+    setArrayDados([]);
   }
 
   return(
     <AlertsMain>
       <AlertsFilterDiv>
-        <DivMessage>
-          Estação da represa de Furnas
-        </DivMessage>
+        <h2>Estação da represa de Furnas</h2>
       </AlertsFilterDiv>
       <AlertsMessages>
         <h3>Mensagens de alerta</h3>
-        <DivMessage>
-          <p><b>{message}</b> - Velocidade do vento: {windData} m/s</p>
-          <p>Horário do alerta: 12:00</p>
-        </DivMessage>
+        <button onClick={limparArray}>Limpar</button>
+        {
+          arrayDados.map((elem, i) => {
+            return <DivMessage key={i}>
+                <p><b>{elem.msg}</b> - Velocidade do vento: {elem.wind} m/s</p>
+                <p>Horário do alerta: {elem.data}</p>
+              </DivMessage>
+          })
+        }
       </AlertsMessages>
       <AlertsMapDiv>
         <AlertsMap windAvgSpeed={windData}/>
@@ -77,6 +101,8 @@ const AlertsBaseDiv = styled.div`
 `;
 
 const AlertsMapDiv = styled(AlertsBaseDiv)`
+  position: relative;
+  z-index: 1;
   width: 60%;
   height: 100%;
 
@@ -89,6 +115,7 @@ const AlertsFilterDiv = styled(AlertsBaseDiv)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 35%;
   height: 46%;
 

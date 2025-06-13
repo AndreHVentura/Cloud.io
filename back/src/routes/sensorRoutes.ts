@@ -7,11 +7,19 @@ const router = express.Router();
 router.get(
   '/',
   asyncHandler(async (req, res) => {
-    const { page = 1, limit = 100 } = req.query;
-    const data = await sensorService.getSensorData(Number(page), Number(limit));
+    const { page = 1, limit = 100, startDate, endDate } = req.query;
+
+    const data = await sensorService.getSensorData(
+      Number(page),
+      Number(limit),
+      startDate as string,
+      endDate as string
+    );
+
     res.json(data);
   })
 );
+
 
 
 router.get(

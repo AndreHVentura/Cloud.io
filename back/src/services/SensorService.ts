@@ -2,27 +2,47 @@ import { SensorModel } from '../models/Sensor';
 
 class SensorService {
   // Busca todos os sensores com paginação
-  async getSensorData(page = 1, limit = 100) {
+  async  getSensorData(
+    page: number = 1,
+    limit: number = 100,
+    startDate?: string,
+    endDate?: string
+  ) {
     const skip = (page - 1) * limit;
-
-    const [sensors, total] = await Promise.all([
-      SensorModel.find()
-        .sort({ reading_time: -1 }) // Ordena por data decrescente
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      SensorModel.countDocuments()
-    ]);
-
-    return {
-      data: sensors,
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-        hasNextPage: (page * limit) < total
+  
+    const filter: any = {};
+  
+    if (startDate || endDate) {
+      const readingTimeFilter: any = {};
+  
+      if (startDate) {
+        const start = new Date(startDate + 'T00:00:00');
+        readingTimeFilter.$gte = start;
       }
+      
+      if (endDate) {
+        const end = new Date(endDate + 'T23:59:59.999');
+        readingTimeFilter.$lte = end;
+      }
+  
+      filter.reading_time = readingTimeFilter;
+    }
+  
+    const [data, total] = await Promise.all([
+      SensorModel.find(filter)
+        .sort({ reading_time: -1 }) // ordena por mais recentes primeiro
+        .skip(skip)
+        .limit(limit),
+      SensorModel.countDocuments(filter),
+    ]);
+  
+    return {
+      data,
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      hasNextPage: skip + data.length < total,
     };
   }
 

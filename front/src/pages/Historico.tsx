@@ -30,8 +30,6 @@ interface PaginationData {
   hasNextPage: boolean;
 }
 
-// ... imports
-
 export default function Historico() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [tableData, setTableData] = useState<SensorData[]>([]);
@@ -39,70 +37,59 @@ export default function Historico() {
   const [pagination, setPagination] = useState<PaginationData | null>(null);
   const [mostrarFiltro, setMostrarFiltro] = useState(false);
 
-  const [filtrosSelecionados, setFiltrosSelecionados] = useState({
-    temp: true,
-    hum: true,
-    bar: true,
-    cab_temp: true,
-    bat_volts: true,
-    uv_level: true,
-    wind_peak: true,
-    wind_avg: true,
-    wind_rt: true,
-    wind_dir_rt: true,
-    wind_dir_avg: true,
-    reading_time: true,
-  });
+  // Estados temporários para o formulário
+  const [dataInicial, setDataInicial] = useState("");
+  const [dataFinal, setDataFinal] = useState("");
 
-  const [filtrosAplicados, setFiltrosAplicados] = useState({ ...filtrosSelecionados });
-
-  // 🟡 Mapeamento de nomes legíveis
-  const nomesFiltros: Record<keyof typeof filtrosSelecionados, string> = {
-    reading_time: "Data e Hora",
-    temp: "Temperatura (°C)",
-    hum: "Umidade (%)",
-    bar: "Pressão (Bar)",
-    cab_temp: "Temp. da Cabine (°C)",
-    bat_volts: "Carga da Bateria (V)",
-    uv_level: "Radiação Solar (W/m²)",
-    wind_peak: "Pico de Vento (m/s)",
-    wind_avg: "Vel. Média do Vento (m/s)",
-    wind_rt: "Dir. Inst. do Vento",
-    wind_dir_avg: "Dir. Média do Vento",
-    wind_dir_rt: "Altura da Onda",
-  };
+  // Estados aplicados ao filtro
+  const [dataAplicadaInicial, setDataAplicadaInicial] = useState("");
+  const [dataAplicadaFinal, setDataAplicadaFinal] = useState("");
 
   const toggleNav = () => setIsNavOpen(!isNavOpen);
   const toggleFiltro = () => setMostrarFiltro(!mostrarFiltro);
 
-  const handleCheckboxChange = (key: keyof typeof filtrosSelecionados) => {
-    setFiltrosSelecionados((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
-
-  const aplicarFiltros = () => {
-    setFiltrosAplicados({ ...filtrosSelecionados });
+  const aplicarFiltroPorData = () => {
+    setPage(1); // Reinicia a paginação
+    setDataAplicadaInicial(dataInicial);
+    setDataAplicadaFinal(dataFinal);
     setMostrarFiltro(false);
+    console.log('Aplicando filtro:', dataInicial, dataFinal);
   };
 
   useEffect(() => {
-    async function fetchSensorData(currentPage = 1, limit = 100) {
+    async function fetchSensorData(currentPage = 1, limit = 50) {
       try {
-        const response = await fetch(
-          `http://localhost:5000/api/sensors?page=${currentPage}&limit=${limit}`
-        );
+        const params = new URLSearchParams({
+          page: currentPage.toString(),
+          limit: limit.toString(),
+        });
+  
+        if (dataAplicadaInicial) params.set('startDate', dataAplicadaInicial);
+        if (dataAplicadaFinal) params.set('endDate', dataAplicadaFinal);
+
+  
+        const url = `http://localhost:5000/api/sensors?${params.toString()}`;
+        console.log('URL fetch:', url);
+
+  
+        const response = await fetch(url);
         const data = await response.json();
+  
         setTableData(data.data);
-        setPagination(data.pagination);
+        setPagination({
+          page: data.page,
+          limit: data.limit,
+          total: data.total,
+          totalPages: data.totalPages,
+          hasNextPage: data.hasNextPage,
+        });
       } catch (error) {
         console.error("Erro ao buscar dados do sensor:", error);
       }
     }
-
-    fetchSensorData(page, 100);
-  }, [page]);
+  
+    fetchSensorData(page);
+  }, [page, dataAplicadaInicial, dataAplicadaFinal]);
 
   return (
     <>
@@ -111,7 +98,7 @@ export default function Historico() {
       <br />
       <Container>
         <ButtonGroup>
-          <button id="filter" onClick={toggleFiltro}>Filtro</button>
+          <button id="filter" onClick={toggleFiltro}>Filtrar por Data</button>
         </ButtonGroup>
 
         {mostrarFiltro && (
@@ -124,23 +111,33 @@ export default function Historico() {
               backgroundColor: "#f2f2f2",
               width: "300px",
               color: "black",
-              flexWrap:"wrap"
+              flexWrap: "wrap",
             }}
           >
-            <h3>Filtros</h3>
-            {Object.entries(filtrosSelecionados).map(([key, value]) => (
-              <label key={key}>
+            <h3>Filtro por Data</h3>
+            <div style={{ marginBottom: "10px" }}>
+              <label>
+                Data Inicial:
                 <input
-                  type="checkbox"
-                  checked={value}
-                  onChange={() => handleCheckboxChange(key as keyof typeof filtrosSelecionados)}
-                />{" "}
-                {nomesFiltros[key as keyof typeof nomesFiltros]}
-                <br />
+                  type="date"
+                  value={dataInicial}
+                  onChange={(e) => setDataInicial(e.target.value)}
+                  style={{ marginLeft: "10px" }}
+                />
               </label>
-            ))}
-            <br />
-            <button onClick={aplicarFiltros}>Aplicar</button>{" "}
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <label>
+                Data Final:
+                <input
+                  type="date"
+                  value={dataFinal}
+                  onChange={(e) => setDataFinal(e.target.value)}
+                  style={{ marginLeft: "10px" }}
+                />
+              </label>
+            </div>
+            <button onClick={aplicarFiltroPorData}>Aplicar</button>{" "}
             <button onClick={toggleFiltro}>Fechar</button>
           </div>
         )}
@@ -148,23 +145,19 @@ export default function Historico() {
         <StyledTable id="tabela">
           <thead>
             <tr>
-              {filtrosAplicados.reading_time && (
-                <>
-                  <th>Data</th>
-                  <th>Hora</th>
-                </>
-              )}
-              {filtrosAplicados.temp && <th>Temperatura (°C)</th>}
-              {filtrosAplicados.hum && <th>Umidade (%)</th>}
-              {filtrosAplicados.bar && <th>Pressão (Bar)</th>}
-              {filtrosAplicados.cab_temp && <th>Temp. da Cabine (°C)</th>}
-              {filtrosAplicados.bat_volts && <th>Carga</th>}
-              {filtrosAplicados.uv_level && <th>Radiação Solar (W/m²)</th>}
-              {filtrosAplicados.wind_peak && <th>Pico de Vento (m/s)</th>}
-              {filtrosAplicados.wind_avg && <th>Vel. Média do Vento (m/s)</th>}
-              {filtrosAplicados.wind_rt && <th>Dir. Inst. do Vento</th>}
-              {filtrosAplicados.wind_dir_avg && <th>Dir. Média do Vento</th>}
-              {filtrosAplicados.wind_dir_rt && <th>Altura da Onda</th>}
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Temperatura (°C)</th>
+              <th>Umidade (%)</th>
+              <th>Pressão (Bar)</th>
+              <th>Temp. da Cabine (°C)</th>
+              <th>Carga</th>
+              <th>Radiação Solar (W/m²)</th>
+              <th>Pico de Vento (m/s)</th>
+              <th>Vel. Média do Vento (m/s)</th>
+              <th>Dir. Inst. do Vento</th>
+              <th>Dir. Média do Vento</th>
+              <th>Altura da Onda</th>
             </tr>
           </thead>
           <tbody>
@@ -175,23 +168,19 @@ export default function Historico() {
 
               return (
                 <tr key={index}>
-                  {filtrosAplicados.reading_time && (
-                    <>
-                      <td>{dataFormatada}</td>
-                      <td>{horaFormatada}</td>
-                    </>
-                  )}
-                  {filtrosAplicados.temp && <td>{row.temp}°C</td>}
-                  {filtrosAplicados.hum && <td>{row.hum}%</td>}
-                  {filtrosAplicados.bar && <td>{row.bar}</td>}
-                  {filtrosAplicados.cab_temp && <td>{row.cab_temp}</td>}
-                  {filtrosAplicados.bat_volts && <td>{row.bat_volts}</td>}
-                  {filtrosAplicados.uv_level && <td>{row.uv_level}</td>}
-                  {filtrosAplicados.wind_peak && <td>{row.wind_peak}</td>}
-                  {filtrosAplicados.wind_avg && <td>{row.wind_avg}</td>}
-                  {filtrosAplicados.wind_rt && <td>{row.wind_rt}</td>}
-                  {filtrosAplicados.wind_dir_avg && <td>{row.wind_dir_avg}</td>}
-                  {/* {filtrosAplicados.wind_dir_rt && <td>{row.wind_dir_rt}</td>} */}
+                  <td>{dataFormatada}</td>
+                  <td>{horaFormatada}</td>
+                  <td>{row.temp}°C</td>
+                  <td>{row.hum}%</td>
+                  <td>{row.bar}</td>
+                  <td>{row.cab_temp}</td>
+                  <td>{row.bat_volts}</td>
+                  <td>{row.uv_level}</td>
+                  <td>{row.wind_peak}</td>
+                  <td>{row.wind_avg}</td>
+                  <td>{row.wind_rt}</td>
+                  <td>{row.wind_dir_avg}</td>
+                  <td>{row.wind_dir_rt}</td>
                 </tr>
               );
             })}
@@ -216,9 +205,9 @@ export default function Historico() {
         )}
 
         <div style={{ marginTop: "20px" }}>
-          <PDFDownloadLink document={<MyDocument data={tableData} />} fileName="relatorio_meteológico.pdf">
+          {/* <PDFDownloadLink document={<MyDocument data={tableData} />} fileName="relatorio_meteorologico.pdf">
             {({ loading }) => (loading ? "Carregando PDF..." : "Baixar Relatório em PDF")}
-          </PDFDownloadLink>
+          </PDFDownloadLink> */}
 
           <button
             onClick={exportToExcel}

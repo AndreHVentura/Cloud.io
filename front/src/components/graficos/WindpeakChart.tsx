@@ -1,8 +1,21 @@
-import React from 'react';
+'use client'
+import { use } from 'react'
 import ApexCharts from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 
+async function fetchSensorData(date: any){
+  const responde = await fetch(`http://localhost:5000/api/sensors/by-day/${date}`)
+  if(!responde.ok){
+    throw new Error('Falha ao buscar dados do sensores')
+  }
+  return responde.json()
+}
+
+
 const WindPeakChart = () => {
+
+  const sensorData = use(fetchSensorData('2025-06-14'))
+
   // Dados reais convertidos de string para número
   const windPeakData = [
     "1,44", "0,40", "0,74", "1,87", "3,26", "3,44", "3,20", "1,73", "1,80", "2,23",
@@ -23,7 +36,10 @@ const WindPeakChart = () => {
   ];
   const timestamps = times.map((time) => new Date(`${date}T${time}:00Z`).toISOString());
 
+
+
   const options: ApexOptions = {
+    
     chart: {
       type: 'area',
       height: 350,

@@ -20,20 +20,6 @@ export default function Grafics(){
       <Content>
         <Sidebar>
           <SelectGroup>
-            <Label>Estação</Label>
-            <Select
-              value={selectedStation}
-              onChange={(e) =>
-                setSelectedStation(
-                  e.target.value as "station1"
-                )
-              }
-            >
-              <option value="" disabled>
-                Escolha a estação
-              </option>
-              <option value="station1">Estação Lago de Furnas</option>
-            </Select>
             <Label>Tipo de Gráfico</Label>
             <Select
               value={selectedChart}
@@ -51,8 +37,7 @@ export default function Grafics(){
               <option value="maxVel">Velocidade Máxima do Vento</option>
               <option value="dirVel">Direção do Vento</option>
               <option value="vel">Velocidade do Vento</option>
-              <option value="onda">Altura da Onda</option>
-              <option value="nivel">Nível do Reservatório</option>
+              
             </Select>
              {selectedStation && (
                 <StationTitle>

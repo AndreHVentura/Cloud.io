@@ -41,17 +41,13 @@ export default function UsuarioDropdown() {
         onClick={() => setIsOpen((prevState) => !prevState)}
         ref={dropdownBtn}
       >
-        <IonIcon icon={Icons.personCircleSharp} />
-        <span>{user?.nome}</span> {/* ou user?.name, depende do que você está armazenando */}
+      <IonIcon icon={Icons.personCircleSharp} />
       </DropdownBtn>
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
-        <MenuItem>
-          <IonIcon icon={Icons.person} /> <span>Meu Perfil</span>
-        </MenuItem>
         <MenuItem onClick={() => navigate("/settings")}>
           <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigate("/login")}>
           <IonIcon icon={Icons.logOut} /> <span>Sair</span>
         </MenuItem>
       </DropdownMenu>
@@ -81,19 +77,14 @@ const DropdownBtn = styled.button`
 
 const DropdownMenu = styled.div`
   position: absolute;
-  botton: 100px;
-  right: 3rem;
   top: 2.7rem;
-  background-color: #333; /* Fundo escuro */
+  right: 3rem;
+  background-color: #333;
   min-width: 200px;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease-out;
+  z-index: 1000;
 
   &.show {
     opacity: 1;

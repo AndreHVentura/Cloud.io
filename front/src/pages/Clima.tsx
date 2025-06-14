@@ -7,6 +7,7 @@ import TempWidget from "../components/widgets/TempWidget";
 import HumWidget from "../components/widgets/HumWidget";
 import PressWidget from "../components/widgets/PressWidget";
 import SolarRadiationWidget from "../components/widgets/SolarRadiationWidget";
+import Footer from "../components/pagina/Footer";
 
 export default function Clima() {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function Clima() {
           </ContentRow>
         </MainDiv>
       </Main>
+      <Footer />
     </Container>
   );
 }

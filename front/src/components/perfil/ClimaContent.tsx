@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import TempWidget from "../widgets/TempWidget";
-import HumWidget from "../widgets/HumWidget";
-import PressWidget from "../widgets/PressWidget";
-import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
-import ClimaSearch from "../pagina/ClimaSearch";
-import WeatherMap from "../pagina/WeatherMap";
+
 import Footer from "../pagina/Footer";
 
 
@@ -13,16 +8,10 @@ export default function ClimaContent() {
       <Container>
         <Main>
           <MainDiv>
-            <ClimaSearch />
             <ContentRow>
               <WidgetsContainer>
-                <TempWidget />
-                <HumWidget />
-                <PressWidget />
-                <SolarRadiationWidget />
               </WidgetsContainer>
               <MapContainer>
-                <WeatherMap />
               </MapContainer>
             </ContentRow>
           </MainDiv>
@@ -63,7 +52,6 @@ const MapContainer = styled.div`
   max-width: 900px;
   height: 700px;
   border-radius: 12px;
-  overflow: hidden;
 `;
 
 const WidgetsContainer = styled.div`

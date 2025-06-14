@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import Notificacao from "./Notificacao";
-import UsuarioDropdown from "./UsuarioDropdown"; // Importar o componente que criamos
+import UsuarioDropdown from "./UsuarioDropdown";
+import AccessibilityMenu from "../pagina/AccessibilityMenu";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Path = (props: any) => (
@@ -24,6 +25,7 @@ export default function TopBar({ helper, isNavOpen }: { helper: () => void, isNa
           </NotificationIcon>
           <UsuarioDropdown /> {/* Adicionar o dropdown do usuário */}
           <P>{user?.name}</P>
+          <AccessibilityMenu />
           <ToggleDiv>
             <MenuToggle toggle={helper} isOpen={isNavOpen} />
           </ToggleDiv>
@@ -71,7 +73,7 @@ const Upperdiv = styled.div`
   color: white;
   padding: 0 1rem;
   position: relative;
-  z-index: 3;
+  z-index: 1000;
 `;
 
 const P = styled.p`

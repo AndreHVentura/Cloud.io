@@ -6,7 +6,6 @@ import Logo_cloud from "../logo/Logo_cloud.png";
 import lagoFurnas from "../logo/lago_furnas.jpg";
 import capitolio from "../logo/capitolio.jpg";
 import nuvens from "../logo/nuvens.jpg";
-import axios from "axios";
 import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
 import ConfirmModal from "../components/pagina/ModalCadastro";
 

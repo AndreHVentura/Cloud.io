@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
@@ -11,9 +11,7 @@ import { IonIcon } from "@ionic/react";
 import { Icons } from "../components/perfil/Icons";
 import LoadingCircleSpinner from "../components/perfil/LoadingScreen";
 
-
 const images = [lagoFurnas, capitolio, nuvens];
-
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -59,40 +57,20 @@ const Login: React.FC = () => {
     <MainContainer>
       <Container>
         <LoginContainer>
+        <BackLink to="/homepage">← Voltar para o Início</BackLink>
           {(isLoadingToSignup || isLoadingToResetPassword) && <LoadingCircleSpinner />}
-
           <LogoImage src={Logo_cloud} alt="Logo Alternativo" />
           <Logo>Cloud.<span>io</span></Logo>
-
           <LoginForm onSubmit={handleLogin}>
             <InputLabel htmlFor="email">E-mail</InputLabel>
-            <InputField
-              type="email"
-              id="email"
-              placeholder="Insira seu e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-
+            <InputField type="email" id="email" placeholder="Insira seu e-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
             <InputLabel htmlFor="senha">Senha</InputLabel>
             <div style={{ position: "relative" }}>
-              <InputField
-                type={pwdVisible ? "password" : "text"}
-                id="senha"
-                placeholder="Insira sua senha"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
-                required
-              />
-              <PasswordVisibilityBtn
-                type="button"
-                onClick={() => setPwdVisible(prev => !prev)}
-              >
+              <InputField type={pwdVisible ? "password" : "text"} id="senha" placeholder="Insira sua senha" value={senha} onChange={(e) => setSenha(e.target.value)} required />
+              <PasswordVisibilityBtn type="button" onClick={() => setPwdVisible(prev => !prev)}>
                 <IonIcon icon={pwdVisible ? Icons.eyeOutline : Icons.eyeOffOutline} />
               </PasswordVisibilityBtn>
             </div>
-
             <OptionsRow>
               <CheckboxWrapper>
                 <input type="checkbox" id="remember" />
@@ -102,43 +80,25 @@ const Login: React.FC = () => {
                 Esqueceu sua senha?
               </PasswordLink>
             </OptionsRow>
-
             <LoginButton type="submit">ENTRAR</LoginButton>
           </LoginForm>
-
           <RegisterText>
             Não possui conta? Cadastre-se
-            <SignupLink
-              onClick={() => {
-                setIsLoadingToSignup(true);
-                setTimeout(() => {
-                  navigate("/register");
-                }, 1500);
-              }}
-            >
+            <SignupLink onClick={() => { setIsLoadingToSignup(true); setTimeout(() => { navigate("/register"); }, 1500);}}>
               {" "}aqui!
             </SignupLink>
           </RegisterText>
         </LoginContainer>
-
         <ImageContainer>
           {images.map((imgSrc, index) => (
-            <CarouselImage
-              key={index}
-              src={imgSrc}
-              alt={`imagem-login-${index}`}
-              isVisible={index === currentImageIndex}
-            />
+            <CarouselImage key={index} src={imgSrc} alt={`imagem-login-${index}`} isVisible={index === currentImageIndex} />
           ))}
         </ImageContainer>
       </Container>
     </MainContainer>
   );
 };
-
 export default Login;
-
-// Styled Components
 
 const MainContainer = styled.div`
   width: 100%;
@@ -309,4 +269,17 @@ const PasswordVisibilityBtn = styled.button`
   position: absolute;
   top: 13px;
   right: 20px;
+`;
+
+const BackLink = styled(Link)` 
+  margin-top: 10px;
+  margin: 10px;
+  margin-right: auto;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #0073e6;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;

@@ -5,7 +5,7 @@ import Footer from "../pagina/Footer";
 
 export default function GraficsContent() {
   const [selectedStation, setSelectedStation] = useState<
-    "station1" | "station2" | "station3" | ""
+    "station1" | ""
   >("");
 
   const [selectedChart, setSelectedChart] = useState<
@@ -22,16 +22,14 @@ export default function GraficsContent() {
               value={selectedStation}
               onChange={(e) =>
                 setSelectedStation(
-                  e.target.value as "station1" | "station2" | "station3"
+                  e.target.value as "station1"
                 )
               }
             >
               <option value="" disabled>
                 Escolha a estação
               </option>
-              <option value="station1">Estação 1</option>
-              <option value="station2">Estação 2</option>
-              <option value="station3">Estação 3</option>
+              <option value="station1">Estação Lago de Furnas</option>
             </Select>
             <Label>Tipo de Gráfico</Label>
             <Select

@@ -7,7 +7,7 @@ import Footer from "../pagina/Footer";
 export default function Grafics(){
 
   const [selectedStation, setSelectedStation] = useState<
-    "station1" | "station2" | "station3" | ""
+    "station1" | ""
   >("");
 
   const [selectedChart, setSelectedChart] = useState<
@@ -20,7 +20,6 @@ export default function Grafics(){
       <Content>
         <Sidebar>
           <SelectGroup>
-           
             <Label>Tipo de Gráfico</Label>
             <Select
               value={selectedChart}

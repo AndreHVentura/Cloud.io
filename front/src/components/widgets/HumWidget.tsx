@@ -1,11 +1,14 @@
-//MOSTRAR DADOS DE HUMIDADE DO AR
 import styled from "styled-components";
 
-export default function TempWidget() {
+type Props = {
+  weatherData: { humidity: number } | null;
+};
+
+export default function HumWidget({ weatherData }: Props) {
   return (
     <Card>
-      <Title>Humidade relativa do ar</Title>
-      <Value>34%</Value>
+      <Title>Umidade Relativa do Ar</Title>
+      <Value>{weatherData ? `${weatherData.humidity} %` : "Carregando..."}</Value>
     </Card>
   );
 }
@@ -13,20 +16,18 @@ export default function TempWidget() {
 const Card = styled.div`
   background: ${({ theme }) => theme.widgetBackground};
   color: ${({ theme }) => theme.text};
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 `;
 
 const Title = styled.h3`
-  font-size: 1rem;
-  color: ${({ theme }) => theme.text};
   margin-bottom: 0.5rem;
+  font-size: 1.2rem;
 `;
 
 const Value = styled.p`
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
-  color: ${({ theme }) => theme.text};
 `;

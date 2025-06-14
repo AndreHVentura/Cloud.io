@@ -1,10 +1,44 @@
-import React from 'react';
+'use client'
+import { useState, useEffect } from 'react';
 import ApexCharts from 'react-apexcharts';
 import { ApexOptions } from 'apexcharts';
 
+
+
+
 const WindPeakChart = () => {
+  const [loading, setLoading] = useState(true);
+  const [windPeakData, setWindPeakData] = useState<number[]>([]);
+  const [timestamps, seTimestamps] = useState<string[]>([]);
+  const initialDate = '2025-06-14'
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/sensors/by-day/${initialDate}`);
+        const result = await res.json();
+       
+        const windPeakArr = result.data.map((e: { wind_peak: number }) => e.wind_peak);
+        setWindPeakData(windPeakArr);
+
+        const timestampsArr = result.data.map((e: { reading_time: string }) => e.reading_time);
+        seTimestamps(timestampsArr);
+      } catch (error) {
+        console.error('Error fetching sensor data:', error);
+      } finally {
+        setLoading(false);
+      }
+
+    }
+
+    loadData();
+  }, [initialDate]);
+
+ 
+
+
   // Dados reais convertidos de string para número
-  const windPeakData = [
+  const windPeakData2 = [
     "1,44", "0,40", "0,74", "1,87", "3,26", "3,44", "3,20", "1,73", "1,80", "2,23",
     "2,17", "3,36", "2,44", "2,75", "1,87", "1,41", "1,61", "2,46", "1,70", "1,44",
     "2,38", "1,62", "2,33", "1,12", "1,75", "1,49", "2,13", "1,53", "0,72", "0,81",
@@ -13,15 +47,16 @@ const WindPeakChart = () => {
   ].map((val) => parseFloat(val.replace(',', '.')));
 
   // Combinar Data + Hora e transformar em timestamps ISO
-  const date = "2024-09-01";
+  const date = initialDate;
   const times = [
-    "00:00","00:10","00:20","00:30","00:40","00:50","01:00","01:10","01:20","01:30",
-    "01:40","01:50","02:00","02:10","02:20","02:30","02:40","02:50","03:00","03:10",
-    "03:20","03:30","03:40","03:50","04:00","04:10","04:20","04:30","04:40","04:50",
-    "05:00","05:10","05:20","05:30","05:40","05:50","06:00","06:10","06:20","06:30",
-    "06:40","06:50","07:00","07:10","07:20","07:30","07:40","07:50","08:00","08:10"
+    "00:00", "00:10", "00:20", "00:30", "00:40", "00:50", "01:00", "01:10", "01:20", "01:30",
+    "01:40", "01:50", "02:00", "02:10", "02:20", "02:30", "02:40", "02:50", "03:00", "03:10",
+    "03:20", "03:30", "03:40", "03:50", "04:00", "04:10", "04:20", "04:30", "04:40", "04:50",
+    "05:00", "05:10", "05:20", "05:30", "05:40", "05:50", "06:00", "06:10", "06:20", "06:30",
+    "06:40", "06:50", "07:00", "07:10", "07:20", "07:30", "07:40", "07:50", "08:00", "08:10"
   ];
-  const timestamps = times.map((time) => new Date(`${date}T${time}:00Z`).toISOString());
+  /*const timestamps = times.map((time) => new Date(`${date}T${time}:00Z`).toISOString());
+  console.log('timestamps: ', timestamps)*/
 
   const options: ApexOptions = {
     chart: {

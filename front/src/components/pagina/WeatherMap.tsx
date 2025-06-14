@@ -1,68 +1,91 @@
-import { MapContainer, TileLayer } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 
-// Definindo a interface para os dados climáticos retornados pela API
-interface WeatherData {
+// Interface para os dados do clima
+export interface WeatherData {
   temperature: number;
   windspeed: number;
   winddirection: number;
-  temperature_2m_max: number; // Pode ser usado para umidade, mas vou deixar como exemplo.
+  temperature_2m_max: number;
+  humidity: number;
+  pressure: number;
+  solarRadiation: number;
 }
 
-export default function WeatherMap() {
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
+interface WeatherMapProps {
+  onDataFetched: (data: WeatherData) => void;
+}
 
-  // Coordenadas de exemplo (São Paulo)
-  const latitude = -23.55;
-  const longitude = -46.63;
+export default function WeatherMap({ onDataFetched }: WeatherMapProps) {
+  const latitude = -20.615;
+  const longitude = -46.05;
 
-  // Função para buscar dados meteorológicos da Open-Meteo
+  const capitolioCoords: [number, number] = [-20.615, -46.05];
+  const canionsCoords: [number, number] = [-20.650346, -46.265993];
+
   const fetchWeatherData = useCallback(async () => {
-    const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
-    );
-    const data = await response.json();
-    setWeatherData(data.current_weather); // Armazenar o clima atual
-  }, [latitude, longitude]);
+    try {
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}` +
+          `&current_weather=true` +
+          `&hourly=relative_humidity_2m,pressure_msl,shortwave_radiation` +
+          `&daily=temperature_2m_max` +
+          `&timezone=auto`
+      );
+      const data = await response.json();
+
+      const now = new Date();
+      const localHour = now.toISOString().slice(0, 13) + ":00";
+      const timeIndex = data.hourly.time.indexOf(localHour);
+      const index = timeIndex !== -1 ? timeIndex : 0;
+
+      const weatherData: WeatherData = {
+        temperature: data.current_weather.temperature,
+        windspeed: data.current_weather.windspeed,
+        winddirection: data.current_weather.winddirection,
+        temperature_2m_max: data.daily.temperature_2m_max[0],
+        humidity: data.hourly.relative_humidity_2m[index],
+        pressure: data.hourly.pressure_msl[index],
+        solarRadiation: data.hourly.shortwave_radiation[index],
+      };
+
+      onDataFetched(weatherData);
+    } catch (error) {
+      console.error("Erro ao buscar dados do clima:", error);
+    }
+  }, [latitude, longitude, onDataFetched]);
 
   useEffect(() => {
-    fetchWeatherData(); // Chama a função de buscar dados ao carregar o componente
+    fetchWeatherData();
   }, [fetchWeatherData]);
 
   return (
     <MapWrapper>
-      <MapContainer center={[latitude, longitude]} zoom={6} scrollWheelZoom={false}>
-        {/* Camada base (OpenStreetMap) */}
+      <MapContainer center={[latitude, longitude]} zoom={10} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {/* Camada de nuvens (OpenWeatherMap) */}
         <TileLayer
           url="https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=b7afd51f4e7a7f74af3d665aef0dfb57"
         />
-        {/* Camada de precipitação (OpenWeatherMap) */}
         <TileLayer
           url="https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=b7afd51f4e7a7f74af3d665aef0dfb57"
         />
-        {/* Camada de radar de chuva (OpenWeatherMap) */}
         <TileLayer
           url="https://tile.openweathermap.org/map/rain_new/{z}/{x}/{y}.png?appid=b7afd51f4e7a7f74af3d665aef0dfb57"
         />
-      </MapContainer>
 
-      {/* Exibindo os dados do clima */}
-      {weatherData && (
-        <WeatherInfo>
-          <h3>Clima Atual em São Paulo</h3>
-          <p>Temperatura: {weatherData.temperature}°C</p>
-          <p>Vento: {weatherData.windspeed} km/h</p>
-          <p>Direção do Vento: {weatherData.winddirection}°</p>
-          <p>Máxima de Temperatura: {weatherData.temperature_2m_max}°C</p>
-        </WeatherInfo>
-      )}
+        <Marker position={capitolioCoords}>
+          <Popup>Capitólio, Minas Gerais</Popup>
+        </Marker>
+
+        <Marker position={canionsCoords}>
+          <Popup>Cânions de Furnas (Capitólio / São José da Barra)</Popup>
+        </Marker>
+      </MapContainer>
     </MapWrapper>
   );
 }
@@ -77,25 +100,5 @@ const MapWrapper = styled.div`
   .leaflet-container {
     height: 100%;
     width: 100%;
-  }
-`;
-
-const WeatherInfo = styled.div`
-  margin-top: 20px;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border-radius: 8px;
-  width: 300px;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 10;
-  font-family: Arial, sans-serif;
-  h3 {
-    margin-top: 0;
-  }
-  p {
-    margin: 5px 0;
   }
 `;

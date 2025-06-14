@@ -34,10 +34,6 @@ export default function Climate() {
       <NavbarPI />
       <Main>
         <MainDiv>
-<<<<<<< HEAD
-=======
-          <ClimaSearch />
->>>>>>> e527a6ab682fe02ae8d3f308fd09eb148f03687e
           <ContentRow>
             <WidgetsContainer>
               <TempWidget weatherData={weatherData} />

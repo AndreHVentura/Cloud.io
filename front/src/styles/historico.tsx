@@ -6,7 +6,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
   min-height: 100vh;
-  background-color: #f9f9f9;
+  background: ${({ theme }) => theme.backgroundGradient};
   padding: 2rem;
 
   @media (max-width: 768px) {
@@ -60,7 +60,7 @@ export const StyledTable = styled.table`
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: normal;
-    color: black;
+    color: ${({ theme }) => theme.text};
   }
 
   th {
@@ -80,10 +80,10 @@ export const DateFilterBox = styled.div`
   margin-top: 20px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #ffffff;
+  background: ${({ theme }) => theme.backgroundGradient};
   border: 1px solid #ccc;
   width: 320px;
-  color: black;
+  color: ${({ theme }) => theme.text};
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -91,7 +91,7 @@ export const DateFilterBox = styled.div`
   h3 {
     font-size: 1.2rem;
     margin-bottom: 10px;
-    color: #333;
+    color: ${({ theme }) => theme.text};
   }
 
   label {
@@ -139,7 +139,7 @@ export const PaginationContainer = styled.div`
   gap: 10px;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: ${({ theme }) => theme.text};
 
   button {
     padding: 0.5rem 1rem;

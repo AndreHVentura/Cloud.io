@@ -51,8 +51,13 @@ export default function Notificacao() {
 
   function updateState() {
     setIsOpen((prevState) => !prevState);
-    setHasNotif((prevState) => !prevState);
+    
+    // Se o menu está sendo aberto, então remove a notificação
+    if (!isOpen) {
+      setHasNotif(false);
+    }
   }
+  
   return (
     <>
       <DropdownBtn

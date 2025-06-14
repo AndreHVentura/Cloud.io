@@ -1,9 +1,5 @@
 import styled from "styled-components";
-import TempWidget from "../widgets/TempWidget";
-import HumWidget from "../widgets/HumWidget";
-import PressWidget from "../widgets/PressWidget";
-import SolarRadiationWidget from "../widgets/SolarRadiationWidget";
-import WeatherMap from "../pagina/WeatherMap";
+
 import Footer from "../pagina/Footer";
 
 
@@ -14,13 +10,8 @@ export default function ClimaContent() {
           <MainDiv>
             <ContentRow>
               <WidgetsContainer>
-                <TempWidget />
-                <HumWidget />
-                <PressWidget />
-                <SolarRadiationWidget />
               </WidgetsContainer>
               <MapContainer>
-                <WeatherMap />
               </MapContainer>
             </ContentRow>
           </MainDiv>

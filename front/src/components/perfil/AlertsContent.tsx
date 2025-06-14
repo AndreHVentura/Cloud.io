@@ -106,8 +106,8 @@ const AlertsMain = styled.main`
 `;
 
 const AlertsBaseDiv = styled.div`
-  color: black;
-  background-color: white;
+  color: ${({ theme }) => theme.text};
+  background-color: ${({ theme }) => theme.widgetBackground};
   margin: 0.5rem;
   border-radius: 1rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);

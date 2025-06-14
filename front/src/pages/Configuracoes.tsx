@@ -1,58 +1,51 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import topoImage from "../logo/canyon-furnas.jpg";
-import { Pencil } from "lucide-react";
 import { AuthContext } from "../contexts/AuthContext";
 import api from "../services/api";
 import ConfirmModal from "../components/pagina/ModalAlteração";
+import Logo_cloud from "../logo/Logo_cloud.png";
+import lagoFurnas from "../logo/lago_furnas.jpg";
+import capitolio from "../logo/capitolio.jpg";
+import nuvens from "../logo/nuvens.jpg";
 
+const images = [lagoFurnas, capitolio, nuvens];
 export default function Configuracoes() {
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [fotoPerfil, setFotoPerfil] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [editandoNome, setEditandoNome] = useState(false);
   const [c_senha, setC_senha] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalStatus, setModalStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-
   const context = useContext(AuthContext);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
   if (!context) {
     throw new Error("AuthContext não encontrado. Certifique-se de que o componente está dentro de <AuthProvider>.");
   }
-
   const { user } = context;
+
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+  }, 4000);
+
+  return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     async function fetchUserData() {
       if (!user) return;
-
       try {
         const response = await api.get('/api/protected/user');
         const data = response.data;
-
         setNomeUsuario(data.user?.nome || "");
         setEmail(data.user?.email || "");
-        if (data.user?.photoUrl) {
-          setPreview(data.user.photoUrl);
-        }
       } catch (error) {
         console.error("Erro ao carregar dados do usuário:", error);
       }
     }
-
     fetchUserData();
   }, [user]);
-
-  const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setFotoPerfil(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -73,10 +66,6 @@ export default function Configuracoes() {
       formData.append("nome", nomeUsuario);
       formData.append("email", email);
       formData.append("senha", senha);
-      if (fotoPerfil) {
-        formData.append("foto", fotoPerfil);
-      }
-
       const response = await api.put(`/api/protected/${user?.id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -100,265 +89,188 @@ export default function Configuracoes() {
   };
 
   return (
-    <PageContainer>
-      <TopImageContainer>
-        <TopImage src={topoImage} alt="Imagem de topo" />
-        <Container>
+    <MainContainer>
+      <Container>
+        <ConfigContainer>
+          <LogoImage src={Logo_cloud} alt="Logo" />
+          <Logo>Cloud.<span>io</span></Logo>
+          <h2>Configurações da Conta</h2>
           <Form onSubmit={(e) => e.preventDefault()}>
-            <h2>Configurações da Conta</h2>
+            {/* Nome */}
+            <InputLabel>Nome</InputLabel>
+            <InputField 
+              type="text" 
+              name="nome" 
+              value={nomeUsuario} 
+              onChange={handleInputChange} 
+            />
 
-            <FotoPerfil>
-              <LabelFoto htmlFor="foto">
-                <PreviewImage
-                  src={preview || "https://via.placeholder.com/100x100.png?text=Perfil"}
-                  alt="Foto de Perfil"
-                />
-                <OverlayTexto>Alterar</OverlayTexto>
-              </LabelFoto>
-              <input
-                type="file"
-                id="foto"
-                accept="image/*"
-                onChange={handleFotoChange}
-              />
-            </FotoPerfil>
+            {/* Email */}
+            <InputLabel>Email</InputLabel>
+            <InputField 
+              type="email" 
+              name="email" 
+              value={email} 
+              disabled 
+            />
 
-            <InputGroup>
-              <label>Nome</label>
-              <InputComIcone>
-                <input
-                  type="text"
-                  name="nome"
-                  value={nomeUsuario}
-                  onChange={handleInputChange}
-                  disabled={false}
-                  required
-                />
-                <IconeBotao type="button">
-                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
-                  <Pencil size={16} />
-                </IconeBotao>
-              </InputComIcone>
-            </InputGroup>
+            {/* Senha */}
+            <InputLabel>Nova senha</InputLabel>
+            <InputField 
+              type="password" 
+              name="senha" 
+              value={senha} 
+              onChange={handleInputChange} 
+            />
 
-            <InputGroup>
-              <label>Email</label>
-              <InputComIcone>
-                <input
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={handleInputChange}
-                  disabled={true}
-                  required
-                />
-              </InputComIcone>
-            </InputGroup>
+            {/* Confirmar Senha */}
+            <InputLabel>Confirmar nova senha</InputLabel>
+            <InputField 
+              type="password" 
+              value={c_senha} 
+              onChange={(e) => setC_senha(e.target.value)} 
+            />
 
-            <InputGroup>
-              <label>Senha</label>
-              <InputComIcone>
-              <input
-                type="password"
-                name="senha"
-                value={senha}
-                onChange={handleInputChange}
-                required
-              />
-              <IconeBotao type="button">
-                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
-                  <Pencil size={16} />
-              </IconeBotao>
-              </InputComIcone>
-            </InputGroup>
-
-            <InputGroup>
-              <label>Confirmar senha</label>
-              <InputComIcone>
-              <input
-                type="password"
-                value={c_senha}
-                onChange={(e) => setC_senha(e.target.value)}
-              />
-              <IconeBotao type="button">
-                {/* // onClick={() => setEditandoNome(!editandoNome)}> */}
-                  <Pencil size={16} />
-              </IconeBotao>
-              </InputComIcone>
-            </InputGroup>
-
-            {/* Botão que chama a confirmação das alterações */}
-            <BotaoSalvar type="button" onClick={() => setShowConfirmModal(true)}>
-              Salvar alterações
-            </BotaoSalvar>
+            <SaveButton type="button" onClick={() => setShowConfirmModal(true)}>
+              Salvar
+            </SaveButton>
           </Form>
-        </Container>
-      </TopImageContainer>
+        </ConfigContainer>
 
-      <PageBackground />
-      <Rodape>Cloudy.IO</Rodape>
+        <ImageContainer>
+          {images.map((imgSrc, index) => (
+            <CarouselImage 
+              key={index} 
+              src={imgSrc} 
+              alt={`imagem-${index}`} 
+              isVisible={index === currentImageIndex} 
+            />
+          ))}
+        </ImageContainer>
+      </Container>
 
-      {/* Modal de confirmação */}
       {showConfirmModal && (
-        <ConfirmModal
-          onConfirm={confirmAlteracao}
-          onCancel={() => {
-            setShowConfirmModal(false);
-            setModalStatus("idle");
-          }}
-          status={modalStatus}
+        <ConfirmModal 
+          onConfirm={confirmAlteracao} 
+          onCancel={() => { setShowConfirmModal(false); setModalStatus("idle"); }} 
+          status={modalStatus} 
         />
       )}
-    </PageContainer>
+    </MainContainer>
   );
 }
 
-const PageContainer = styled.div`
-  position: relative;
-  min-height: 100vh;
-  background-color: #0a4a5c;
-  overflow: hidden;
-`;
-
-const TopImageContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 250px;
-`;
-
-const TopImage = styled.img`
-  opacity: 0.8;
-  filter: brightness(70%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+const MainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Container = styled.div`
-  position: absolute;
-  top: 70px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+`;
+
+const ConfigContainer = styled.div`
+  position: relative;
+  width: 30%;
   background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 100%;
-  max-width: 400px;
-  color: black;
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: -90px;
+`;
+
+const Logo = styled.h1`
+  margin-top: 10px;
+  font-size: 2.5rem;
+  font-family: 'Inter Tight', sans-serif;
+  background: linear-gradient(to right, #0073e6, #00cc66);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+`;
+
+const LogoImage = styled.img`
+  width: 70%;
+  margin-bottom: -110px;
+  object-fit: contain;
 `;
 
 const Form = styled.form`
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-
-  h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
 `;
 
-const FotoPerfil = styled.div`
-  text-align: center;
-  margin-bottom: 1.5rem;
-
-  input {
-    display: none;
-  }
-`;
-
-const LabelFoto = styled.label`
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-`;
-
-const PreviewImage = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #444;
-`;
-
-const OverlayTexto = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
-  font-size: 0.75rem;
-  text-align: center;
-  border-bottom-left-radius: 50%;
-  border-bottom-right-radius: 50%;
-`;
-
-const InputGroup = styled.div`
-  margin-bottom: 1rem;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: #000000;
-  }
-
-  input {
-    width: 100%;
-    padding: 0.6rem;
-    border-color: black;
-    border-radius: 4px;
-    background-color: white;
-    color: #000000;
-  }
-`;
-
-const BotaoSalvar = styled.button`
-  width: 100%;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 4px;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #45a049;
-  }
-`;
-
-const PageBackground = styled.div`
-  background: linear-gradient(135deg, #0e0e1a, #1f1f2e);
-  height: calc(100vh - 250px);
-`;
-
-const Rodape = styled.footer`
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  color: white;
-  font-family: sans-serif;
+const InputLabel = styled.label`
+  color: #232323;
+  margin-bottom: 8px;
   font-size: 1rem;
+  font-weight: bold;
 `;
 
-const InputComIcone = styled.div`
-  display: flex;
-  align-items: center;
+const InputField = styled.input`
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 90%;
+`;
 
-  input {
-    flex: 1;
-    padding-right: 8px;
+const SaveButton = styled.button`
+  @property --myColor1 {
+    syntax: '<color>';
+    initial-value: #2A7B9B;
+    inherits: false;
   }
-`;
+  
+  @property --myColor2 {
+    syntax: '<color>';
+    initial-value: #57C785;
+    inherits: false;
+  }
 
-const IconeBotao = styled.button`
-  background: none;
+  color: white;
+  padding: 0.75rem 2rem;
   border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
   cursor: pointer;
-  margin-left: 8px;
-  color: #555;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--myColor1), var(--myColor2));
+  transition: --myColor1 500ms, --myColor2 500ms;
 
   &:hover {
-    color: #000;
+    --myColor1: #57C785;
+    --myColor2: #EDDD53;
   }
 `;
+
+const ImageContainer = styled.div`
+  flex: 2.5;
+  position: relative;
+  overflow: hidden;
+`;
+
+const CarouselImage = styled.img<{ isVisible: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transition: opacity 1s ease-in-out;
+  pointer-events: none;
+`;
+
+

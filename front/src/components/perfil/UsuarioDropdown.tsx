@@ -47,7 +47,7 @@ export default function UsuarioDropdown() {
         <MenuItem onClick={() => navigate("/settings")}>
           <IonIcon icon={Icons.settingsSharp} /> <span>Configurações</span>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={() => navigate("/login")}>
           <IonIcon icon={Icons.logOut} /> <span>Sair</span>
         </MenuItem>
       </DropdownMenu>

@@ -8,8 +8,6 @@ import {
   DateFilterBox,
   PaginationContainer
 } from "../styles/historico";
-import { PDFDownloadLink } from "@react-pdf/renderer";
-import MyDocument from "../styles/pdf";
 import exportToExcel from "../styles/excel";
 import Footer from "../components/pagina/Footer";
 
@@ -216,7 +214,7 @@ export default function Historico() {
           </button>
         </div>
       </Container>
-        <Footer />
+      <Footer />
     </>
   );
 }

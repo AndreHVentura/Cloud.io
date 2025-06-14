@@ -4,7 +4,6 @@ import TempWidget from "../components/widgets/TempWidget";
 import HumWidget from "../components/widgets/HumWidget";
 import PressWidget from "../components/widgets/PressWidget";
 import SolarRadiationWidget from "../components/widgets/SolarRadiationWidget";
-import ClimaSearch from "../components/pagina/ClimaSearch";
 import WeatherMap from "../components/pagina/WeatherMap";
 import NavbarPI from "../components/perfil/NavbarPI";
 import Footer from "../components/pagina/Footer";
@@ -16,7 +15,6 @@ export default function Climate() {
       <NavbarPI />
       <Main>
         <MainDiv>
-            <ClimaSearch />
           <ContentRow>
             <WidgetsContainer>
               <TempWidget />

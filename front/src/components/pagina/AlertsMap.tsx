@@ -20,17 +20,17 @@ export default function AlertsMap({ windAvgSpeed }: {windAvgSpeed: number}) {
   }
 
   return(
-    <StyledMapContainer center={position_one} zoom={11}>
+    <StyledMapContainer center={position_one} zoom={9}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
-      <Marker position={position_one}>
+      <Marker position={position_one} >
         <Popup>
           Estação 1
         </Popup>
       </Marker>
-      <Circle center={position_one} radius={10000} pathOptions={currentColor}/>
+      <Circle center={position_one} radius={80000} pathOptions={currentColor}/>
     </StyledMapContainer>
   );
 };

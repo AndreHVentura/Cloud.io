@@ -71,7 +71,7 @@ const Upperdiv = styled.div`
   color: white;
   padding: 0 1rem;
   position: relative;
-  z-index: 3;
+  z-index: 1000;
 `;
 
 const P = styled.p`

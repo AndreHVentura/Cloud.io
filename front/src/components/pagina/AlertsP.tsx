@@ -14,19 +14,15 @@ import NavbarPI from "../perfil/NavbarPI";
 import { useThemeCustom } from "../../contexts/ThemeContext";
 
 export default function AlertsP() {
-  const [selectedStation, setSelectedStation] = useState<"station1" | "station2" | "station3">("station1");
+  const [selectedStation] = useState<"station1">("station1");
 
   const positions = {
     station1: [-21.039668, -46.060912] as LatLngTuple,
-    station2: [-20.733301, -45.925631] as LatLngTuple,
-    station3: [-20.792253, -45.702784] as LatLngTuple,
   };
 
   // Estado para os alertas de cada estação (cores e tipo)
   const [alerts, setAlerts] = useState({
     station1: { type: "Sem alertas", color: "green" },
-    station2: { type: "Sem alertas", color: "green" },
-    station3: { type: "Sem alertas", color: "green" },
   });
 
   // Função que simula a criação de alertas aleatórios, incluindo "Sem alertas"
@@ -46,8 +42,6 @@ export default function AlertsP() {
     const interval = setInterval(() => {
       const newAlerts = {
         station1: generateAlert(),
-        station2: generateAlert(),
-        station3: generateAlert(),
       };
 
       setAlerts(newAlerts); // Atualiza os alertas individualmente
@@ -70,45 +64,24 @@ export default function AlertsP() {
         <NavbarPI />
         <AlertsMain>
           <LeftColumn>
-            <StationSelector
-              value={selectedStation}
-              onChange={(e) =>
-                setSelectedStation(e.target.value as "station1" | "station2" | "station3")
-              }
-            >
-              <StationOption value="station1">Estação 1</StationOption>
-              <StationOption value="station2">Estação 2</StationOption>
-              <StationOption value="station3">Estação 3</StationOption>
+            <StationSelector value={selectedStation} onChange={() => {}}>
+              <StationOption value="station1">Estação Lago de Furnas</StationOption>
             </StationSelector>
 
             {/* Caixa de Alerta para a Estação 1 */}
             <AlertBox>
-              <strong>Alerta Estação 1:</strong>
+              <strong>Alertas na região:</strong>
               <br />
               {alerts.station1.type}
-            </AlertBox>
-
-            {/* Caixa de Alerta para a Estação 2 */}
-            <AlertBox>
-              <strong>Alerta Estação 2:</strong>
-              <br />
-              {alerts.station2.type}
-            </AlertBox>
-
-            {/* Caixa de Alerta para a Estação 3 */}
-            <AlertBox>
-              <strong>Alerta Estação 3:</strong>
-              <br />
-              {alerts.station3.type}
             </AlertBox>
           </LeftColumn>
 
           <AlertsMapDiv>
             <StyledMapContainer
               center={positions[selectedStation]}
-              zoom={12}
-              minZoom={12}
-              maxZoom={14}
+              zoom={9}
+              minZoom={8}
+              maxZoom={16}
               maxBounds={[
                 [-21.2, -46.3],
                 [-20.6, -45.5],
@@ -127,26 +100,8 @@ export default function AlertsP() {
               </Marker>
               <Circle
                 center={positions.station1}
-                radius={10000}
+                radius={80000}
                 pathOptions={{ fillColor: alerts.station1.color, color: alerts.station1.color }}
-              />
-
-              <Marker position={positions.station2} icon={alertIcon}>
-                <Popup>Estação 2 - {alerts.station2.type}</Popup>
-              </Marker>
-              <Circle
-                center={positions.station2}
-                radius={10000}
-                pathOptions={{ fillColor: alerts.station2.color, color: alerts.station2.color }}
-              />
-
-              <Marker position={positions.station3} icon={alertIcon}>
-                <Popup>Estação 3 - {alerts.station3.type}</Popup>
-              </Marker>
-              <Circle
-                center={positions.station3}
-                radius={10000}
-                pathOptions={{ fillColor: alerts.station3.color, color: alerts.station3.color }}
               />
             </StyledMapContainer>
           </AlertsMapDiv>
@@ -160,13 +115,13 @@ export default function AlertsP() {
 function MapUpdater({ position }: { position: LatLngTuple }) {
   const map = useMap();
   useEffect(() => {
-    map.flyTo(position, 12, { duration: 1.5 });
+    map.flyTo(position, 9, { duration: 1.5 });
   }, [position, map]);
 
   useEffect(() => {
     map.setMaxBounds([
-      [-21.2, -46.3],
-      [-20.6, -45.5],
+      [-21.5, -46.5],
+      [-20.4, -45.2],
     ]);
   }, [map]);
 

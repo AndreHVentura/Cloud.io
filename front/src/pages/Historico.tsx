@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import NavBar from "../components/perfil/Navbar";
 import Topbar from "../components/perfil/Topbar";
-import { ButtonGroup, Container, StyledTable } from "../styles/historico";
+import {
+  ButtonGroup,
+  Container,
+  StyledTable,
+  DateFilterBox,
+  PaginationContainer
+} from "../styles/historico";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import MyDocument from "../styles/pdf";
 import exportToExcel from "../styles/excel";
+import Footer from "../components/pagina/Footer";
 
 interface SensorData {
   mysqlId: string;
@@ -102,44 +109,29 @@ export default function Historico() {
         </ButtonGroup>
 
         {mostrarFiltro && (
-          <div
-            style={{
-              marginTop: "20px",
-              padding: "20px",
-              border: "1px solid #ccc",
-              borderRadius: "5px",
-              backgroundColor: "#f2f2f2",
-              width: "300px",
-              color: "black",
-              flexWrap: "wrap",
-            }}
-          >
+          <DateFilterBox>
             <h3>Filtro por Data</h3>
-            <div style={{ marginBottom: "10px" }}>
-              <label>
-                Data Inicial:
-                <input
-                  type="date"
-                  value={dataInicial}
-                  onChange={(e) => setDataInicial(e.target.value)}
-                  style={{ marginLeft: "10px" }}
-                />
-              </label>
+            <label>
+              Data Inicial:
+              <input
+                type="date"
+                value={dataInicial}
+                onChange={(e) => setDataInicial(e.target.value)}
+              />
+            </label>
+            <label>
+              Data Final:
+              <input
+                type="date"
+                value={dataFinal}
+                onChange={(e) => setDataFinal(e.target.value)}
+              />
+            </label>
+            <div>
+              <button onClick={aplicarFiltroPorData}>Aplicar</button>
+              <button onClick={toggleFiltro}>Fechar</button>
             </div>
-            <div style={{ marginBottom: "10px" }}>
-              <label>
-                Data Final:
-                <input
-                  type="date"
-                  value={dataFinal}
-                  onChange={(e) => setDataFinal(e.target.value)}
-                  style={{ marginLeft: "10px" }}
-                />
-              </label>
-            </div>
-            <button onClick={aplicarFiltroPorData}>Aplicar</button>{" "}
-            <button onClick={toggleFiltro}>Fechar</button>
-          </div>
+          </DateFilterBox>
         )}
 
         <StyledTable id="tabela">
@@ -188,20 +180,18 @@ export default function Historico() {
         </StyledTable>
 
         {pagination && (
-          <div style={{ marginTop: "20px", display: "flex", gap: "10px", alignItems: "center", color: "black" }}>
+          <PaginationContainer>
             <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
-              Página Anterior
+              Voltar
             </button>
-            <span>
-              Página {pagination.page} de {pagination.totalPages}
-            </span>
+            <span>Página {pagination.page} de {pagination.totalPages}</span>
             <button
               onClick={() => setPage((prev) => prev + 1)}
               disabled={!pagination.hasNextPage}
             >
-              Próxima Página
+              Avançar
             </button>
-          </div>
+          </PaginationContainer>
         )}
 
         <div style={{ marginTop: "20px" }}>
@@ -226,6 +216,7 @@ export default function Historico() {
           </button>
         </div>
       </Container>
+        <Footer />
     </>
   );
 }

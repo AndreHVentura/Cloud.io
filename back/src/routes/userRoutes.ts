@@ -9,9 +9,16 @@ router.post('/register', (req, res) => userController.register(req, res));
 
 // Rota para autenticar um usuário
 router.post('/login', (req, res) => userController.login(req, res));
-router.get('/user', async (req, res) => {
-  await userController.buscar(req, res);
+
+// Rota para buscar usuário por nome
+router.get('/user', (req, res) => {
+  userController.buscar(req, res);
 });
-  
+ 
+// NOVA ROTA: Atualizar usuário por ID
+router.put('/user/:id', (req, res) => userController.updateUser(req, res));
+
+// NOVA ROTA: Deletar usuário por ID
+router.delete('/user/:id', (req, res) => userController.deleteUser(req, res));
 
 export default router;

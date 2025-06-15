@@ -7,82 +7,119 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
-class UserService{
-    //cria usuario
-    async createUser({name,email,password,city,role}: IUser){
-        //verificando se o usuario ja existe
+// Objeto com os métodos do serviço (não é mais uma classe)
+const userService = {
+    // Cria usuário
+    async createUser({name, email, password, city, role}: IUser) {
         try {
             const existingUser = await User.findOne({email});
-            if(existingUser){
+            if(existingUser) {
                 throw new Error('Usuário já existe');
             }
 
-            //criando um novo usuario
-            const user = new User({name,email,password,city,role});
+            const user = new User({name, email, password, city, role});
             await user.save();
 
-            //agora vai gerar o token JWT para o usuario para autenticacao
-            const token = jwt.sign({userId: user._id, role: user.role},JWT_SECRET,{expiresIn: '1h'});
+            const token = jwt.sign({userId: user._id, role: user.role}, JWT_SECRET, {expiresIn: '1h'});
             return {user, token};
         } catch (error) {
-            if (error instanceof Error) {
-                throw new Error("Erro: " + error.message);
-            } else {
-                throw new Error('Erro desconhecido');
-            }
+            handleError(error);
         }
-    }
+    },
 
-    //autencação do usuario - login
-    async loginUser(email: string, password: string){
+    // Autenticação do usuário - login
+    async loginUser(email: string, password: string) {
         try {
-            //verifica se o usuario existe
             const user = await User.findOne({email});
-            if(!user){              
+            if(!user) {              
                 throw new Error('Usuário não encontrado');
             }
 
-            //verifica se a senha esta correta
             const isPasswordCorrect = await bcrypt.compare(password, user.password);
-            if(!isPasswordCorrect){
+            if(!isPasswordCorrect) {
                 throw new Error('Senha incorreta');
             }
 
-            //gera o token JWT para o usuario
-            const token = jwt.sign({userId: user._id, role: user.role},JWT_SECRET,{expiresIn: '1h'});
+            const token = jwt.sign({userId: user._id, role: user.role}, JWT_SECRET, {expiresIn: '1h'});
             
-            //retorna o usuario e o token
             const userResponse = {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
                 city: user.city,
                 role: user.role
-            }
+            };
             return {user: userResponse, token};
         } catch (error) {
-            if (error instanceof Error) {
-                throw new Error("Erro: " + error.message);
-            } else {
-                throw new Error('Erro desconhecido');
+            handleError(error);
+        }
+    },
+
+    // Busca usuário por nome
+    async buscar(name: string) {
+        try {
+            const user = await User.findOne({name: name}).select("-password");
+            if(!user) {
+                throw new Error("Usuário não encontrado");
             }
+            return {user};
+        } catch (error) {
+            handleError(error);
+        }
+    },
+
+    // Atualiza usuário
+    async updateUser(userId: string, updateData: Partial<IUser>) {
+        try {
+            // Se estiver atualizando a senha, faz o hash
+            if (updateData.password) {
+                updateData.password = await bcrypt.hash(updateData.password, 10);
+            }
+
+            const updatedUser = await User.findByIdAndUpdate(
+                userId,
+                updateData,
+                { 
+                    new: true,         // Retorna o documento atualizado
+                    runValidators: true // Valida os dados antes de atualizar
+                }
+            ).select("-password");
+
+            if (!updatedUser) {
+                throw new Error('Usuário não encontrado');
+            }
+
+            return { user: updatedUser };
+        } catch (error) {
+            handleError(error);
+        }
+    },
+
+    // Deleta usuário
+    async deleteUser(userId: string) {
+        try {
+            const deletedUser = await User.findByIdAndDelete(userId).select("-password");
+            
+            if (!deletedUser) {
+                throw new Error('Usuário não encontrado');
+            }
+
+            return { 
+                message: 'Usuário deletado com sucesso', 
+                user: deletedUser 
+            };
+        } catch (error) {
+            handleError(error);
         }
     }
-    async buscar(name:string){
-        try{
-            const user = await User.findOne({name:name}).select("-password")
-            if(!user){
-                throw new Error("erro ao buscar nome de usuário")
-            }
-            return{user};
-        }catch (error) {
-            if (error instanceof Error) {
-                throw new Error("Erro: " + error.message);
-            } else {
-                throw new Error('Erro desconhecido');
-            }
-        }
+};
+
+// Função de tratamento de erros (não é mais um método privado)
+function handleError(error: unknown): never {
+    if (error instanceof Error) {
+        throw new Error(error.message);
     }
+    throw new Error('Erro desconhecido');
 }
 
-export default UserService;
+export default userService;

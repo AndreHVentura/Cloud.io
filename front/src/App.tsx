@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "styled-components";
@@ -19,6 +18,7 @@ import Graphics from "./components/pagina/graphics";
 import Climate from "./pages/Climate";
 import Configuracoes from "./pages/Configuracoes";
 import RedefinirSenha from "./pages/Redefinir_Senha"; 
+import AlertProvider from "./contexts/AlertContext";
 
 function App() {
   return (
@@ -33,6 +33,7 @@ function InnerApp() {
 
   return (
     <ThemeProvider theme={isLightTheme ? lightTheme : darkTheme}>
+      <AlertProvider>
       <AuthProvider>
         <GlobalStyle />
         <BrowserRouter>
@@ -59,6 +60,7 @@ function InnerApp() {
           </Routes>
         </BrowserRouter>
       </AuthProvider>
+      </AlertProvider>
     </ThemeProvider>
   );
 }

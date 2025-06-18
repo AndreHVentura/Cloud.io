@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { IonIcon } from "./Icons";
 import { Icons } from "./Icons";
 import styled from "styled-components";
+import { AlertContext } from "../../contexts/AlertContext";
 
 export default function Notificacao() {
-  const [windData, setWindData] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
-  const [hasNotif, setHasNotif] = useState(true);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownBtn = useRef<HTMLButtonElement>(null);
+
+  const {wind, hasNotif, setHasNotif} = useContext(AlertContext);
 
   useEffect(() => {
     function clickOutside(event: MouseEvent) {
@@ -32,27 +33,8 @@ export default function Notificacao() {
     };
   }, [isOpen]);
 
-  useEffect(() => {
-     async function fetchData() {
-       const dado = await fetch("http://localhost:5000/api/sensors?page=1&limit=1");
-       const json = await dado.json();
-      
-       let x = json.data[0].wind_avg
-       setWindData(x);
-       if(x >= 10) setHasNotif(true);
-     }
-
-     fetchData()
-     const intervalId = setInterval(() => {
-       fetchData();
-     }, 600000);
-     return () => clearInterval(intervalId);
-  }, []);
-
   function updateState() {
     setIsOpen((prevState) => !prevState);
-    
-    // Se o menu está sendo aberto, então remove a notificação
     if (!isOpen) {
       setHasNotif(false);
     }
@@ -70,9 +52,9 @@ export default function Notificacao() {
       <DropdownMenu className={isOpen ? "show" : "hide"} ref={dropdownRef}>
         <MenuItem>
           {
-            windData >= 17
+            wind >= 17
             ? <><IonIcon icon={Icons.warning} /><span>Alerta de ventos fortes</span></>
-            : windData >= 10
+            : wind >= 10
               ? <><IonIcon icon={Icons.warning} /><span>Ventos de média intensidade</span></>
               : <span>Tudo bem por enquanto</span>
           }

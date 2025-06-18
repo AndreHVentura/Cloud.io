@@ -1,55 +1,31 @@
 import styled from "styled-components";
 import AlertsMap from "../pagina/AlertsMap";
-import { useEffect, useState } from "react";
-import Footer from "../pagina/Footer";
-// import AlertsMap from "./AlertsMap";
+import { useContext, useEffect, useState } from "react";
+import { AlertContext } from "../../contexts/AlertContext";
 
 export default function AlertsContent() {
   type AlertaDeVento = {
     wind: number;
     data: string;
-    msg: string;
+    msg?: string;
   }
 
-  const [windData, setWindData] = useState(0);
   const [arrayDados, setArrayDados] = useState<AlertaDeVento[]>([]);
+  const {wind, timestamp, message} = useContext(AlertContext);
 
   useEffect(() => {
-    async function fetchData() {
-      const dado = await fetch("http://localhost:5000/api/sensors?page=1&limit=1");
-      const json = await dado.json();
-      
-      let windAvgSpeed = json.data[0].wind_avg
-      let timestamp = json.data[0].reading_time
+      if(wind < 10) {
+        return;
+      } else {
+        const ventoAtual = {
+          wind: wind,
+          data: timestamp,
+          msg: message
+        }
 
-      setWindData(windAvgSpeed);
-
-      if(windAvgSpeed < 10) return;
-
-      let newMessage = "";
-      if(windAvgSpeed >= 17.00) {
-        newMessage = "É perigoso navegar";
-      } else if(windAvgSpeed >= 10.00) {
-        newMessage = "Cuidado ao navegar";
+        setArrayDados(a => [ventoAtual, ...a.slice(0,4)]);
       }
-
-      const ventoAtual = {
-        wind: windAvgSpeed,
-        data: timestamp,
-        msg: newMessage
-      }
-
-      setArrayDados(a => [ventoAtual, ...a.slice(0,4)]);
-    }
-
-    fetchData()
-
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 600000);
-
-    return () => clearInterval(intervalId);
-  }, []);
+  }, [wind, timestamp, message]);
 
   function limparArray() {
     setArrayDados([]);
@@ -75,7 +51,7 @@ export default function AlertsContent() {
         </AlertsMessages>
       </LeftColumn>
       <AlertsMapDiv>
-        <AlertsMap windAvgSpeed={windData}/>
+        <AlertsMap windAvgSpeed={wind}/>
       </AlertsMapDiv>
     </AlertsMain>
   );

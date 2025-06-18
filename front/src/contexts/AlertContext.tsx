@@ -33,10 +33,10 @@ export default function AlertProvider({children}: PropsWithChildren) {
             setWind(windAvgSpeed);
             setTimestamp(timestamp);
 
-            if(windAvgSpeed <= 17) {
+            if(windAvgSpeed >= 17) {
                 setMessage("É perigoso navegar");
                 setHasNotif(true);
-            } else if(windAvgSpeed <= 10) {
+            } else if(windAvgSpeed >= 10) {
                 setMessage("Cuidado ao navegar");
                 setHasNotif(true);
             } else {
